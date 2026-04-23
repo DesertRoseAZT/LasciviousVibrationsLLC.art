@@ -1,240 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LasciviousVibrations LLC • Art</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400&display=swap');
-        
-        body {
-            margin: 0;
-            padding: 0;
-            background: #0a0a0a;
-            color: #d4c3a3;
-            font-family: 'Roboto', sans-serif;
-            line-height: 1.6;
-        }
-        
-        header {
-            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://picsum.photos/id/1015/1920/600') center/cover no-repeat;
-            height: 60vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-        }
-        
-        .header-text {
-            font-family: 'Playfair Display', serif;
-            font-size: 4.5rem;
-            color: #f4d03f;
-            text-shadow: 0 0 20px rgba(0,0,0,0.9);
-            letter-spacing: 4px;
-        }
-        
-        nav {
-            background: #111;
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid #444;
-        }
-        
-        nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            margin: 0;
-            padding: 0;
-        }
-        
-        nav a {
-            color: #d4c3a3;
-            text-decoration: none;
-            font-size: 1.1rem;
-            transition: color 0.3s;
-        }
-        
-        nav a:hover {
-            color: #f4d03f;
-        }
-        
-        section {
-            padding: 4rem 8%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.8rem;
-            color: #f4d03f;
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-        
-        .two-column {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-        }
-        
-        .card {
-            background: #1a1a1a;
-            padding: 2rem;
-            border: 1px solid #444;
-        }
-        
-        .card img {
-            width: 100%;
-            height: auto;
-            margin-bottom: 1.5rem;
-            border: 1px solid #555;
-        }
-        
-        .drops-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-        
-        .drop-card {
-            background: #1a1a1a;
-            padding: 1.5rem;
-            text-align: center;
-            border: 1px solid #444;
-        }
-        
-        .drop-card img {
-            width: 100%;
-            height: 280px;
-            object-fit: cover;
-            border: 1px solid #555;
-        }
-        
-        footer {
-            background: #0a0a0a;
-            text-align: center;
-            padding: 2rem;
-            border-top: 1px solid #444;
-            font-size: 0.9rem;
-        }
-        
-        @media (max-width: 768px) {
-            .two-column { grid-template-columns: 1fr; }
-            .header-text { font-size: 3rem; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lascivious Vibrations</title>
+
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <!-- HEADER -->
-    <header>
-        <div>
-            <h1 class="header-text">Be The Change</h1>
-        </div>
-    </header>
+<h1>LASCIVIOUS VIBRATIONS</h1>
 
-    <!-- NAVIGATION -->
-    <nav>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#drops">Drops</a></li>
-            <li><a href="#be-the-change">Be The Change</a></li>
-            <li><a href="#blog">Blog</a></li>
-        </ul>
-    </nav>
+<div class="container">
 
-    <!-- HOME / INTRO -->
-    <section id="home">
-        <div class="two-column">
-            <div class="card">
-                <img src="https://picsum.photos/id/1015/600/400" alt="Steampunk scene">
-                <h3>The World Isn’t Broken</h3>
-                <p>Everyone says the world is broken. But broken things don’t repeat patterns this consistently...</p>
-            </div>
-            <div class="card">
-                <img src="https://picsum.photos/id/870/600/400" alt="Mechanical figure">
-                <h3>A Voice Without Action</h3>
-                <p>We live in a time where everyone has something to say. Opinions are everywhere. Outrage is constant. But words without action don’t create change.</p>
-            </div>
-        </div>
-    </section>
+<!-- DROP SELECT -->
+<h3>Select Drop</h3>
+<button onclick="setDrop('001')">001</button>
+<button onclick="setDrop('002')">002</button>
+<button onclick="setDrop('003')">003</button>
+<button onclick="setDrop('004')">004</button>
 
-    <!-- DROPS SECTION -->
-    <section id="drops" style="background:#111;">
-        <h2>Drops 001 - 004</h2>
-        <div class="drops-grid">
-            <div class="drop-card">
-                <img src="https://picsum.photos/id/1015/600/400" alt="Drop 001">
-                <h3>Drop 001</h3>
-                <p>Replace this image with your Drop 001 file</p>
-            </div>
-            <div class="drop-card">
-                <img src="https://picsum.photos/id/870/600/400" alt="Drop 002">
-                <h3>Drop 002</h3>
-                <p>Replace this image with your Drop 002 file</p>
-            </div>
-            <div class="drop-card">
-                <img src="https://picsum.photos/id/1018/600/400" alt="Drop 003">
-                <h3>Drop 003</h3>
-                <p>Replace this image with your Drop 003 file</p>
-            </div>
-            <div class="drop-card">
-                <img src="https://picsum.photos/id/102/600/400" alt="Drop 004">
-                <h3>Drop 004</h3>
-                <p>Replace this image with your Drop 004 file</p>
-            </div>
-        </div>
-    </section>
+<!-- GENERATOR -->
+<h3>Prompt Generator</h3>
+<button onclick="generatePrompt()">Generate</button>
+<button onclick="remixPrompt()">Remix</button>
+<button onclick="copyPrompt()">Copy</button>
 
-    <!-- BE THE CHANGE SECTION -->
-    <section id="be-the-change">
-        <h2>Be The Change</h2>
-        
-        <div style="max-width:900px; margin:0 auto; font-size:1.15rem;">
-            <p style="font-size:1.4rem; text-align:center; color:#f4d03f; margin-bottom:3rem;">
-                The world is not happening to us.<br>
-                It is happening through us.
-            </p>
-            
-            <h3 style="color:#f4d03f;">What “Be The Change” Really Means Here</h3>
-            <p>This isn’t decoration. It’s a confrontation.</p>
-            <p>People want a better world… without becoming better participants in it.</p>
-            <p>They speak kindness but act in indifference. They want unity but behave in separation.</p>
-            
-            <h3 style="color:#f4d03f; margin-top:3rem;">That Pull You’re Feeling</h3>
-            <p>That pull you’re feeling isn’t random. It’s perception, values, and lived experience lining up in a way that won’t let you ignore it.</p>
-            <p>You see patterns others filter out. You haven’t numbed out to it. You value alignment — actions matching words.</p>
-            <p>This movement is about turning that awareness into direction. Not carrying the whole world, but showing something clearly enough that others start to see it too.</p>
-            
-            <p style="margin-top:3rem; font-style:italic;">
-                Change does not start collectively.<br>
-                It starts individually.<br>
-                But it doesn’t stay that way.
-            </p>
-            
-            <p style="text-align:center; margin-top:4rem; font-size:1.3rem; color:#f4d03f;">
-                Someone has to go first.<br>
-                Why not you?
-            </p>
-        </div>
-    </section>
+<div id="promptBox" class="box"></div>
 
-    <!-- BLOG PLACEHOLDER -->
-    <section id="blog" style="background:#111;">
-        <h2>Blog</h2>
-        <p style="text-align:center;">Your latest writings and reflections will appear here.</p>
-    </section>
+<!-- AUTOPILOT CONTENT -->
+<h3>Autopilot Content</h3>
+<button onclick="generateAuto()">Generate Content</button>
 
-    <footer>
-        © 2026 LasciviousVibrations LLC • Art<br>
-        Be The Change — One small choice at a time.
-    </footer>
+<div id="blog" class="box"></div>
+<div id="pin" class="box"></div>
+<div id="video" class="box"></div>
+
+<!-- CTA -->
+<h3>Unlock Full Drops</h3>
+<a href="https://lasciviouscreator.gumroad.com/" target="_blank">
+<button class="cta">Unlock Premium</button>
+</a>
+
+</div>
+
+<script>
+
+let currentDrop = "001";
+let currentPrompt = "";
+
+/* DROP DATA */
+const drops = {
+  "001": ["identity fracture","self realization","mirror consciousness"],
+  "002": ["surveillance system","digital prison","data overload"],
+  "003": ["history collapse","timeline merging","war memory"],
+  "004": ["human unity","rebirth world","light reconstruction"]
+};
+
+const style = [
+  "cinematic lighting",
+  "volumetric fog",
+  "ultra realistic",
+  "dramatic shadows",
+  "film still",
+  "emotional atmosphere"
+];
+
+/* SET DROP */
+function setDrop(d){
+	  currentDrop = d;
+	  generatePrompt();
+	  generateAuto();
+	}
+
+/* GENERATE PROMPT */
+function generatePrompt(){
+  let base = drops[currentDrop][Math.floor(Math.random()*drops[currentDrop].length)];
+  let s = style.sort(()=>0.5-Math.random()).slice(0,3);
+  currentPrompt = base + ", " + s.join(", ");
+  document.getElementById("promptBox").innerText = currentPrompt;
+}
+
+/* REMIX */
+function remixPrompt(){
+  currentPrompt += ", enhanced cinematic detail";
+  document.getElementById("promptBox").innerText = currentPrompt;
+}
+
+/* COPY */
+function copyPrompt(){
+	  navigator.clipboard.writeText(currentPrompt).then(function() {
+	    alert("Prompt copied to clipboard!");
+	  }, function() {
+	    alert("Failed to copy prompt.");
+	  });
+	}
+
+/* AUTOPILOT CONTENT */
+function generateAuto(){
+
+  const blog = `
+DROP ${currentDrop}
+
+A cinematic exploration of human perception and reality.
+This drop transforms emotion into visual storytelling through AI-driven prompts.
+`;
+
+  const pin = `
+Cinematic AI prompts exploring Drop ${currentDrop}.
+Dark aesthetic, emotional visuals, surreal storytelling.
+`;
+
+  const video = `
+"This isn't just AI art..."
+
+Drop ${currentDrop} creates cinematic experiences from emotion.
+Watch reality transform into visuals.
+`;
+
+  document.getElementById("blog").innerText = blog;
+  document.getElementById("pin").innerText = pin;
+  document.getElementById("video").innerText = video;
+}
+
+generatePrompt();
+	generateAuto();
+	</script>
 
 </body>
 </html>
