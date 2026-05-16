@@ -749,3 +749,171 @@
   .actions-grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
   .wall-placeholder { grid-template-columns: 1fr; }
 }
+
+/* ═══ BTC TRANSMISSIONS / BLOG POSTS ═══ */
+.btc-transmissions { padding-top: 6rem; }
+.btc-transmissions-intro {
+  font-family: 'Space Grotesk', sans-serif;
+  color: rgba(255,255,255,0.5);
+  font-size: 1.1rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-top: 1rem;
+}
+
+.btc-post {
+  padding: 2rem 0;
+}
+.btc-post-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+  padding: 0 2rem;
+}
+.btc-post-inner.btc-post-reverse {
+  direction: rtl;
+}
+.btc-post-inner.btc-post-reverse > * {
+  direction: ltr;
+}
+.btc-post-image-wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  box-shadow: 0 0 40px rgba(0,0,0,0.5), 0 0 80px rgba(var(--realm-r,180), var(--realm-g,160), var(--realm-b,100), 0.1);
+}
+.btc-post-image {
+  width: 100%;
+  display: block;
+  transition: transform 0.6s ease;
+}
+.btc-post-image-wrap:hover .btc-post-image {
+  transform: scale(1.03);
+}
+.btc-post-id {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+.btc-post-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: var(--cream);
+  letter-spacing: 0.05em;
+  margin-bottom: 1.5rem;
+  line-height: 1.3;
+  border-bottom: 1px solid rgba(var(--gold-r,196),var(--gold-g,167),var(--gold-b,103),0.2);
+  padding-bottom: 1rem;
+}
+.btc-post-body {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.85;
+  color: rgba(255,255,255,0.75);
+}
+.btc-post-body p {
+  margin-bottom: 1.2rem;
+}
+.btc-post-body .btc-emphasis {
+  color: var(--gold);
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+.btc-post-body .btc-quiet {
+  color: rgba(255,255,255,0.45);
+  font-style: italic;
+}
+
+/* ═══ SIGNALS FEATURED CARDS ═══ */
+.signals-featured { padding-top: 2rem; }
+.signals-featured-intro {
+  font-family: 'Space Grotesk', sans-serif;
+  color: rgba(255,255,255,0.45);
+  font-size: 1rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-top: 0.75rem;
+}
+.signals-upcoming {
+  padding-top: 4rem;
+}
+
+.signal-featured-card {
+  max-width: 1100px;
+  margin: 2rem auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: center;
+  padding: 2rem;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 6px;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+  cursor: pointer;
+}
+.signal-featured-card:hover {
+  border-color: rgba(100,140,180,0.2);
+  box-shadow: 0 0 40px rgba(100,140,180,0.08);
+}
+.signal-featured-card.signal-featured-reverse {
+  direction: rtl;
+}
+.signal-featured-card.signal-featured-reverse > * {
+  direction: ltr;
+}
+.signal-featured-image {
+  overflow: hidden;
+  border-radius: 4px;
+}
+.signal-featured-image img {
+  width: 100%;
+  display: block;
+  transition: transform 0.6s ease;
+}
+.signal-featured-card:hover .signal-featured-image img {
+  transform: scale(1.02);
+}
+.signal-featured-content {
+  padding: 1rem 0;
+}
+.signal-featured-content .signal-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+.signal-featured-content .signal-excerpt {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 1.5rem;
+}
+.signal-featured-content .signal-cta {
+  color: var(--gold);
+  cursor: pointer;
+}
+.signal-locked {
+  color: rgba(255,255,255,0.25) !important;
+}
+
+/* ═══ RESPONSIVE — BLOG POSTS ═══ */
+@media (max-width: 768px) {
+  .btc-post-inner,
+  .btc-post-inner.btc-post-reverse,
+  .signal-featured-card,
+  .signal-featured-card.signal-featured-reverse {
+    grid-template-columns: 1fr;
+    direction: ltr;
+    gap: 1.5rem;
+  }
+  .btc-post-title { font-size: 1.4rem; }
+  .btc-post-body { font-size: 0.9rem; }
+  .signal-featured-content .signal-title { font-size: 1.2rem; }
+}
