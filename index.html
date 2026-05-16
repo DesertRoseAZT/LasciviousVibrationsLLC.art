@@ -3,130 +3,795 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lascivious Vibrations</title>
-
-<link rel="stylesheet" href="style.css">
+<title>LASCIVIOUS VIBRATIONS — Enter The System</title>
+<meta name="description" content="A digital creative ecosystem. Where drops fund the movement, the movement gives meaning, and art becomes a portal.">
+<meta name="theme-color" content="#0a0008">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Rajdhani:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/realms.css">
+<link rel="stylesheet" href="css/animations.css">
 </head>
+<body data-realm="void">
 
-<body>
+<!-- ═══ VOID CANVAS (Layer 1 — Always present) ═══ -->
+<canvas id="void-canvas"></canvas>
 
-<h1>LASCIVIOUS VIBRATIONS</h1>
+<!-- ═══ REALM GLOW (Layer 2 — Ambient aura) ═══ -->
+<div id="realm-glow"></div>
 
-<div class="container">
+<!-- ═══ MOUSE REACTOR (Layer 4 — Follows cursor) ═══ -->
+<div id="mouse-glow"></div>
 
-<!-- DROP SELECT -->
-<h3>Select Drop</h3>
-<button onclick="setDrop('001')">001</button>
-<button onclick="setDrop('002')">002</button>
-<button onclick="setDrop('003')">003</button>
-<button onclick="setDrop('004')">004</button>
-
-<!-- GENERATOR -->
-<h3>Prompt Generator</h3>
-<button onclick="generatePrompt()">Generate</button>
-<button onclick="remixPrompt()">Remix</button>
-<button onclick="copyPrompt()">Copy</button>
-
-<div id="promptBox" class="box"></div>
-
-<!-- AUTOPILOT CONTENT -->
-<h3>Autopilot Content</h3>
-<button onclick="generateAuto()">Generate Content</button>
-
-<div id="blog" class="box"></div>
-<div id="pin" class="box"></div>
-<div id="video" class="box"></div>
-
-<!-- CTA -->
-<h3>Unlock Full Drops</h3>
-<a href="https://lasciviouscreator.gumroad.com/" target="_blank">
-<button class="cta">Unlock Premium</button>
-</a>
-
+<!-- ═══ TRANSITION OVERLAY (Layer 5) ═══ -->
+<div id="transition-overlay">
+  <div class="transition-text">CROSSING OVER</div>
 </div>
 
-<script>
+<!-- ═══ NAVIGATION ═══ -->
+<nav id="main-nav" class="nav-hidden">
+  <div class="nav-inner">
+    <a href="#home" class="nav-logo" data-navigate="home">
+      <span class="nav-crown">♛</span>
+      <span class="nav-title">LASCIVIOUS VIBRATIONS</span>
+    </a>
+    <div class="nav-links">
+      <a href="#drops" data-navigate="drops" class="nav-link">DROPS</a>
+      <a href="#btc" data-navigate="btc" class="nav-link">BE THE CHANGE</a>
+      <a href="#signals" data-navigate="signals" class="nav-link">SIGNALS</a>
+      <a href="#about" data-navigate="about" class="nav-link">ABOUT</a>
+    </div>
+    <button class="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
 
-let currentDrop = "001";
-let currentPrompt = "";
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ═══ REALM: HOME (The Portal) ═══ -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="realm-home" class="realm active" data-realm-color="home">
 
-/* DROP DATA */
-const drops = {
-  "001": ["identity fracture","self realization","mirror consciousness"],
-  "002": ["surveillance system","digital prison","data overload"],
-  "003": ["history collapse","timeline merging","war memory"],
-  "004": ["human unity","rebirth world","light reconstruction"]
-};
+  <!-- HERO VOID -->
+  <div class="hero-void">
+    <div class="hero-content">
+      <div class="hero-crown">♛</div>
+      <h1 class="hero-title">
+        <span class="title-line" data-delay="0">LASCIVIOUS</span>
+        <span class="title-line" data-delay="200">VIBRATIONS</span>
+      </h1>
+      <p class="hero-tagline reveal-text">Be the change you want to see in the world.</p>
+      <div class="hero-divider"></div>
+      <p class="hero-sub reveal-text">Create Intentionally · Build Freely · Inspire Always</p>
+    </div>
+    <div class="scroll-indicator">
+      <span class="scroll-text">DESCEND</span>
+      <div class="scroll-line"></div>
+    </div>
+  </div>
 
-const style = [
-  "cinematic lighting",
-  "volumetric fog",
-  "ultra realistic",
-  "dramatic shadows",
-  "film still",
-  "emotional atmosphere"
-];
+  <!-- ENTRY STATEMENT -->
+  <div class="section entry-statement">
+    <div class="section-inner">
+      <p class="statement-text reveal-text">This is not a store.<br>This is not a portfolio.<br>This is not a page.</p>
+      <p class="statement-emphasis reveal-text">This is a system.</p>
+      <p class="statement-sub reveal-text">Where art becomes signal. Where signal becomes movement.<br>Where movement becomes change.</p>
+    </div>
+  </div>
 
-/* SET DROP */
-function setDrop(d){
-	  currentDrop = d;
-	  generatePrompt();
-	  generateAuto();
-	}
+  <!-- REALM SELECTOR (Portals) -->
+  <div class="section realm-selector">
+    <h2 class="section-heading reveal-text">SELECT YOUR REALM</h2>
+    <div class="portals-grid">
 
-/* GENERATE PROMPT */
-function generatePrompt(){
-  let base = drops[currentDrop][Math.floor(Math.random()*drops[currentDrop].length)];
-  let s = style.sort(()=>0.5-Math.random()).slice(0,3);
-  currentPrompt = base + ", " + s.join(", ");
-  document.getElementById("promptBox").innerText = currentPrompt;
-}
+      <!-- DROPS PORTAL -->
+      <div class="portal portal-drops reveal-up" data-navigate="drops">
+        <div class="portal-glow"></div>
+        <div class="portal-frame">
+          <div class="portal-icon">◆</div>
+          <h3 class="portal-title">DROPS</h3>
+          <p class="portal-desc">Digital art collections.<br>Cinematic prompt ecosystems.<br>The financial engine.</p>
+          <span class="portal-cta">ENTER REALM →</span>
+        </div>
+      </div>
 
-/* REMIX */
-function remixPrompt(){
-  currentPrompt += ", enhanced cinematic detail";
-  document.getElementById("promptBox").innerText = currentPrompt;
-}
+      <!-- BTC PORTAL -->
+      <div class="portal portal-btc reveal-up" data-navigate="btc">
+        <div class="portal-glow"></div>
+        <div class="portal-frame">
+          <div class="portal-icon">◎</div>
+          <h3 class="portal-title">BE THE CHANGE</h3>
+          <p class="portal-desc">The movement behind the art.<br>Intentional action.<br>Human connection.</p>
+          <span class="portal-cta">CROSS OVER →</span>
+        </div>
+      </div>
 
-/* COPY */
-function copyPrompt(){
-	  navigator.clipboard.writeText(currentPrompt).then(function() {
-	    alert("Prompt copied to clipboard!");
-	  }, function() {
-	    alert("Failed to copy prompt.");
-	  });
-	}
+      <!-- SIGNALS PORTAL -->
+      <div class="portal portal-signals reveal-up" data-navigate="signals">
+        <div class="portal-glow"></div>
+        <div class="portal-frame">
+          <div class="portal-icon">◇</div>
+          <h3 class="portal-title">SIGNALS</h3>
+          <p class="portal-desc">Transmissions from within.<br>Philosophy. Creation. Vision.<br>The voice of the system.</p>
+          <span class="portal-cta">OPEN SIGNAL →</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
-/* AUTOPILOT CONTENT */
-function generateAuto(){
+  <!-- FEATURED DROP -->
+  <div class="section featured-drop">
+    <div class="section-inner">
+      <span class="label-tag reveal-text">LATEST DROP</span>
+      <h2 class="section-heading reveal-text">DROP 004 — PRETTY LITTLE NIGHTMARES</h2>
+      <p class="section-sub reveal-text">Vol. 1: Sweet Decay Collection</p>
+      <div class="featured-image-wrap reveal-up">
+        <img src="images/drop004_hero.webp" alt="DROP 004 Pretty Little Nightmares" class="featured-image" loading="lazy">
+        <div class="image-overlay"></div>
+      </div>
+      <p class="featured-desc reveal-text">95 cinematic AI prompts across 4 psychological horror dimensions.<br>Creepy Cute · Gothic Romance · Nightmare Worlds · Childhood Distortion</p>
+      <a class="btn-portal reveal-up" data-navigate="drop004">
+        <span>DESCEND INTO DROP 004</span>
+      </a>
+    </div>
+  </div>
 
-  const blog = `
-DROP ${currentDrop}
+  <!-- MANIFESTO PREVIEW -->
+  <div class="section manifesto-preview">
+    <div class="section-inner">
+      <div class="manifesto-quote reveal-text">
+        <span class="quote-mark">"</span>
+        Not someday. Not someone else.<br>
+        <em>You. Now.</em>
+        <span class="quote-mark">"</span>
+      </div>
+      <p class="manifesto-sub reveal-text">The drops are symbolic expressions of the movement.<br>Every purchase plants a seed. Every share amplifies the signal.</p>
+      <a class="btn-portal btn-warm reveal-up" data-navigate="btc">
+        <span>DISCOVER THE MOVEMENT</span>
+      </a>
+    </div>
+  </div>
 
-A cinematic exploration of human perception and reality.
-This drop transforms emotion into visual storytelling through AI-driven prompts.
-`;
+  <!-- FOOTER VOID -->
+  <div class="footer-void">
+    <div class="footer-inner">
+      <div class="footer-crown">♛</div>
+      <p class="footer-brand">LASCIVIOUS VIBRATIONS LLC</p>
+      <p class="footer-tagline">Create Intentionally · Build Freely · Inspire Always</p>
+      <div class="footer-links">
+        <a href="https://lasciviouscreator.gumroad.com/" target="_blank" rel="noopener">GUMROAD</a>
+        <a href="#signals" data-navigate="signals">SIGNALS</a>
+        <a href="#about" data-navigate="about">ABOUT</a>
+      </div>
+      <p class="footer-copy">© 2025 Lascivious Vibrations LLC. All rights reserved.</p>
+    </div>
+  </div>
+</section>
 
-  const pin = `
-Cinematic AI prompts exploring Drop ${currentDrop}.
-Dark aesthetic, emotional visuals, surreal storytelling.
-`;
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ═══ REALM: DROPS ═══ -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="realm-drops" class="realm" data-realm-color="drops">
+  <div class="realm-header">
+    <span class="realm-label reveal-text">THE DROPS REALM</span>
+    <h1 class="realm-title reveal-text">DIGITAL DIMENSIONS</h1>
+    <p class="realm-desc reveal-text">Each drop is a world. Each world is a mirror.<br>Choose which reality you want to enter.</p>
+  </div>
 
-  const video = `
-"This isn't just AI art..."
+  <div class="drops-grid">
 
-Drop ${currentDrop} creates cinematic experiences from emotion.
-Watch reality transform into visuals.
-`;
+    <!-- DROP 001 -->
+    <div class="drop-card reveal-up" data-navigate="drop001">
+      <div class="drop-card-image">
+        <img src="images/drop001_hero.webp" alt="DROP 001" loading="lazy">
+        <div class="drop-card-overlay"></div>
+      </div>
+      <div class="drop-card-content">
+        <span class="drop-number">DROP 001</span>
+        <h3 class="drop-name">PRETTY WITH TEETH</h3>
+        <p class="drop-tagline">Beauty hiding truth. Awareness beneath appearance.</p>
+        <div class="drop-tiers">
+          <span class="tier-badge">The Glimpse $29</span>
+          <span class="tier-badge">The Stare $39</span>
+          <span class="tier-badge tier-elite">The Obsession $49</span>
+        </div>
+        <span class="drop-cta">ENTER DIMENSION →</span>
+      </div>
+    </div>
 
-  document.getElementById("blog").innerText = blog;
-  document.getElementById("pin").innerText = pin;
-  document.getElementById("video").innerText = video;
-}
+    <!-- DROP 002 -->
+    <div class="drop-card reveal-up" data-navigate="drop002">
+      <div class="drop-card-image">
+        <img src="images/drop002_hero.webp" alt="DROP 002" loading="lazy">
+        <div class="drop-card-overlay"></div>
+      </div>
+      <div class="drop-card-content">
+        <span class="drop-number">DROP 002</span>
+        <h3 class="drop-name">THE DROP RITUAL TOOLKIT</h3>
+        <p class="drop-tagline">Structured creation. Discipline. Intentional action.</p>
+        <div class="drop-tiers">
+          <span class="tier-badge">The Spark $39</span>
+          <span class="tier-badge">The Flame $49</span>
+          <span class="tier-badge tier-elite">The Cult Following $59</span>
+        </div>
+        <span class="drop-cta">ENTER DIMENSION →</span>
+      </div>
+    </div>
 
-generatePrompt();
-	generateAuto();
-	</script>
+    <!-- DROP 003 -->
+    <div class="drop-card reveal-up" data-navigate="drop003">
+      <div class="drop-card-image">
+        <img src="images/drop003_hero.webp" alt="DROP 003" loading="lazy">
+        <div class="drop-card-overlay"></div>
+      </div>
+      <div class="drop-card-content">
+        <span class="drop-number">DROP 003</span>
+        <h3 class="drop-name">ALCHEMY OF WORLDS</h3>
+        <p class="drop-tagline">Planetary collapse, transformation, and rebirth.</p>
+        <div class="drop-tiers">
+          <span class="tier-badge">The Crucible $49</span>
+          <span class="tier-badge">The Transmutation $59</span>
+          <span class="tier-badge tier-elite">The Philosopher's Engine $69</span>
+        </div>
+        <span class="drop-cta">ENTER DIMENSION →</span>
+      </div>
+    </div>
 
+    <!-- DROP 004 -->
+    <div class="drop-card drop-card-featured reveal-up" data-navigate="drop004">
+      <div class="drop-card-image">
+        <img src="images/drop004_hero.webp" alt="DROP 004" loading="lazy">
+        <div class="drop-card-overlay"></div>
+        <span class="drop-badge-new">NEW</span>
+      </div>
+      <div class="drop-card-content">
+        <span class="drop-number">DROP 004</span>
+        <h3 class="drop-name">PRETTY LITTLE NIGHTMARES</h3>
+        <p class="drop-tagline">Vol. 1: Sweet Decay Collection — Psychological horror meets creepy beauty.</p>
+        <div class="drop-tiers">
+          <span class="tier-badge">Innocence Rot $59</span>
+          <span class="tier-badge">Fractured Whispers $69</span>
+          <span class="tier-badge tier-elite">Grotesque Bloom $79</span>
+        </div>
+        <span class="drop-cta">DESCEND →</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ═══ REALM: DROP 004 (Individual Dimension) ═══ -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="realm-drop004" class="realm" data-realm-color="drops">
+  <div class="realm-header">
+    <a class="back-link reveal-text" data-navigate="drops">← RETURN TO DROPS REALM</a>
+    <span class="realm-label reveal-text">DROP 004</span>
+    <h1 class="realm-title reveal-text">PRETTY LITTLE NIGHTMARES</h1>
+    <p class="realm-desc reveal-text">Vol. 1: Sweet Decay Collection<br>4 Sections · 3 Tiers · 400 Cinematic AI Prompts</p>
+  </div>
+
+  <!-- Drop Visual Gallery -->
+  <div class="section drop-gallery">
+    <div class="gallery-grid">
+      <div class="gallery-item reveal-up">
+        <img src="images/drop004_s1_creepy_cute.webp" alt="Creepy Cute" loading="lazy">
+        <div class="gallery-label">SECTION 01<br><strong>CREEPY CUTE</strong></div>
+      </div>
+      <div class="gallery-item reveal-up">
+        <img src="images/drop004_s2_gothic_romance.webp" alt="Gothic Romance Decay" loading="lazy">
+        <div class="gallery-label">SECTION 02<br><strong>GOTHIC ROMANCE DECAY</strong></div>
+      </div>
+      <div class="gallery-item reveal-up">
+        <img src="images/drop004_s3_nightmare_worlds.webp" alt="Nightmare Worlds" loading="lazy">
+        <div class="gallery-label">SECTION 03<br><strong>NIGHTMARE WORLDS</strong></div>
+      </div>
+      <div class="gallery-item reveal-up">
+        <img src="images/drop004_s4_childhood_distortion.webp" alt="Childhood Distortion" loading="lazy">
+        <div class="gallery-label">SECTION 04<br><strong>CHILDHOOD DISTORTION</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Drop Lore -->
+  <div class="section drop-lore">
+    <div class="section-inner">
+      <h2 class="section-heading reveal-text">THE LORE</h2>
+      <p class="lore-text reveal-text">Something innocent was broken here. The dolls still smile, but their eyes have seen too much. Roses bloom from wounds that never healed. Lullabies play in rooms where childhood stopped existing.</p>
+      <p class="lore-text reveal-text">This is not horror for shock. This is horror as <em>recognition</em> — the moment you realize the pretty thing was never safe.</p>
+    </div>
+  </div>
+
+  <!-- Download Chamber -->
+  <div class="section download-chamber">
+    <div class="section-inner">
+      <h2 class="section-heading reveal-text">THE DOWNLOAD CHAMBER</h2>
+      <div class="tiers-grid">
+        <div class="tier-card reveal-up">
+          <div class="tier-glow"></div>
+          <span class="tier-label">TIER 1</span>
+          <h3 class="tier-name">INNOCENCE ROT</h3>
+          <div class="tier-price">$59</div>
+          <ul class="tier-features">
+            <li>25 Core Cinematic Prompts</li>
+            <li>Expanded Prompt System</li>
+            <li>Negative Prompt Library</li>
+            <li>Section Description & Lore</li>
+            <li>Legal Documentation</li>
+          </ul>
+          <a href="https://lasciviouscreator.gumroad.com/" target="_blank" class="btn-portal btn-tier">
+            <span>UNLOCK ACCESS</span>
+          </a>
+        </div>
+
+        <div class="tier-card tier-card-mid reveal-up">
+          <div class="tier-glow"></div>
+          <span class="tier-label">TIER 2</span>
+          <h3 class="tier-name">FRACTURED WHISPERS</h3>
+          <div class="tier-price">$69</div>
+          <span class="tier-includes">Includes everything in Tier 1 +</span>
+          <ul class="tier-features">
+            <li>+20 Bonus Expansion Prompts</li>
+            <li>Advanced Prompt Engineering</li>
+            <li>Cinematic Sequence Builder</li>
+            <li>Extended Negative Library</li>
+          </ul>
+          <a href="https://lasciviouscreator.gumroad.com/" target="_blank" class="btn-portal btn-tier">
+            <span>UNLOCK ACCESS</span>
+          </a>
+        </div>
+
+        <div class="tier-card tier-card-elite reveal-up">
+          <div class="tier-glow"></div>
+          <div class="tier-badge-elite">ELITE</div>
+          <span class="tier-label">TIER 3</span>
+          <h3 class="tier-name">GROTESQUE BLOOM</h3>
+          <div class="tier-price">$79</div>
+          <span class="tier-includes">Includes everything in Tier 1 & 2 +</span>
+          <ul class="tier-features">
+            <li>+50 Elite Cinematic Prompts</li>
+            <li>Digital Artbook PDF</li>
+            <li>World-Building Guide</li>
+            <li>24-Month Content Calendar</li>
+            <li>Commercial Portfolio License</li>
+          </ul>
+          <a href="https://lasciviouscreator.gumroad.com/" target="_blank" class="btn-portal btn-tier btn-tier-elite">
+            <span>INITIATE</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Bundle -->
+      <div class="bundle-card reveal-up">
+        <div class="bundle-glow"></div>
+        <div class="bundle-content">
+          <span class="bundle-label">COMPLETE COLLECTION</span>
+          <h3 class="bundle-name">ALL 4 SECTIONS · ALL 3 TIERS</h3>
+          <div class="bundle-pricing">
+            <span class="bundle-original">$828</span>
+            <span class="bundle-arrow">→</span>
+            <span class="bundle-price">$297</span>
+          </div>
+          <p class="bundle-desc">400 prompts. Full ecosystem. Every section. Every tier. Every tool.</p>
+          <a href="https://lasciviouscreator.gumroad.com/" target="_blank" class="btn-portal btn-bundle">
+            <span>ACCESS THE COMPLETE SYSTEM</span>
+          </a>
+        </div>
+        <div class="bundle-image">
+          <img src="images/drop004_bundle.webp" alt="Complete Bundle" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Related Signal -->
+  <div class="section related-signal">
+    <div class="section-inner">
+      <span class="label-tag reveal-text">RELATED SIGNAL</span>
+      <p class="signal-preview reveal-text">"The things we called innocent were never innocent. They were just small enough to ignore."</p>
+      <a class="btn-portal btn-cool reveal-up" data-navigate="signals">
+        <span>OPEN SIGNAL FILE →</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- BTC Connection -->
+  <div class="section btc-connection">
+    <div class="section-inner">
+      <span class="label-tag reveal-text">MOVEMENT CONNECTION</span>
+      <h2 class="section-heading reveal-text">Every nightmare holds a truth.</h2>
+      <p class="connection-text reveal-text">DROP 004 doesn't glorify horror — it exposes the violence hiding behind beauty. The systems that hurt us most often wear the prettiest masks.</p>
+      <a class="btn-portal btn-warm reveal-up" data-navigate="btc">
+        <span>EXPLORE THE MOVEMENT</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ═══ REALM: DROP 001 ═══ -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="realm-drop001" class="realm" data-realm-color="drops">
+  <div class="realm-header">
+    <a class="back-link reveal-text" data-navigate="drops">← RETURN TO DROPS REALM</a>
+    <span class="realm-label reveal-text">DROP 001</span>
+    <h1 class="realm-title reveal-text">PRETTY WITH TEETH</h1>
+    <p class="realm-desc reveal-text">Beauty is the mask. The teeth are the truth.<br>Posters · Wall Sets · Creator Bundles</p>
+  </div>
+  <div class="section drop-gallery">
+    <div class="gallery-grid gallery-grid-3">
+      <div class="gallery-item reveal-up">
+        <img src="images/drop001_poster_cute_is_the_bait.webp" alt="Cute Is The Bait" loading="lazy">
+        <div class="gallery-label"><strong>CUTE IS THE BAIT</strong></div>
+      </div>
+      <div class="gallery-item reveal-up">
+        <img src="images/drop001_wall_smile_with_teeth.webp" alt="Smile With Teeth" loading="lazy">
+        <div class="gallery-label"><strong>THE SMILE SERIES</strong></div>
+      </div>
+      <div class="gallery-item reveal-up">
+        <img src="images/drop001_tier3_obsession.webp" alt="The Obsession" loading="lazy">
+        <div class="gallery-label"><strong>THE OBSESSION</strong></div>
+      </div>
+    </div>
+  </div>
+  <div class="section download-chamber">
+    <div class="section-inner">
+      <h2 class="section-heading reveal-text">DOWNLOAD CHAMBER</h2>
+      <div class="tiers-grid">
+        <div class="tier-card reveal-up">
+          <span class="tier-label">TIER 1</span>
+          <h3 class="tier-name">THE GLIMPSE</h3>
+          <div class="tier-price">$29</div>
+          <ul class="tier-features"><li>5 Single Posters with Prompts</li><li>Style Tags & Negative Prompts</li><li>Commercial Use License</li></ul>
+          <a href="https://lasciviouscreator.gumroad.com/" target="_blank" class="btn-portal btn-tier"><span>UNLOCK</span></a>
+        </div>
+        <div class="tier-card tier-card-mid reveal-up">
+          <span class="tier-label">TIER 2</span>
+          <h3 class="tier-name">THE STARE</h3>
+          <div class="tier-price">$39</div>
+          <ul class="tier-features"><li>Everything in Tier 1 +</li><li>"The Smile Series" 6-Image Wall Set</li><li>Extended Prompt Guide</li></ul>
+          <a href="https://lasciviouscreator.gumroad.com/" target="_blank" class="btn-portal btn-tier"><span>UNLOCK</span></a>
+        </div>
+        <div class="tier-card tier-card-elite reveal-up">
+          <div class="tier-badge-elite">ELITE</div>
+          <span class="tier-label">TIER 3</span>
+          <h3 class="tier-name">THE OBSESSION</h3>
+          <div class="tier-price">$49</div>
+          <ul class="tier-features"><li>Everything in Tier 1 & 2 +</li><li>10 Elite Variation Posters</li><li>"The Progression" 12-Image Story</li><li>Mockup Pack · Artbook PDF</li><li>Extended Commercial License</li></ul>
+          <a href="https://lasciviouscreator.gumroad.com/" target="_blank" class="btn-portal btn-tier btn-tier-elite"><span>INITIATE</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section btc-connection">
+    <div class="section-inner">
+      <span class="label-tag reveal-text">MOVEMENT CONNECTION</span>
+      <p class="connection-text reveal-text">"Be real in a world addicted to performance."</p>
+      <a class="btn-portal btn-warm reveal-up" data-navigate="btc"><span>EXPLORE THE MOVEMENT</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ═══ REALM: DROP 002 ═══ -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="realm-drop002" class="realm" data-realm-color="drops">
+  <div class="realm-header">
+    <a class="back-link reveal-text" data-navigate="drops">← RETURN TO DROPS REALM</a>
+    <span class="realm-label reveal-text">DROP 002</span>
+    <h1 class="realm-title reveal-text">THE DROP RITUAL TOOLKIT</h1>
+    <p class="realm-desc reveal-text">Every drop is a ritual. This is how you stop treating launches like accidents.<br>Templates · Guides · Systems</p>
+  </div>
+  <div class="section drop-gallery">
+    <div class="gallery-grid gallery-grid-2">
+      <div class="gallery-item reveal-up">
+        <img src="images/drop002_templates.webp" alt="Templates" loading="lazy">
+        <div class="gallery-label"><strong>RITUAL TEMPLATES</strong></div>
+      </div>
+      <div class="gallery-item reveal-up">
+        <img src="images/drop002_tier3_cult.webp" alt="The Cult Following" loading="lazy">
+        <div class="gallery-label"><strong>THE CULT FOLLOWING</strong></div>
+      </div>
+    </div>
+  </div>
+  <div class="section download-chamber">
+    <div class="section-inner">
+      <h2 class="section-heading reveal-text">DOWNLOAD CHAMBER</h2>
+      <div class="tiers-grid">
+        <div class="tier-card reveal-up">
+          <span class="tier-label">TIER 1</span><h3 class="tier-name">THE SPARK</h3><div class="tier-price">$39</div>
+          <ul class="tier-features"><li>Canva Templates</li><li>Caption & Copy Templates</li><li>CTA Phrase Library</li><li>Branding Basics Guide</li></ul>
+          <a href="https://lasciviouscreator.gumroad.com/" target="_blank" class="btn-portal btn-tier"><span>UNLOCK</span></a>
+        </div>
+        <div class="tier-card tier-card-mid reveal-up">
+          <span class="tier-label">TIER 2</span><h3 class="tier-name">THE FLAME</h3><div class="tier-price">$49</div>
+          <ul class="tier-features"><li>Everything in Tier 1 +</li><li>Launch Strategy Guides</li><li>Content Calendar System</li><li>Advanced Pricing Guide</li></ul>
+          <a href="https://lasciviouscreator.gumroad.com/" target="_blank" class="btn-portal btn-tier"><span>UNLOCK</span></a>
+        </div>
+        <div class="tier-card tier-card-elite reveal-up">
+          <div class="tier-badge-elite">ELITE</div>
+          <span class="tier-label">TIER 3</span><h3 class="tier-name">THE CULT FOLLOWING</h3><div class="tier-price">$59</div>
+          <ul class="tier-features"><li>Everything in Tier 1 & 2 +</li><li>12-Month Drop Calendar</li><li>Video Template Pack</li><li>Email Sequence Templates</li><li>Community Building Playbook</li><li>Analytics Dashboard</li><li>Lifetime Updates</li></ul>
+          <a href="https://lasciviouscreator.gumroad.com/" target="_blank" class="btn-portal btn-tier btn-tier-elite"><span>INITIATE</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section btc-connection">
+    <div class="section-inner">
+      <span class="label-tag reveal-text">MOVEMENT CONNECTION</span>
+      <p class="connection-text reveal-text">"Your habits create your future."</p>
+      <a class="btn-portal btn-warm reveal-up" data-navigate="btc"><span>EXPLORE THE MOVEMENT</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ═══ REALM: DROP 003 ═══ -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="realm-drop003" class="realm" data-realm-color="drops">
+  <div class="realm-header">
+    <a class="back-link reveal-text" data-navigate="drops">← RETURN TO DROPS REALM</a>
+    <span class="realm-label reveal-text">DROP 003</span>
+    <h1 class="realm-title reveal-text">ALCHEMY OF WORLDS</h1>
+    <p class="realm-desc reveal-text">Not every world deserves to be saved. Some must fall before they can become something better.<br>75 Cinematic AI Prompts · 3 Tiers</p>
+  </div>
+  <div class="section drop-gallery">
+    <div class="gallery-grid gallery-grid-3">
+      <div class="gallery-item reveal-up">
+        <img src="images/drop003_s1_decay.webp" alt="Planetary Decay" loading="lazy">
+        <div class="gallery-label">SECTION I<br><strong>PLANETARY DECAY</strong></div>
+      </div>
+      <div class="gallery-item reveal-up">
+        <img src="images/drop003_s2_transform.webp" alt="Transformation" loading="lazy">
+        <div class="gallery-label">SECTION II<br><strong>TRANSFORMATION</strong></div>
+      </div>
+      <div class="gallery-item reveal-up">
+        <img src="images/drop003_s3_rebirth.webp" alt="Rebirth" loading="lazy">
+        <div class="gallery-label">SECTION III<br><strong>REBIRTH</strong></div>
+      </div>
+    </div>
+  </div>
+  <div class="section download-chamber">
+    <div class="section-inner">
+      <h2 class="section-heading reveal-text">DOWNLOAD CHAMBER</h2>
+      <div class="tiers-grid">
+        <div class="tier-card reveal-up">
+          <span class="tier-label">TIER 1</span><h3 class="tier-name">THE CRUCIBLE</h3><div class="tier-price">$49</div>
+          <ul class="tier-features"><li>20 Core Cinematic Prompts</li><li>7 Thematic Sections</li><li>Style & Negative Guides</li><li>Prompt Chaining System</li></ul>
+          <a href="https://lasciviouscreator.gumroad.com/" target="_blank" class="btn-portal btn-tier"><span>UNLOCK</span></a>
+        </div>
+        <div class="tier-card tier-card-mid reveal-up">
+          <span class="tier-label">TIER 2</span><h3 class="tier-name">THE TRANSMUTATION</h3><div class="tier-price">$59</div>
+          <ul class="tier-features"><li>Everything in Tier 1 +</li><li>+25 Expansion Prompts</li><li>Sections VIII–XII</li><li>Advanced Systems</li></ul>
+          <a href="https://lasciviouscreator.gumroad.com/" target="_blank" class="btn-portal btn-tier"><span>UNLOCK</span></a>
+        </div>
+        <div class="tier-card tier-card-elite reveal-up">
+          <div class="tier-badge-elite">ELITE</div>
+          <span class="tier-label">TIER 3</span><h3 class="tier-name">THE PHILOSOPHER'S ENGINE</h3><div class="tier-price">$69</div>
+          <ul class="tier-features"><li>Everything in Tier 1 & 2 +</li><li>+30 Elite Prompts</li><li>Cinematic Sequence Builder</li><li>Digital Artbook PDF</li><li>World-Building Guide</li><li>24-Month Content Calendar</li><li>Commercial Portfolio License</li></ul>
+          <a href="https://lasciviouscreator.gumroad.com/" target="_blank" class="btn-portal btn-tier btn-tier-elite"><span>INITIATE</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section btc-connection">
+    <div class="section-inner">
+      <span class="label-tag reveal-text">MOVEMENT CONNECTION</span>
+      <p class="connection-text reveal-text">"The future is created collectively."</p>
+      <a class="btn-portal btn-warm reveal-up" data-navigate="btc"><span>EXPLORE THE MOVEMENT</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ═══ REALM: BE THE CHANGE ═══ -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="realm-btc" class="realm" data-realm-color="btc">
+  <div class="realm-header btc-header">
+    <h1 class="realm-title btc-title reveal-text">BE THE CHANGE<br>YOU WANT TO SEE<br>IN THE WORLD</h1>
+    <div class="btc-subtitle reveal-text">
+      <p>Not someday.<br>Not someone else.</p>
+      <p class="btc-emphasis">You. Now.</p>
+    </div>
+  </div>
+
+  <!-- The Problem -->
+  <div class="section btc-section">
+    <div class="section-inner">
+      <h2 class="section-heading reveal-text">THE PROBLEM</h2>
+      <div class="btc-text-block reveal-text">
+        <p>We live in a world that profits from division.</p>
+        <p>Where greed replaces empathy. Where performance replaces authenticity. Where connection is reduced to content, and content is reduced to metrics.</p>
+        <p>We scroll past suffering. We perform compassion. We curate ourselves into strangers.</p>
+        <p class="btc-quiet">Something broke. And most of us can feel it.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- The Shift -->
+  <div class="section btc-section">
+    <div class="section-inner">
+      <h2 class="section-heading reveal-text">THE SHIFT</h2>
+      <div class="btc-text-block reveal-text">
+        <p>Small actions matter more than grand gestures.</p>
+        <p>Kindness compounds. Creativity influences culture. Behavior spreads.</p>
+        <p>The world doesn't change through politics or protest alone — it changes through <em>daily human behavior</em>. The way you treat strangers. The way you create. The way you choose to see the world.</p>
+        <p class="btc-emphasis">Change is not an event. It's a practice.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Real World Actions -->
+  <div class="section btc-section">
+    <div class="section-inner">
+      <h2 class="section-heading reveal-text">REAL WORLD ACTIONS</h2>
+      <div class="actions-grid reveal-up">
+        <div class="action-card">
+          <div class="action-icon">🤝</div>
+          <p>Help a stranger without documenting it</p>
+        </div>
+        <div class="action-card">
+          <div class="action-icon">🎨</div>
+          <p>Support an independent creator</p>
+        </div>
+        <div class="action-card">
+          <div class="action-icon">🌿</div>
+          <p>Protect something that can't protect itself</p>
+        </div>
+        <div class="action-card">
+          <div class="action-icon">💬</div>
+          <p>Choose honesty when silence is easier</p>
+        </div>
+        <div class="action-card">
+          <div class="action-icon">🔥</div>
+          <p>Create something with purpose, not just for profit</p>
+        </div>
+        <div class="action-card">
+          <div class="action-icon">🌍</div>
+          <p>Build community in a world designed to isolate</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Community Wall (Future) -->
+  <div class="section btc-section">
+    <div class="section-inner">
+      <h2 class="section-heading reveal-text">THE WALL</h2>
+      <p class="btc-coming reveal-text">A space is being built here — for stories, for proof, for evidence that change is happening.</p>
+      <p class="btc-coming reveal-text">Not yet. But soon.</p>
+      <div class="wall-placeholder reveal-up">
+        <div class="wall-card wall-card-placeholder">Your story here.</div>
+        <div class="wall-card wall-card-placeholder">An act of kindness.</div>
+        <div class="wall-card wall-card-placeholder">Art with purpose.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Join -->
+  <div class="section btc-section btc-join">
+    <div class="section-inner">
+      <h2 class="section-heading reveal-text">JOIN THE MOVEMENT</h2>
+      <p class="btc-text-block reveal-text">Every drop you support. Every piece you share. Every conversation you start.<br>It all adds up. It all matters.</p>
+      <a class="btn-portal btn-warm reveal-up" data-navigate="drops">
+        <span>EXPLORE THE DROPS</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ═══ REALM: SIGNALS (Blog) ═══ -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="realm-signals" class="realm" data-realm-color="signals">
+  <div class="realm-header">
+    <span class="realm-label reveal-text">INTERCEPTED TRANSMISSIONS</span>
+    <h1 class="realm-title reveal-text">SIGNALS</h1>
+    <p class="realm-desc reveal-text">Dispatches from within the system.<br>Philosophy · Creation · Vision · Truth</p>
+  </div>
+
+  <div class="signals-grid">
+    <div class="signal-card reveal-up">
+      <span class="signal-id">SIGNAL_001</span>
+      <span class="signal-category">HUMANITY</span>
+      <h3 class="signal-title">The Mask Economy</h3>
+      <p class="signal-excerpt">We perform ourselves into extinction. The curated life isn't a life — it's a product. And the cost of selling yourself is forgetting who you were before the audience arrived.</p>
+      <span class="signal-cta">OPEN FILE →</span>
+    </div>
+    <div class="signal-card reveal-up">
+      <span class="signal-id">SIGNAL_002</span>
+      <span class="signal-category">CREATIVITY</span>
+      <h3 class="signal-title">Why AI Art Is Not The Enemy</h3>
+      <p class="signal-excerpt">The tool doesn't define the art. The intention does. A paintbrush in the hand of a machine is nothing. A prompt in the mind of a visionary is everything.</p>
+      <span class="signal-cta">OPEN FILE →</span>
+    </div>
+    <div class="signal-card reveal-up">
+      <span class="signal-id">SIGNAL_003</span>
+      <span class="signal-category">THE FUTURE</span>
+      <h3 class="signal-title">Rebuilding From Digital Ash</h3>
+      <p class="signal-excerpt">Every civilization that falls creates the conditions for the next one. The question is: what do we build from the rubble? The same system? Or something that actually works?</p>
+      <span class="signal-cta">OPEN FILE →</span>
+    </div>
+    <div class="signal-card reveal-up">
+      <span class="signal-id">SIGNAL_004</span>
+      <span class="signal-category">BEHIND THE DROPS</span>
+      <h3 class="signal-title">Pretty Little Nightmares: Why Horror Heals</h3>
+      <p class="signal-excerpt">The things we call "creepy" are usually the things we're afraid to acknowledge. Horror doesn't create fear — it gives shape to the fear that was already there.</p>
+      <span class="signal-cta">OPEN FILE →</span>
+    </div>
+  </div>
+
+  <div class="section signals-note">
+    <p class="reveal-text">More signals incoming. The system is always transmitting.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ═══ REALM: ABOUT ═══ -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="realm-about" class="realm" data-realm-color="about">
+  <div class="realm-header">
+    <span class="realm-label reveal-text">ORIGIN FILE</span>
+    <h1 class="realm-title reveal-text">WHAT IS THIS?</h1>
+  </div>
+
+  <div class="section about-section">
+    <div class="section-inner">
+      <h2 class="section-heading reveal-text">LASCIVIOUS VIBRATIONS</h2>
+      <div class="about-text reveal-text">
+        <p>Lascivious Vibrations is a digital creative ecosystem built at the intersection of art, technology, and human consciousness.</p>
+        <p>It is three things simultaneously:</p>
+        <p><strong>1. A product system.</strong> Cinematic AI art collections, prompt engineering packs, and creator toolkits — designed for people who understand that AI is a creative instrument, not a replacement for vision.</p>
+        <p><strong>2. A movement.</strong> "Be The Change You Want To See In The World" is not a slogan. It's the operating principle. Every drop carries a message. Every message carries intent.</p>
+        <p><strong>3. A signal.</strong> The blog — "Signals" — is a voice. Not a content machine. A real perspective on humanity, creativity, the future, and the work behind the art.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section about-section">
+    <div class="section-inner">
+      <h2 class="section-heading reveal-text">THE PHILOSOPHY</h2>
+      <div class="about-text reveal-text">
+        <p><em>Create Intentionally.</em> Nothing here is filler. Every prompt, every image, every word was placed with purpose.</p>
+        <p><em>Build Freely.</em> These tools exist so creators can build without limits. No gatekeeping. No artificial scarcity of knowledge.</p>
+        <p><em>Inspire Always.</em> If the work doesn't move someone, it hasn't done its job.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section about-section">
+    <div class="section-inner">
+      <h2 class="section-heading reveal-text">CREATOR STATEMENT</h2>
+      <div class="about-text reveal-text">
+        <p>I built this because the world has enough noise and not enough signal.</p>
+        <p>I believe AI art can be intentional, emotional, and meaningful. I believe products can fund movements. I believe movements can change behavior. I believe behavior changes everything.</p>
+        <p>This is not a brand. This is a system.</p>
+        <p>Welcome to it.</p>
+      </div>
+      <div class="about-signature reveal-text">
+        <p>— Lascivious Vibrations LLC</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-void">
+    <div class="footer-inner">
+      <div class="footer-crown">♛</div>
+      <p class="footer-brand">LASCIVIOUS VIBRATIONS LLC</p>
+      <p class="footer-tagline">Create Intentionally · Build Freely · Inspire Always</p>
+      <div class="footer-links">
+        <a href="https://lasciviouscreator.gumroad.com/" target="_blank" rel="noopener">GUMROAD</a>
+        <a href="#signals" data-navigate="signals">SIGNALS</a>
+        <a href="mailto:saundramaebennett@gmail.com">CONTACT</a>
+      </div>
+      <p class="footer-copy">© 2025 Lascivious Vibrations LLC. All rights reserved.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SCRIPTS ═══ -->
+<script src="js/particles.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>
