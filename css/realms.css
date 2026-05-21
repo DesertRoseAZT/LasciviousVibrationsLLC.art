@@ -917,3 +917,54 @@
   .btc-post-body { font-size: 0.9rem; }
   .signal-featured-content .signal-title { font-size: 1.2rem; }
 }
+
+
+/* ═══ Be The Change Q&A ═══ */
+.btc-qa-block {
+  margin-bottom: 3rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(255, 200, 100, 0.1);
+}
+.btc-qa-block:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.btc-qa-question {
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  color: rgba(255, 200, 100, 0.9);
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+}
+.btc-qa-block p {
+  margin-bottom: 0.8rem;
+  line-height: 1.8;
+}
+
+/* ═══ New Signal Cards ═══ */
+.signal-category-horror { color: #ff4466; }
+.signal-category-movement { color: rgba(255, 200, 100, 0.9); }
+.signal-category-vision { color: #66aaff; }
+
+
+/* ═══ Full Signal Body (expanded blog posts) ═══ */
+.signal-full-body {
+  margin-top: 1.2rem;
+}
+.signal-full-body p {
+  margin-bottom: 0.9rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.75);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.95rem;
+}
+.signal-full-body strong {
+  color: rgba(255, 200, 100, 0.9);
+  font-weight: 600;
+}
+.signal-full-body em {
+  color: rgba(255, 255, 255, 0.9);
+  font-style: italic;
+}
