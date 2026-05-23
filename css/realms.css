@@ -968,3 +968,418 @@
   color: rgba(255, 255, 255, 0.9);
   font-style: italic;
 }
+
+/* ═══════════════════════════════════════════════════════════
+   THE DARK CANVAS REALM — Crimson Blood / Living Gallery
+   A world that breathes, bleeds, and watches back.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── HEADER ── */
+.dc-header {
+  position: relative;
+}
+
+.dc-title {
+  text-shadow: 0 0 60px rgba(180, 30, 45, 0.5), 0 0 120px rgba(120, 10, 20, 0.3);
+  background: linear-gradient(180deg, #f0e6d3 0%, #d4303f 60%, #8b1a25 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── HERO IMAGE ── */
+.dc-hero-section {
+  padding: 0 var(--space-md) var(--space-lg);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dc-hero-image-wrap {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(180, 30, 45, 0.2);
+  box-shadow: 0 0 80px rgba(180, 30, 45, 0.15), 0 30px 100px rgba(0, 0, 0, 0.7);
+}
+
+.dc-hero-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 12s ease-out;
+}
+
+.dc-hero-image-wrap:hover .dc-hero-image {
+  transform: scale(1.05);
+}
+
+.dc-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, 
+    rgba(5, 2, 8, 0.1) 0%, 
+    rgba(5, 2, 8, 0) 30%, 
+    rgba(5, 2, 8, 0) 60%, 
+    rgba(5, 2, 8, 0.8) 100%
+  );
+  pointer-events: none;
+}
+
+.dc-hero-caption {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  z-index: 2;
+}
+
+.dc-caption-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.4em;
+  color: rgba(180, 30, 45, 0.8);
+  text-transform: uppercase;
+}
+
+.dc-caption-text {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--cream-dim);
+  font-style: italic;
+}
+
+/* ── SECTIONS ── */
+.dc-section {
+  padding: var(--space-lg) 0;
+}
+
+.dc-section-alt {
+  background: linear-gradient(180deg, 
+    rgba(180, 30, 45, 0.03) 0%, 
+    rgba(180, 30, 45, 0.06) 50%, 
+    rgba(180, 30, 45, 0.03) 100%
+  );
+  border-top: 1px solid rgba(180, 30, 45, 0.08);
+  border-bottom: 1px solid rgba(180, 30, 45, 0.08);
+}
+
+.dc-heading {
+  color: #d4303f;
+  text-shadow: 0 0 30px rgba(180, 30, 45, 0.3);
+}
+
+.dc-intro-text {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--cream-dim);
+  max-width: 800px;
+  margin: 0 auto var(--space-lg);
+  text-align: center;
+}
+
+/* ── MANIFESTO PULL QUOTE ── */
+.dc-manifesto {
+  text-align: center;
+  padding: var(--space-lg) var(--space-md);
+}
+
+.dc-pull-quote {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 3vw, 2rem);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--cream);
+  letter-spacing: 0.02em;
+  position: relative;
+}
+
+.dc-pull-quote::before,
+.dc-pull-quote::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #d4303f, transparent);
+  margin: 1.5rem auto;
+}
+
+/* ── 7-LAYER GRID ── */
+.dc-layers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+.dc-layer-card {
+  position: relative;
+  padding: 1.8rem;
+  background: rgba(180, 30, 45, 0.04);
+  border: 1px solid rgba(180, 30, 45, 0.1);
+  transition: all 0.5s var(--ease-out);
+  overflow: hidden;
+}
+
+.dc-layer-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(180deg, #d4303f, rgba(180, 30, 45, 0.2));
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.dc-layer-card:hover {
+  background: rgba(180, 30, 45, 0.08);
+  border-color: rgba(180, 30, 45, 0.25);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 40px rgba(180, 30, 45, 0.1);
+}
+
+.dc-layer-card:hover::before {
+  opacity: 1;
+}
+
+.dc-layer-num {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: #d4303f;
+  display: block;
+  margin-bottom: 0.8rem;
+}
+
+.dc-layer-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.6rem;
+  color: var(--cream);
+}
+
+.dc-layer-card p {
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--cream-dim);
+}
+
+.dc-layer-card-final {
+  grid-column: 1 / -1;
+  text-align: center;
+  background: rgba(180, 30, 45, 0.06);
+  border-color: rgba(180, 30, 45, 0.15);
+}
+
+.dc-layer-card-final::before {
+  display: none;
+}
+
+/* ── ESSAY BLOCKS ── */
+.dc-essay {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+.dc-essay p {
+  font-size: 1rem;
+  line-height: 1.9;
+  color: var(--cream-soft);
+  margin-bottom: 1.5rem;
+}
+
+.dc-essay em {
+  color: var(--cream);
+  font-style: italic;
+}
+
+.dc-emphasis {
+  font-family: var(--font-display);
+  font-size: 1.15rem !important;
+  color: #d4303f !important;
+  text-align: center;
+  padding: 1rem 0;
+  text-shadow: 0 0 20px rgba(180, 30, 45, 0.3);
+}
+
+/* ── DIMENSIONS GRID ── */
+.dc-dimensions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+.dc-dimension {
+  position: relative;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  background: rgba(5, 2, 8, 0.6);
+  border: 1px solid rgba(180, 30, 45, 0.1);
+  transition: all 0.6s var(--ease-out);
+  overflow: hidden;
+}
+
+.dc-dimension::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #d4303f, transparent);
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.dc-dimension:hover {
+  border-color: rgba(180, 30, 45, 0.3);
+  transform: translateY(-5px);
+  box-shadow: 0 15px 50px rgba(180, 30, 45, 0.12);
+}
+
+.dc-dimension:hover::after {
+  opacity: 1;
+}
+
+.dc-dimension-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  filter: grayscale(0.3);
+}
+
+.dc-dimension-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.6rem;
+  color: var(--cream);
+}
+
+.dc-dimension-desc {
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--cream-dim);
+  margin-bottom: 1rem;
+}
+
+.dc-dimension-drop {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.4em;
+  color: rgba(180, 30, 45, 0.6);
+}
+
+/* ── DECLARATION ── */
+.dc-declaration {
+  text-align: center;
+  padding: var(--space-xl) 0;
+}
+
+.dc-final-statement {
+  max-width: 700px;
+  margin: 0 auto var(--space-lg);
+}
+
+.dc-declaration-text {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 0.03em;
+  color: var(--cream);
+  margin-bottom: 1rem;
+}
+
+.dc-declaration-emphasis {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 2vw, 1.4rem);
+  font-weight: 500;
+  color: #d4303f;
+  text-shadow: 0 0 40px rgba(180, 30, 45, 0.4);
+  letter-spacing: 0.05em;
+}
+
+/* ── BUTTONS ── */
+.dc-cta-group {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.dc-btn {
+  padding: 0.8rem 2.2rem;
+  border: 1px solid rgba(180, 30, 45, 0.4);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  color: var(--cream);
+  background: rgba(180, 30, 45, 0.08);
+  transition: all 0.4s var(--ease-out);
+  cursor: pointer;
+}
+
+.dc-btn:hover {
+  background: rgba(180, 30, 45, 0.2);
+  border-color: #d4303f;
+  box-shadow: 0 0 30px rgba(180, 30, 45, 0.2);
+  transform: translateY(-2px);
+}
+
+.dc-btn-secondary {
+  border-color: rgba(240, 230, 211, 0.15);
+  background: rgba(240, 230, 211, 0.03);
+}
+
+.dc-btn-secondary:hover {
+  border-color: rgba(240, 230, 211, 0.4);
+  background: rgba(240, 230, 211, 0.08);
+  box-shadow: 0 0 30px rgba(240, 230, 211, 0.05);
+}
+
+/* ── CRIMSON AMBIENT PULSE (unique to Dark Canvas) ── */
+@keyframes dc-ambient-pulse {
+  0%, 100% { 
+    box-shadow: 0 0 60px rgba(180, 30, 45, 0.08), inset 0 0 60px rgba(180, 30, 45, 0.02); 
+  }
+  50% { 
+    box-shadow: 0 0 100px rgba(180, 30, 45, 0.15), inset 0 0 100px rgba(180, 30, 45, 0.04); 
+  }
+}
+
+#realm-darkcanvas {
+  animation: dc-ambient-pulse 8s ease-in-out infinite;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .dc-layers-grid {
+    grid-template-columns: 1fr;
+  }
+  .dc-dimensions-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .dc-layer-card-final {
+    grid-column: 1;
+  }
+  .dc-hero-section {
+    padding: 0 var(--space-sm) var(--space-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .dc-dimensions-grid {
+    grid-template-columns: 1fr;
+  }
+}

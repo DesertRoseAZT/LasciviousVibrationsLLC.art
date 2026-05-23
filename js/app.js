@@ -16,6 +16,7 @@
     drop004: { r: 200, g: 100, b: 200, css: 'rgba(200, 100, 200,' },   // Magenta/Lavender
     btc:     { r: 201, g: 168, b: 76,  css: 'rgba(201, 168, 76,' },    // Gold/White
     signals: { r: 100, g: 136, b: 255, css: 'rgba(100, 136, 255,' },   // Deep Blue
+    darkcanvas: { r: 180, g: 30, b: 45, css: 'rgba(180, 30, 45,' },    // Crimson Blood
     about:   { r: 160, g: 130, b: 200, css: 'rgba(160, 130, 200,' },   // Soft Purple
     void:    { r: 80,  g: 60,  b: 120, css: 'rgba(80, 60, 120,' },     // Dark void
   };

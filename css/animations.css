@@ -139,6 +139,7 @@
 .portal-drops .portal-frame { animation-delay: 0s; }
 .portal-btc .portal-frame { animation-delay: 2s; }
 .portal-signals .portal-frame { animation-delay: 4s; }
+.portal-darkcanvas .portal-frame { animation-delay: 6s; }
 
 /* ── LOADING / ENTERING STATE ── */
 body.entering .hero-content {
