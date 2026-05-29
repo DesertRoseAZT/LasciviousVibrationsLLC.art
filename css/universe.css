@@ -540,6 +540,21 @@ body.audio-muted .audio-off { display: block; }
   margin-bottom: 20px;
   filter: drop-shadow(0 0 20px rgba(184,154,90,0.3));
 }
+.sigil-image {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  opacity: 0.75;
+  filter: saturate(0.7) brightness(0.8);
+  transition: all 0.5s var(--ease-nightmare);
+}
+.sigil-card:hover .sigil-image {
+  opacity: 1;
+  filter: saturate(1) brightness(1);
+  transform: scale(1.03);
+}
 .sigil-number {
   font-family: var(--font-mono);
   font-size: 0.55rem;
