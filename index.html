@@ -3,20 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LASCIVIOUS VIBRATIONS — Enter The System</title>
-<meta name="description" content="A digital creative ecosystem. Where drops fund the movement, the movement gives meaning, and art becomes a portal.">
+<title>LASCIVIOUS VIBRATIONS — Pretty Little Nightmares: Sweet Decay</title>
+<meta name="description" content="A living, breathing digital universe of dark fairy tales, sweet decay, and nightmare beauty. Where art becomes signal and signal becomes change.">
 <meta name="theme-color" content="#0a0008">
+<meta name="keywords" content="dark fairy tale, horror art, AI art, sweet decay, pretty little nightmares, gothic, lascivious vibrations, cinematic prompts">
 
 <!-- Favicon -->
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="images/icon-192.png">
 
-<!-- Open Graph / Facebook -->
+<!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://lasciviousvibrationsllc.art/">
-<meta property="og:title" content="LASCIVIOUS VIBRATIONS — Enter The System">
-<meta property="og:description" content="A digital creative ecosystem. Where drops fund the movement, the movement gives meaning, and art becomes a portal.">
+<meta property="og:title" content="LASCIVIOUS VIBRATIONS — Pretty Little Nightmares: Sweet Decay">
+<meta property="og:description" content="A living, breathing digital universe of dark fairy tales, sweet decay, and nightmare beauty. Enter the system.">
 <meta property="og:image" content="https://lasciviousvibrationsllc.art/images/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="1200">
@@ -24,29 +25,30 @@
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="LASCIVIOUS VIBRATIONS — Enter The System">
-<meta name="twitter:description" content="A digital creative ecosystem. Where drops fund the movement, the movement gives meaning, and art becomes a portal.">
+<meta name="twitter:title" content="LASCIVIOUS VIBRATIONS — Pretty Little Nightmares: Sweet Decay">
+<meta name="twitter:description" content="A living, breathing digital universe of dark fairy tales, sweet decay, and nightmare beauty.">
 <meta name="twitter:image" content="https://lasciviousvibrationsllc.art/images/og-image.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Rajdhani:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="css/realms.css">
-<link rel="stylesheet" href="css/animations.css">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/universe.css">
 </head>
-<body data-realm="void">
+<body data-realm="veil">
 
-<!-- ═══ VOID CANVAS (Layer 1 — Always present) ═══ -->
+<!-- ═══ GLOBAL LAYERS ═══ -->
 <canvas id="void-canvas"></canvas>
-
-<!-- ═══ REALM GLOW (Layer 2 — Ambient aura) ═══ -->
 <div id="realm-glow"></div>
+<div id="cursor-trail"></div>
+<div id="sky-canvas"></div>
 
-<!-- ═══ MOUSE REACTOR (Layer 4 — Follows cursor) ═══ -->
-<div id="mouse-glow"></div>
+<!-- Audio Toggle -->
+<button id="audio-toggle" class="audio-btn" aria-label="Toggle Sound">
+  <svg class="audio-icon audio-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+  <svg class="audio-icon audio-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+</button>
 
-<!-- ═══ TRANSITION OVERLAY (Layer 5) ═══ -->
+<!-- Transition Overlay -->
 <div id="transition-overlay">
   <div class="transition-text">CROSSING OVER</div>
 </div>
@@ -54,15 +56,14 @@
 <!-- ═══ NAVIGATION ═══ -->
 <nav id="main-nav" class="nav-hidden">
   <div class="nav-inner">
-    <a href="#home" class="nav-logo" data-navigate="home">
+    <a href="#veil" class="nav-logo" data-navigate="veil">
       <span class="nav-crown">♛</span>
       <span class="nav-title">LASCIVIOUS VIBRATIONS</span>
     </a>
     <div class="nav-links">
+      <a href="#crossroads" data-navigate="crossroads" class="nav-link">WORLDS</a>
       <a href="#drops" data-navigate="drops" class="nav-link">DROPS</a>
       <a href="#btc" data-navigate="btc" class="nav-link">BE THE CHANGE</a>
-      <a href="#signals" data-navigate="signals" class="nav-link">SIGNALS</a>
-      <a href="#darkcanvas" data-navigate="darkcanvas" class="nav-link">THE DARK CANVAS</a>
       <a href="#about" data-navigate="about" class="nav-link">ABOUT</a>
     </div>
     <button class="nav-toggle" aria-label="Menu">
@@ -71,153 +72,755 @@
   </div>
 </nav>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- ═══ REALM: HOME (The Portal) ═══ -->
-<!-- ═══════════════════════════════════════════════════════ -->
-<section id="realm-home" class="realm active" data-realm-color="home">
-
-  <!-- HERO VOID -->
-  <div class="hero-void">
-    <div class="hero-content">
-      <div class="hero-crown">♛</div>
-      <h1 class="hero-title">
-        <span class="title-line" data-delay="0">LASCIVIOUS</span>
-        <span class="title-line" data-delay="200">VIBRATIONS</span>
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ═══ REALM: THE VEIL (Homepage) ═══ -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section id="realm-veil" class="realm active" data-realm-id="veil" data-particles="decay-dust" data-audio="veil">
+  <div class="veil-container">
+    <div class="veil-content">
+      <div class="veil-crown-wrap">
+        <div class="veil-crown" id="enter-crown">♛</div>
+        <div class="veil-crown-pulse"></div>
+        <div class="veil-crown-ring"></div>
+      </div>
+      <h1 class="veil-title">
+        <span class="veil-line" data-delay="0">LASCIVIOUS</span>
+        <span class="veil-line" data-delay="300">VIBRATIONS</span>
       </h1>
-      <p class="hero-tagline reveal-text">Be the change you want to see in the world.</p>
-      <div class="hero-divider"></div>
-      <p class="hero-sub reveal-text">Create Intentionally · Build Freely · Inspire Always</p>
+      <p class="veil-whisper">pretty little nightmares</p>
+      <p class="veil-sub">sweet decay</p>
+      <div class="veil-enter-hint">
+        <span class="hint-text">TOUCH THE CROWN TO DESCEND</span>
+        <div class="hint-line"></div>
+      </div>
     </div>
-    <div class="scroll-indicator">
-      <span class="scroll-text">DESCEND</span>
-      <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ═══ REALM: THE CROSSROADS (Universe Gateway) ═══ -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section id="realm-crossroads" class="realm" data-realm-id="crossroads" data-particles="decay-dust" data-audio="crossroads">
+  <div class="realm-header">
+    <span class="realm-label rv">CHOOSE YOUR DESCENT</span>
+    <h1 class="realm-title rv">THE CROSSROADS</h1>
+    <p class="realm-desc rv">Four worlds. Four frequencies. Each one darker than the last.</p>
+  </div>
+
+  <div class="sigils-grid">
+    <div class="sigil-card" data-navigate="creepy-cute" data-sigil="creepy-cute">
+      <div class="sigil-glow"></div>
+      <div class="sigil-symbol">🍬</div>
+      <div class="sigil-inner">
+        <span class="sigil-number">WORLD I</span>
+        <h2 class="sigil-name">CREEPY CUTE</h2>
+        <p class="sigil-desc">Where candy rots and dolls remember everything</p>
+        <span class="sigil-cta">ENTER →</span>
+      </div>
+    </div>
+
+    <div class="sigil-card" data-navigate="gothic-romance" data-sigil="gothic-romance">
+      <div class="sigil-glow"></div>
+      <div class="sigil-symbol">🥀</div>
+      <div class="sigil-inner">
+        <span class="sigil-number">WORLD II</span>
+        <h2 class="sigil-name">GOTHIC ROMANCE &amp; ROT</h2>
+        <p class="sigil-desc">Love that outlasts flesh. Devotion that outlasts death.</p>
+        <span class="sigil-cta">ENTER →</span>
+      </div>
+    </div>
+
+    <div class="sigil-card" data-navigate="nightmare-worlds" data-sigil="nightmare-worlds">
+      <div class="sigil-glow"></div>
+      <div class="sigil-symbol">🌀</div>
+      <div class="sigil-inner">
+        <span class="sigil-number">WORLD III</span>
+        <h2 class="sigil-name">NIGHTMARE WORLDS</h2>
+        <p class="sigil-desc">Reality fractures. The sky weeps constellations of dread.</p>
+        <span class="sigil-cta">ENTER →</span>
+      </div>
+    </div>
+
+    <div class="sigil-card" data-navigate="childhood-distortion" data-sigil="childhood-distortion">
+      <div class="sigil-glow"></div>
+      <div class="sigil-symbol">🎭</div>
+      <div class="sigil-inner">
+        <span class="sigil-number">WORLD IV</span>
+        <h2 class="sigil-name">CHILDHOOD DISTORTION</h2>
+        <p class="sigil-desc">The toys are watching. The lullaby never ends.</p>
+        <span class="sigil-cta">ENTER →</span>
+      </div>
     </div>
   </div>
 
-  <!-- ENTRY STATEMENT -->
-  <div class="section entry-statement">
-    <div class="section-inner">
-      <p class="statement-text reveal-text">This is not a store.<br>This is not a portfolio.<br>This is not a page.</p>
-      <p class="statement-emphasis reveal-text">This is a system.</p>
-      <p class="statement-sub reveal-text">Where art becomes signal. Where signal becomes movement.<br>Where movement becomes change.</p>
+  <div class="crossroads-secondary">
+    <a class="crossroads-link" data-navigate="drops">VIEW ALL DROPS →</a>
+    <a class="crossroads-link" data-navigate="btc">THE HEART: BE THE CHANGE →</a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ═══ REALM: CREEPY CUTE (World I) ═══ -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section id="realm-creepy-cute" class="realm world-realm" data-realm-id="creepy-cute" data-particles="candy-breath" data-audio="creepy-cute">
+  <div class="realm-header">
+    <a class="back-link rv" data-navigate="crossroads">← RETURN TO THE CROSSROADS</a>
+    <span class="realm-label rv">WORLD I · SECTION 01</span>
+    <h1 class="realm-title rv world-title">CREEPY CUTE</h1>
+    <p class="realm-desc rv">Porcelain smiles cracked at the edges. Cotton candy dissolving into something that screams. Button eyes that followed you home. This is the world where innocence learned to bite.</p>
+  </div>
+
+  <div class="world-gallery">
+    <div class="world-gallery-item rv">
+      <img src="images/drop004_s1_creepy_cute.webp" alt="Creepy Cute — where innocence wears a mask" loading="lazy">
+      <div class="gallery-caption">
+        <h3>THE FIRST CRACK</h3>
+        <p>A porcelain doll sits in a room of melting sweets, her smile stitched on too tight. The candy around her has begun to rot, revealing thorns beneath the sugar coating. She doesn't blink. She doesn't need to.</p>
+      </div>
+    </div>
+    <div class="world-gallery-item rv">
+      <img src="images/drop004_hero.webp" alt="Pretty Little Nightmares — the collection" loading="lazy">
+      <div class="gallery-caption">
+        <h3>SWEET DECAY OVERTURE</h3>
+        <p>The entrance to the nightmare nursery. Wilted flowers frame a doorway that shouldn't exist, their petals dripping with something between honey and tears. Beyond it, the lullaby plays backward.</p>
+      </div>
+    </div>
+    <div class="world-gallery-item rv">
+      <img src="images/drop001_poster_cute_is_the_bait.webp" alt="Cute Is The Bait" loading="lazy">
+      <div class="gallery-caption">
+        <h3>CUTE IS THE BAIT</h3>
+        <p>They made it beautiful so you'd come closer. They made it sweet so you'd let your guard down. By the time you see the teeth, it's already too late. Pretty was always the trap.</p>
+      </div>
     </div>
   </div>
 
-  <!-- FEATURED VIDEO — The World Beneath the Lie -->
-  <div class="section featured-video-section">
+  <div class="world-descend">
+    <div class="descend-inner">
+      <h2 class="rv">DESCEND TO THE ARCHIVE</h2>
+      <p class="rv">95 cinematic AI prompts. Psychological horror meets creepy beauty.</p>
+      <a href="https://lasciviouscreator.gumroad.com/l/drop004-s01-creepy-cute" target="_blank" rel="noopener" class="btn-descend">
+        <span>DESCEND TO THE ARCHIVE</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ═══ REALM: GOTHIC ROMANCE & ROT (World II) ═══ -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section id="realm-gothic-romance" class="realm world-realm" data-realm-id="gothic-romance" data-particles="moth-wings" data-audio="gothic-romance">
+  <div class="realm-header">
+    <a class="back-link rv" data-navigate="crossroads">← RETURN TO THE CROSSROADS</a>
+    <span class="realm-label rv">WORLD II · SECTION 02</span>
+    <h1 class="realm-title rv world-title">GOTHIC ROMANCE &amp; ROT</h1>
+    <p class="realm-desc rv">Where the cello bellows across tombstones and lost souls cling to what remains of devotion. Love letters written in decay. Roses that bleed instead of bloom. Romance that refuses to die even after everything else has.</p>
+  </div>
+
+  <div class="world-gallery">
+    <div class="world-gallery-item rv">
+      <img src="images/drop004_s2_gothic_romance.webp" alt="Gothic Romance & Rot" loading="lazy">
+      <div class="gallery-caption">
+        <h3>THE ETERNAL VOW</h3>
+        <p>Two figures intertwined beneath a canopy of dead roses, their skin translucent as aged parchment. The chapel crumbles around them but they remain — love outlasting architecture, devotion outlasting flesh.</p>
+      </div>
+    </div>
+    <div class="world-gallery-item rv">
+      <img src="images/drop003_s1_decay.webp" alt="Planetary Decay" loading="lazy">
+      <div class="gallery-caption">
+        <h3>THE SLOW EROSION</h3>
+        <p>Beauty doesn't die suddenly. It erodes — petal by petal, breath by breath — until all that remains is the architecture of what once was. And somehow, the ruin is more beautiful than the original ever dared to be.</p>
+      </div>
+    </div>
+    <div class="world-gallery-item rv">
+      <img src="images/darkcanvas_hero.webp" alt="The Dark Canvas" loading="lazy">
+      <div class="gallery-caption">
+        <h3>GALLERY OF THE BELOVED</h3>
+        <p>A gothic gallery where every portrait weeps. The frames are ornate and rotting. The subjects watch you with eyes that remember everything love promised and everything death took away.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="world-descend">
+    <div class="descend-inner">
+      <h2 class="rv">DESCEND TO THE ARCHIVE</h2>
+      <p class="rv">Where the piano weeps and devotion outlasts death itself.</p>
+      <a href="https://lasciviouscreator.gumroad.com/l/drop004-s02-gothic-romance" target="_blank" rel="noopener" class="btn-descend">
+        <span>DESCEND TO THE ARCHIVE</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ═══ REALM: NIGHTMARE WORLDS (World III) ═══ -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section id="realm-nightmare-worlds" class="realm world-realm" data-realm-id="nightmare-worlds" data-particles="thorn-lollipop" data-audio="nightmare-worlds">
+  <div class="realm-header">
+    <a class="back-link rv" data-navigate="crossroads">← RETURN TO THE CROSSROADS</a>
+    <span class="realm-label rv">WORLD III · SECTION 03</span>
+    <h1 class="realm-title rv world-title">NIGHTMARE WORLDS</h1>
+    <p class="realm-desc rv">The sky is wrong here. Constellations form patterns that whisper warnings nobody understands. Fur Elise plays softly, distorted, crying through dimensions that were never meant to be witnessed. The violence weeps. The abyss wraps itself around whatever it can cling to.</p>
+  </div>
+
+  <div class="world-gallery">
+    <div class="world-gallery-item rv">
+      <img src="images/drop004_s3_nightmare_worlds.webp" alt="Nightmare Worlds" loading="lazy">
+      <div class="gallery-caption">
+        <h3>THE FRACTURED SKY</h3>
+        <p>Above the nightmare city, the sky has cracked open like porcelain, revealing an endless void of shifting constellations that form faces — faces of everyone who ever fell asleep and woke up somewhere they couldn't escape.</p>
+      </div>
+    </div>
+    <div class="world-gallery-item rv">
+      <img src="images/drop003_s2_transform.webp" alt="Transformation" loading="lazy">
+      <div class="gallery-caption">
+        <h3>THE TRANSMUTATION</h3>
+        <p>Reality folding in on itself like origami made of screams. The landscape doesn't just change — it remembers what it was and mourns the transformation. Every new shape carries the ghost of its former self.</p>
+      </div>
+    </div>
+    <div class="world-gallery-item rv">
+      <img src="images/drop003_s3_rebirth.webp" alt="Rebirth" loading="lazy">
+      <div class="gallery-caption">
+        <h3>OMINOUS REBIRTH</h3>
+        <p>From the wreckage, something new emerges — not beautiful, not ugly, but inevitable. The rebirth carries every scar of the destruction that preceded it. Nothing is born clean in the nightmare worlds.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="world-descend">
+    <div class="descend-inner">
+      <h2 class="rv">DESCEND TO THE ARCHIVE</h2>
+      <p class="rv">Where reality fractures and the sky weeps nightmare constellations.</p>
+      <a href="https://lasciviouscreator.gumroad.com/l/drop004-s03-nightmare-worlds" target="_blank" rel="noopener" class="btn-descend">
+        <span>DESCEND TO THE ARCHIVE</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ═══ REALM: CHILDHOOD DISTORTION (World IV) ═══ -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section id="realm-childhood-distortion" class="realm world-realm" data-realm-id="childhood-distortion" data-particles="thorn-lollipop" data-audio="childhood-distortion">
+  <div class="realm-header">
+    <a class="back-link rv" data-navigate="crossroads">← RETURN TO THE CROSSROADS</a>
+    <span class="realm-label rv">WORLD IV · SECTION 04</span>
+    <h1 class="realm-title rv world-title">CHILDHOOD DISTORTION</h1>
+    <p class="realm-desc rv">The hallways echo with laughter that stopped being innocent decades ago. Broken mechanical music machines play a sugar plum fairy nightmare ballet. Creaking doors open to rooms where toys warn others and deviantly beckon. The children are still giggling. They never stopped.</p>
+  </div>
+
+  <div class="world-gallery">
+    <div class="world-gallery-item rv">
+      <img src="images/drop004_s4_childhood_distortion.webp" alt="Childhood Distortion" loading="lazy">
+      <div class="gallery-caption">
+        <h3>THE NURSERY</h3>
+        <p>A room preserved in amber-colored decay. Toys arranged in circles on the floor as if they were holding a séance. The rocking horse moves on its own. The music box plays a melody that sounds like crying if you listen long enough.</p>
+      </div>
+    </div>
+    <div class="world-gallery-item rv">
+      <img src="images/drop001_wall_smile_with_teeth.webp" alt="Smile With Teeth" loading="lazy">
+      <div class="gallery-caption">
+        <h3>THE SMILE THAT STAYED</h3>
+        <p>They told her to smile. So she did. And she never stopped. Even after the room went dark. Even after everyone left. The smile stayed, growing wider, growing teeth, growing into something that watches from every mirror in the house.</p>
+      </div>
+    </div>
+    <div class="world-gallery-item rv">
+      <img src="images/drop001_tier3_obsession.webp" alt="The Obsession" loading="lazy">
+      <div class="gallery-caption">
+        <h3>THE COLLECTION</h3>
+        <p>Someone has been collecting broken things. Arranging them with disturbing tenderness. Each piece placed with the precision of love and the patience of something that has been waiting in the dark for a very, very long time.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="world-descend">
+    <div class="descend-inner">
+      <h2 class="rv">DESCEND TO THE ARCHIVE</h2>
+      <p class="rv">Where childhood innocence was consumed by something that still remembers.</p>
+      <a href="https://lasciviouscreator.gumroad.com/l/drop004-complete" target="_blank" rel="noopener" class="btn-descend">
+        <span>DESCEND TO THE ARCHIVE</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ═══ REALM: DROPS (All Collections) ═══ -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section id="realm-drops" class="realm" data-realm-id="drops" data-particles="decay-dust" data-audio="crossroads">
+  <div class="realm-header">
+    <span class="realm-label rv">THE ARCHIVE</span>
+    <h1 class="realm-title rv">ALL DROPS</h1>
+    <p class="realm-desc rv">Each drop is a world. Each world is a mirror.<br>Choose which dimension to enter.</p>
+  </div>
+
+  <div class="drops-grid">
+    <!-- DROP 004 -->
+    <div class="drop-card drop-featured rv" data-navigate="crossroads">
+      <div class="drop-card-img"><img src="images/drop004_hero.webp" alt="DROP 004" loading="lazy"><span class="drop-badge">NEW</span></div>
+      <div class="drop-card-body">
+        <span class="drop-num">DROP 004</span>
+        <h3>PRETTY LITTLE NIGHTMARES</h3>
+        <p>Vol. 1: Sweet Decay Collection — 4 Sections · 3 Tiers · 400 Cinematic AI Prompts</p>
+        <div class="drop-tiers"><span>Tier 1 $59</span><span>Tier 2 $69</span><span class="tier-elite">Tier 3 $79</span></div>
+        <div class="drop-links">
+          <a href="https://lasciviouscreator.gumroad.com/l/drop004-s01-creepy-cute" target="_blank">Section 01</a>
+          <a href="https://lasciviouscreator.gumroad.com/l/drop004-s02-gothic-romance" target="_blank">Section 02</a>
+          <a href="https://lasciviouscreator.gumroad.com/l/drop004-s03-nightmare-worlds" target="_blank">Section 03</a>
+          <a href="https://lasciviouscreator.gumroad.com/l/drop004-complete" target="_blank" class="link-bundle">COMPLETE BUNDLE $297</a>
+        </div>
+        <span class="drop-cta" data-navigate="crossroads">EXPLORE THE WORLDS →</span>
+      </div>
+    </div>
+
+    <!-- DROP 001 -->
+    <div class="drop-card rv">
+      <div class="drop-card-img"><img src="images/drop001_hero.webp" alt="DROP 001" loading="lazy"></div>
+      <div class="drop-card-body">
+        <span class="drop-num">DROP 001</span>
+        <h3>PRETTY WITH TEETH</h3>
+        <p>Beauty hiding truth. Awareness beneath appearance. Posters · Wall Sets · Creator Bundles</p>
+        <div class="drop-tiers"><span>Glimpse $29</span><span>Stare $39</span><span class="tier-elite">Obsession $49</span></div>
+        <div class="drop-links">
+          <a href="https://lasciviouscreator.gumroad.com/l/drop001-standard" target="_blank">Tier 1</a>
+          <a href="https://lasciviouscreator.gumroad.com/l/drop001-premium" target="_blank">Tier 2</a>
+          <a href="https://lasciviouscreator.gumroad.com/l/drop001-elite" target="_blank">Tier 3</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- DROP 002 -->
+    <div class="drop-card rv">
+      <div class="drop-card-img"><img src="images/drop002_hero.webp" alt="DROP 002" loading="lazy"></div>
+      <div class="drop-card-body">
+        <span class="drop-num">DROP 002</span>
+        <h3>THE DROP RITUAL TOOLKIT</h3>
+        <p>Structured creation. Discipline. Intentional action. Templates · Guides · Systems</p>
+        <div class="drop-tiers"><span>Spark $39</span><span>Flame $49</span><span class="tier-elite">Cult Following $59</span></div>
+        <div class="drop-links">
+          <a href="https://lasciviouscreator.gumroad.com/l/drop002-standard" target="_blank">Tier 1</a>
+          <a href="https://lasciviouscreator.gumroad.com/l/drop002-premium" target="_blank">Tier 2</a>
+          <a href="https://lasciviouscreator.gumroad.com/l/drop002-elite" target="_blank">Tier 3</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- DROP 003 -->
+    <div class="drop-card rv">
+      <div class="drop-card-img"><img src="images/drop003_hero.webp" alt="DROP 003" loading="lazy"></div>
+      <div class="drop-card-body">
+        <span class="drop-num">DROP 003</span>
+        <h3>ALCHEMY OF WORLDS</h3>
+        <p>Planetary collapse, transformation, and rebirth. 75 Cinematic AI Prompts · 3 Tiers</p>
+        <div class="drop-tiers"><span>Crucible $49</span><span>Transmutation $59</span><span class="tier-elite">Philosopher's Engine $69</span></div>
+        <div class="drop-links">
+          <a href="https://lasciviouscreator.gumroad.com/l/drop003-standard" target="_blank">Tier 1</a>
+          <a href="https://lasciviouscreator.gumroad.com/l/drop003-premium" target="_blank">Tier 2</a>
+          <a href="https://lasciviouscreator.gumroad.com/l/drop003-elite" target="_blank">Tier 3</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ═══ REALM: BE THE CHANGE (The Heart / The Sanctuary) ═══ -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section id="realm-btc" class="realm sanctuary-realm" data-realm-id="btc" data-particles="none" data-audio="sanctuary">
+  <div class="realm-header sanctuary-header">
+    <h1 class="realm-title sanctuary-title rv">BE THE CHANGE<br>YOU WANT TO SEE<br>IN THE WORLD</h1>
+    <div class="sanctuary-subtitle rv">
+      <p>Not someday. Not someone else.</p>
+      <p class="sanctuary-emphasis">You. Now.</p>
+    </div>
+  </div>
+
+  <!-- Sub-navigation for BTC -->
+  <div class="sanctuary-nav rv">
+    <a data-navigate="btc" class="snav-link snav-active">THE HEART</a>
+    <a data-navigate="btc-videos" class="snav-link">VIDEOS</a>
+    <a data-navigate="btc-blog-1" class="snav-link">TRANSMISSIONS</a>
+    <a data-navigate="btc-blog-2" class="snav-link">THE DARK CANVAS</a>
+    <a data-navigate="community" class="snav-link">COMMUNITY</a>
+    <a data-navigate="about" class="snav-link">ABOUT</a>
+  </div>
+
+  <!-- Featured Film -->
+  <div class="section btc-section">
     <div class="section-inner">
-      <span class="label-tag reveal-text">🐇 NOW SHOWING</span>
-      <h2 class="section-heading reveal-text">THE WORLD BENEATH THE LIE</h2>
-      <p class="section-sub reveal-text">A dark cinematic journey through a fractured wonderland.<br>Follow the rabbit. Fall through the lie. Choose different.</p>
-      <div class="video-cinema-wrap reveal-up">
-        <div class="video-glow"></div>
+      <span class="label-tag rv">🐇 WATCH THE FILM</span>
+      <h2 class="section-heading rv">THE WORLD BENEATH THE LIE</h2>
+      <div class="video-wrap rv">
         <div class="video-frame">
-          <iframe 
-            src="https://www.youtube.com/embed/xtpXBp3WFH4?rel=0&modestbranding=1&color=white" 
-            title="The World Beneath the Lie — Be The Change" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-            allowfullscreen
-          ></iframe>
+          <iframe src="https://www.youtube.com/embed/xtpXBp3WFH4?rel=0&modestbranding=1&color=white" title="The World Beneath the Lie" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
       </div>
-      <p class="video-tagline reveal-text">"Be the change you want to see in the world…<br>Or stay part of the problem."</p>
+      <p class="video-tagline rv">"Follow the rabbit. Fall through the lie.<br>See what your silence built. Then choose different."</p>
     </div>
   </div>
 
-  <!-- REALM SELECTOR (Portals) -->
-  <div class="section realm-selector">
-    <h2 class="section-heading reveal-text">SELECT YOUR REALM</h2>
-    <div class="portals-grid">
-
-      <!-- DROPS PORTAL -->
-      <div class="portal portal-drops reveal-up" data-navigate="drops">
-        <div class="portal-glow"></div>
-        <div class="portal-frame">
-          <div class="portal-icon">◆</div>
-          <h3 class="portal-title">DROPS</h3>
-          <p class="portal-desc">Digital art collections.<br>Cinematic prompt ecosystems.<br>The financial engine.</p>
-          <span class="portal-cta">ENTER REALM →</span>
-        </div>
-      </div>
-
-      <!-- BTC PORTAL -->
-      <div class="portal portal-btc reveal-up" data-navigate="btc">
-        <div class="portal-glow"></div>
-        <div class="portal-frame">
-          <div class="portal-icon">◎</div>
-          <h3 class="portal-title">BE THE CHANGE</h3>
-          <p class="portal-desc">The movement behind the art.<br>Intentional action.<br>Human connection.</p>
-          <span class="portal-cta">CROSS OVER →</span>
-        </div>
-      </div>
-
-      <!-- SIGNALS PORTAL -->
-      <div class="portal portal-signals reveal-up" data-navigate="signals">
-        <div class="portal-glow"></div>
-        <div class="portal-frame">
-          <div class="portal-icon">◇</div>
-          <h3 class="portal-title">SIGNALS</h3>
-          <p class="portal-desc">Transmissions from within.<br>Philosophy. Creation. Vision.<br>The voice of the system.</p>
-          <span class="portal-cta">OPEN SIGNAL →</span>
-        </div>
-      </div>
-
-      <!-- DARK CANVAS PORTAL -->
-      <div class="portal portal-darkcanvas reveal-up" data-navigate="darkcanvas">
-        <div class="portal-glow"></div>
-        <div class="portal-frame">
-          <div class="portal-icon">🩸</div>
-          <h3 class="portal-title">THE DARK CANVAS</h3>
-          <p class="portal-desc">Horror art as emotional architecture.<br>Where darkness is the medium<br>and feeling is the point.</p>
-          <span class="portal-cta">DESCEND INTO THE GALLERY →</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- FEATURED DROP -->
-  <div class="section featured-drop">
+  <!-- The Problem -->
+  <div class="section btc-section">
     <div class="section-inner">
-      <span class="label-tag reveal-text">LATEST DROP</span>
-      <h2 class="section-heading reveal-text">DROP 004 — PRETTY LITTLE NIGHTMARES</h2>
-      <p class="section-sub reveal-text">Vol. 1: Sweet Decay Collection</p>
-      <div class="featured-image-wrap reveal-up">
-        <img src="images/drop004_hero.webp" alt="DROP 004 Pretty Little Nightmares" class="featured-image" loading="lazy">
-        <div class="image-overlay"></div>
+      <h2 class="section-heading rv">THE PROBLEM</h2>
+      <div class="btc-text rv">
+        <p>We live in a world that profits from division.</p>
+        <p>Where greed replaces empathy. Where performance replaces authenticity. Where connection is reduced to content, and content is reduced to metrics.</p>
+        <p>We scroll past suffering. We perform compassion. We curate ourselves into strangers.</p>
+        <p class="btc-quiet">Something broke. And most of us can feel it.</p>
       </div>
-      <p class="featured-desc reveal-text">95 cinematic AI prompts across 4 psychological horror dimensions.<br>Creepy Cute · Gothic Romance · Nightmare Worlds · Childhood Distortion</p>
-      <a class="btn-portal reveal-up" data-navigate="drop004">
-        <span>DESCEND INTO DROP 004</span>
-      </a>
     </div>
   </div>
 
-  <!-- MANIFESTO PREVIEW -->
-  <div class="section manifesto-preview">
+  <!-- The Shift -->
+  <div class="section btc-section">
     <div class="section-inner">
-      <div class="manifesto-quote reveal-text">
-        <span class="quote-mark">"</span>
-        Not someday. Not someone else.<br>
-        <em>You. Now.</em>
-        <span class="quote-mark">"</span>
+      <h2 class="section-heading rv">THE SHIFT</h2>
+      <div class="btc-text rv">
+        <p>Small actions matter more than grand gestures.</p>
+        <p>Kindness compounds. Creativity influences culture. Behavior spreads.</p>
+        <p>The world doesn't change through politics or protest alone — it changes through <em>daily human behavior</em>.</p>
+        <p class="btc-emphasis">Change is not an event. It's a practice.</p>
       </div>
-      <p class="manifesto-sub reveal-text">The drops are symbolic expressions of the movement.<br>Every purchase plants a seed. Every share amplifies the signal.</p>
-      <a class="btn-portal btn-warm reveal-up" data-navigate="btc">
-        <span>DISCOVER THE MOVEMENT</span>
-      </a>
     </div>
   </div>
 
-  <!-- FOOTER VOID -->
-
-  <!-- Be The Change Q&A -->
-  <div class="section about-section">
+  <!-- Real World Actions -->
+  <div class="section btc-section">
     <div class="section-inner">
-      <h2 class="section-heading reveal-text">BE THE CHANGE — IN HER WORDS</h2>
+      <h2 class="section-heading rv">REAL WORLD ACTIONS</h2>
+      <div class="actions-grid rv">
+        <div class="action-card"><div class="action-icon">🤝</div><p>Help a stranger without documenting it</p></div>
+        <div class="action-card"><div class="action-icon">🎨</div><p>Support an independent creator</p></div>
+        <div class="action-card"><div class="action-icon">🌿</div><p>Protect something that can't protect itself</p></div>
+        <div class="action-card"><div class="action-icon">💬</div><p>Choose honesty when silence is easier</p></div>
+        <div class="action-card"><div class="action-icon">🔥</div><p>Create something with purpose, not just for profit</p></div>
+        <div class="action-card"><div class="action-icon">🌍</div><p>Build community in a world designed to isolate</p></div>
+      </div>
+    </div>
+  </div>
 
-      <div class="about-text reveal-text btc-qa-block">
-        <h3 class="btc-qa-question">What is "Be The Change You Want To See In The World"?</h3>
+  <div class="section btc-section">
+    <div class="section-inner">
+      <a class="btn-sanctuary rv" data-navigate="btc-blog-1"><span>READ THE TRANSMISSIONS →</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ═══ REALM: VIDEOS ═══ -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section id="realm-btc-videos" class="realm sanctuary-realm" data-realm-id="btc-videos" data-particles="none" data-audio="sanctuary">
+  <div class="realm-header sanctuary-header">
+    <a class="back-link rv" data-navigate="btc">← RETURN TO THE HEART</a>
+    <h1 class="realm-title rv">VIDEOS</h1>
+    <p class="realm-desc rv">Visual transmissions. Click to watch.</p>
+  </div>
+
+  <div class="sanctuary-nav rv">
+    <a data-navigate="btc" class="snav-link">THE HEART</a>
+    <a data-navigate="btc-videos" class="snav-link snav-active">VIDEOS</a>
+    <a data-navigate="btc-blog-1" class="snav-link">TRANSMISSIONS</a>
+    <a data-navigate="btc-blog-2" class="snav-link">THE DARK CANVAS</a>
+    <a data-navigate="community" class="snav-link">COMMUNITY</a>
+    <a data-navigate="about" class="snav-link">ABOUT</a>
+  </div>
+
+  <div class="videos-grid">
+    <div class="video-card rv">
+      <div class="video-thumb" data-video-id="xtpXBp3WFH4">
+        <img src="https://img.youtube.com/vi/xtpXBp3WFH4/maxresdefault.jpg" alt="The World Beneath the Lie" loading="lazy">
+        <div class="play-overlay">▶</div>
+      </div>
+      <h3>The World Beneath the Lie</h3>
+      <p>A dark cinematic journey through a fractured wonderland. Follow the rabbit. Fall through the lie. Choose different.</p>
+    </div>
+  </div>
+
+  <!-- Video Modal -->
+  <div id="video-modal" class="video-modal">
+    <div class="video-modal-content">
+      <button class="video-modal-close">&times;</button>
+      <div class="video-modal-frame" id="modal-video-frame"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ═══ REALM: BLOG 1 — BTC TRANSMISSIONS ═══ -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section id="realm-btc-blog-1" class="realm sanctuary-realm" data-realm-id="btc-blog-1" data-particles="none" data-audio="sanctuary">
+  <div class="realm-header sanctuary-header">
+    <a class="back-link rv" data-navigate="btc">← RETURN TO THE HEART</a>
+    <h1 class="realm-title rv">TRANSMISSIONS</h1>
+    <p class="realm-desc rv">Words from within. Not content — conviction.</p>
+  </div>
+
+  <div class="sanctuary-nav rv">
+    <a data-navigate="btc" class="snav-link">THE HEART</a>
+    <a data-navigate="btc-videos" class="snav-link">VIDEOS</a>
+    <a data-navigate="btc-blog-1" class="snav-link snav-active">TRANSMISSIONS</a>
+    <a data-navigate="btc-blog-2" class="snav-link">THE DARK CANVAS</a>
+    <a data-navigate="community" class="snav-link">COMMUNITY</a>
+    <a data-navigate="about" class="snav-link">ABOUT</a>
+  </div>
+
+  <!-- Transmission 001 -->
+  <div class="blog-post rv">
+    <div class="blog-post-inner">
+      <div class="blog-img"><img src="images/btc_post_001.webp" alt="The Mirror in the Crowd" loading="lazy"></div>
+      <div class="blog-content">
+        <span class="blog-id">TRANSMISSION_001</span>
+        <h3>The Mirror in the Crowd</h3>
+        <p>We have comforted ourselves for too long with the lie that the world is "broken." What we see around us isn't a collapse; it is a masterpiece of our own design.</p>
+        <p class="btc-emphasis">The world is not happening to us. It is happening <em>through</em> us.</p>
+        <p>Every time we look away from a stranger's quiet struggle, every time we choose the safety of silence over the discomfort of kindness, we are laying another brick. We condemn the cruelty of the "system" while practicing a thousand tiny indifferences in our own hallways.</p>
+        <p>This is not a call to witness a tragedy; it is a confrontation of our own hands. If this world is built by our habits, it can be dismantled by our intentions.</p>
+        <p class="btc-emphasis">Stop looking for the villains. Look at the reflection. Then, choose to interrupt the pattern.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Transmission 002 -->
+  <div class="blog-post rv">
+    <div class="blog-post-inner blog-reverse">
+      <div class="blog-img"><img src="images/btc_post_002.webp" alt="A Voice Without Action" loading="lazy"></div>
+      <div class="blog-content">
+        <span class="blog-id">TRANSMISSION_002</span>
+        <h3>A Voice Without Action</h3>
+        <p>We live in an era of endless commentary. Everyone has a stance, a grievance, or a scripted piece of outrage ready to fire. We claim a moral high ground we haven't actually earned.</p>
+        <p class="btc-emphasis">Words without the backbone of action are just noise.</p>
+        <p>Real change doesn't announce itself with a megaphone. It is quiet. It happens in the shadows when no one is watching and there is nothing to gain. It lives in the decision to remain calm when rage is easier.</p>
+        <p class="btc-emphasis">So, look at your reflection. Are you the solution, or just more noise?</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Transmission 003 -->
+  <div class="blog-post rv">
+    <div class="blog-post-inner">
+      <div class="blog-img"><img src="images/btc_post_003.webp" alt="Watching The Lights Go Out" loading="lazy"></div>
+      <div class="blog-content">
+        <span class="blog-id">TRANSMISSION_003</span>
+        <h3>Watching The Lights Go Out</h3>
+        <p>I've stood still long enough to watch the world speed past itself. Long enough to watch people stop looking at each other. Long enough to watch the lights go out behind people's eyes while they're still standing there smiling.</p>
+        <p>Everybody's moving, but nobody's really arriving anywhere. They rush. They scroll. They consume. They react. But very few people actually <em>feel</em> anymore.</p>
+        <p class="btc-quiet">And what's missing isn't manners. It isn't "common courtesy." It's humanity. Real humanity.</p>
+        <p>Because every once in a while… in the middle of all this cold machinery… you see a glitch in the system.</p>
+        <p class="btc-emphasis">You see someone stop.</p>
+        <p>Usually somebody who doesn't even have much themselves. They don't stop because it's trendy. They stop because their heart still works.</p>
+        <p class="btc-emphasis">That's strength. Strength is keeping your soul intact in a world designed to poison it.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Transmission 004 -->
+  <div class="blog-post rv">
+    <div class="blog-post-inner blog-reverse">
+      <div class="blog-img"><img src="images/btc_post_004.webp" alt="The Blueprint" loading="lazy"></div>
+      <div class="blog-content">
+        <span class="blog-id">TRANSMISSION_004</span>
+        <h3>The Blueprint</h3>
+        <p>People keep asking what "Be the Change" actually means in practice. Here's the uncomfortable truth: you already know.</p>
+        <p class="btc-emphasis">Being the change isn't a philosophy. It's a mirror.</p>
+        <p>Human behavior creates culture. Repeated behavior creates society. Every small action people normalize becomes part of the structure we all live inside of.</p>
+        <p>Being the change means sometimes being the first person to help. The first person to speak honestly. The first person to break the hostility cycle.</p>
+        <p class="btc-emphasis">A healthier civilization starts with healthier human behavior. Not perfection. Just awareness and intention.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ═══ REALM: BLOG 2 — THE DARK CANVAS ═══ -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section id="realm-btc-blog-2" class="realm sanctuary-realm" data-realm-id="btc-blog-2" data-particles="none" data-audio="sanctuary">
+  <div class="realm-header sanctuary-header">
+    <a class="back-link rv" data-navigate="btc">← RETURN TO THE HEART</a>
+    <h1 class="realm-title rv">THE DARK CANVAS</h1>
+    <p class="realm-desc rv">Horror Art as Emotional Architecture</p>
+  </div>
+
+  <div class="sanctuary-nav rv">
+    <a data-navigate="btc" class="snav-link">THE HEART</a>
+    <a data-navigate="btc-videos" class="snav-link">VIDEOS</a>
+    <a data-navigate="btc-blog-1" class="snav-link">TRANSMISSIONS</a>
+    <a data-navigate="btc-blog-2" class="snav-link snav-active">THE DARK CANVAS</a>
+    <a data-navigate="community" class="snav-link">COMMUNITY</a>
+    <a data-navigate="about" class="snav-link">ABOUT</a>
+  </div>
+
+  <!-- Signal 004 -->
+  <div class="blog-post rv">
+    <div class="blog-post-inner">
+      <div class="blog-img"><img src="images/signal_004_horror_art.webp" alt="The Dark Canvas" loading="lazy"></div>
+      <div class="blog-content">
+        <span class="blog-id">SIGNAL_004</span>
+        <h3>Horror Art as Emotional Architecture</h3>
+        <p>Horror art isn't about scaring people. That's what Halloween costumes and jump-scare movies are for. Horror art — real horror art — is about making you feel something you've been running from.</p>
+        <p>Every image in the Lascivious Vibrations universe was built through emotional architecture. Each piece went through seven layers of intentional design: subject identity, psychological weight, cinematic composition, texture logic, atmospheric lighting, worldbuilding continuity, and negative suppression.</p>
+        <p class="btc-emphasis">The goal was never "make something creepy." The goal was always: make something that won't leave you alone.</p>
+        <p>There's a difference between horror that repulses and horror that seduces. The first pushes you away. The second pulls you closer while whispering that you should probably leave. That's the space we operate in. Beautiful danger. Emotionally invasive. Psychologically sophisticated.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Signal 005 -->
+  <div class="blog-post rv">
+    <div class="blog-post-inner blog-reverse">
+      <div class="blog-img"><img src="images/signal_005_live_signal.webp" alt="Live Signal" loading="lazy"></div>
+      <div class="blog-content">
+        <span class="blog-id">SIGNAL_005</span>
+        <h3>Frequency of the Awake</h3>
+        <p>Most people are tuned to dead frequencies. Feeds full of outrage, performance, and emotional manipulation designed to keep them scrolling, reacting, and never actually thinking.</p>
+        <p>A live signal is different. It's a transmission that doesn't need you to agree with it. It needs you to <em>feel</em> it. To sit with the discomfort. To let it rearrange something inside you that was already misaligned.</p>
+        <p class="btc-emphasis">If you're reading this, you've already tuned in. The question is whether you'll stay on the frequency or go back to the noise.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Signal 006 -->
+  <div class="blog-post rv">
+    <div class="blog-post-inner">
+      <div class="blog-img"><img src="images/signal_006_transitions.webp" alt="Transitions" loading="lazy"></div>
+      <div class="blog-content">
+        <span class="blog-id">SIGNAL_006</span>
+        <h3>Between Who You Were and Who You're Becoming</h3>
+        <p>Nobody talks about the middle. Everybody celebrates the before and after. But the space between? The ugly, confusing, terrifying middle where you're no longer who you were but haven't yet become who you're going to be?</p>
+        <p>That's where the real work happens. And it's where most people quit.</p>
+        <p class="btc-emphasis">The doorway between who you were and who you're becoming only opens when you stop trying to go back through the one you came from.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Signal 007 -->
+  <div class="blog-post rv">
+    <div class="blog-post-inner blog-reverse">
+      <div class="blog-img"><img src="images/signal_007_live_transmission.webp" alt="Words That Cost Something" loading="lazy"></div>
+      <div class="blog-content">
+        <span class="blog-id">SIGNAL_007</span>
+        <h3>Words That Cost Something</h3>
+        <p>The difference between content and a transmission is cost. Content costs time. A transmission costs something personal. It requires honesty when dishonesty would be easier. Vulnerability when performance would be safer.</p>
+        <p>This is a woman building an entire creative universe from scratch while simultaneously trying to model a different way of existing in the world. The drops fund the movement. The movement gives the art meaning.</p>
+        <p class="btc-emphasis">This is a live transmission. It will continue broadcasting whether you're tuned in or not. But if you are… welcome to the frequency.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ═══ REALM: COMMUNITY ═══ -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section id="realm-community" class="realm sanctuary-realm" data-realm-id="community" data-particles="none" data-audio="sanctuary">
+  <div class="realm-header sanctuary-header">
+    <a class="back-link rv" data-navigate="btc">← RETURN TO THE HEART</a>
+    <h1 class="realm-title rv">COMMUNITY</h1>
+    <p class="realm-desc rv">Connection in a world designed to isolate.</p>
+  </div>
+
+  <div class="sanctuary-nav rv">
+    <a data-navigate="btc" class="snav-link">THE HEART</a>
+    <a data-navigate="btc-videos" class="snav-link">VIDEOS</a>
+    <a data-navigate="btc-blog-1" class="snav-link">TRANSMISSIONS</a>
+    <a data-navigate="btc-blog-2" class="snav-link">THE DARK CANVAS</a>
+    <a data-navigate="community" class="snav-link snav-active">COMMUNITY</a>
+    <a data-navigate="about" class="snav-link">ABOUT</a>
+  </div>
+
+  <div class="community-content">
+    <div class="community-block rv">
+      <h2>THE WALL</h2>
+      <p>A space is being built here — for stories, for proof, for evidence that change is happening.</p>
+      <div class="wall-grid">
+        <div class="wall-card">Your story here.</div>
+        <div class="wall-card">An act of kindness.</div>
+        <div class="wall-card">Art with purpose.</div>
+        <div class="wall-card">A moment of courage.</div>
+      </div>
+    </div>
+
+    <div class="community-block rv">
+      <h2>HOW TO CONNECT</h2>
+      <div class="connect-grid">
+        <div class="connect-card">
+          <h3>🎨 Create</h3>
+          <p>Use the drops. Build worlds. Share your art. Every creation adds to the signal.</p>
+        </div>
+        <div class="connect-card">
+          <h3>📡 Share</h3>
+          <p>Amplify the transmissions. Share the work. Share the movement. Share the frequency.</p>
+        </div>
+        <div class="connect-card">
+          <h3>🌍 Act</h3>
+          <p>Be the change in your own hallway. Your daily behavior is your most powerful broadcast.</p>
+        </div>
+        <div class="connect-card">
+          <h3>💬 Speak</h3>
+          <p>Use your voice with intention. Words cost something when they carry truth.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="community-block rv">
+      <h2>JOIN THE MOVEMENT</h2>
+      <p>Every drop you support. Every piece you share. Every conversation you start.<br>It all adds up. It all matters.</p>
+      <div class="community-links">
+        <a href="https://lasciviouscreator.gumroad.com/" target="_blank" class="btn-sanctuary"><span>VISIT GUMROAD</span></a>
+        <a data-navigate="drops" class="btn-sanctuary"><span>EXPLORE THE DROPS</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ═══ REALM: ABOUT + Q&A ═══ -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section id="realm-about" class="realm sanctuary-realm" data-realm-id="about" data-particles="none" data-audio="sanctuary">
+  <div class="realm-header sanctuary-header">
+    <a class="back-link rv" data-navigate="btc">← RETURN TO THE HEART</a>
+    <span class="realm-label rv">ORIGIN FILE</span>
+    <h1 class="realm-title rv">ABOUT</h1>
+  </div>
+
+  <div class="sanctuary-nav rv">
+    <a data-navigate="btc" class="snav-link">THE HEART</a>
+    <a data-navigate="btc-videos" class="snav-link">VIDEOS</a>
+    <a data-navigate="btc-blog-1" class="snav-link">TRANSMISSIONS</a>
+    <a data-navigate="btc-blog-2" class="snav-link">THE DARK CANVAS</a>
+    <a data-navigate="community" class="snav-link">COMMUNITY</a>
+    <a data-navigate="about" class="snav-link snav-active">ABOUT</a>
+  </div>
+
+  <div class="about-content">
+    <div class="about-block rv">
+      <h2>LASCIVIOUS VIBRATIONS</h2>
+      <p>Lascivious Vibrations is a digital creative ecosystem built at the intersection of art, technology, and human consciousness.</p>
+      <p>It is three things simultaneously:</p>
+      <p><strong>1. A product system.</strong> Cinematic AI art collections, prompt engineering packs, and creator toolkits — designed for people who understand that AI is a creative instrument, not a replacement for vision.</p>
+      <p><strong>2. A movement.</strong> "Be The Change You Want To See In The World" is not a slogan. It's the operating principle. Every drop carries a message. Every message carries intent.</p>
+      <p><strong>3. A signal.</strong> The transmissions are a voice. Not a content machine. A real perspective on humanity, creativity, the future, and the work behind the art.</p>
+    </div>
+
+    <div class="about-block rv">
+      <h2>THE PHILOSOPHY</h2>
+      <p><em>Create Intentionally.</em> Nothing here is filler. Every prompt, every image, every word was placed with purpose.</p>
+      <p><em>Build Freely.</em> These tools exist so creators can build without limits. No gatekeeping. No artificial scarcity of knowledge.</p>
+      <p><em>Inspire Always.</em> If the work doesn't move someone, it hasn't done its job.</p>
+    </div>
+
+    <div class="about-block rv">
+      <h2>CREATOR STATEMENT</h2>
+      <p>I built this because the world has enough noise and not enough signal.</p>
+      <p>I believe AI art can be intentional, emotional, and meaningful. I believe products can fund movements. I believe movements can change behavior. I believe behavior changes everything.</p>
+      <p>This is not a brand. This is a system. Welcome to it.</p>
+      <p class="about-sig">— Lascivious Vibrations LLC</p>
+    </div>
+
+    <!-- ═══ THE Q&A — FORBIDDEN TO LEAVE OUT ═══ -->
+    <div class="about-qa rv">
+      <h2>BE THE CHANGE — IN HER WORDS</h2>
+
+      <div class="qa-block">
+        <h3>What is "Be The Change You Want To See In The World"?</h3>
         <p>A lot of people treat it like a quote. Like something you hang on a wall to sound deep.</p>
         <p>For me… it's not that.</p>
         <p>It's accountability. It's understanding that the world we live in didn't just magically become this way. We built it. Through our actions, our silence, our greed, our avoidance, our lack of empathy, our refusal to work together.</p>
@@ -227,8 +830,8 @@
         <p>And the truth is… society is a reflection of collective behavior. That reflection starts with us.</p>
       </div>
 
-      <div class="about-text reveal-text btc-qa-block">
-        <h3 class="btc-qa-question">What are the principles to being the change? Is there a certain way you have to live?</h3>
+      <div class="qa-block">
+        <h3>What are the principles to being the change? Is there a certain way you have to live?</h3>
         <p>I don't think being the change means being perfect.</p>
         <p>People hear things like this and immediately think somebody's trying to tell them how to live or act morally superior. That's not what this is.</p>
         <p>Being the change is about alignment. It's about your actions matching the things you claim to believe in.</p>
@@ -238,29 +841,27 @@
         <p>The way you treat people when there's nothing to gain from it says more about you than anything else ever will.</p>
       </div>
 
-      <div class="about-text reveal-text btc-qa-block">
-        <h3 class="btc-qa-question">When you say "a voice without action is only noise," what do you mean by that?</h3>
+      <div class="qa-block">
+        <h3>When you say "a voice without action is only noise," what do you mean by that?</h3>
         <p>I mean exactly what it sounds like.</p>
         <p>People talk constantly. Everybody has opinions. Everybody has outrage. Everybody posts quotes and hashtags and speeches and performances.</p>
         <p>But then you look at how they actually move through the world… and none of it matches.</p>
         <p>You can say you care about people all day long, but if you walk past suffering every chance you get… what are your words actually worth?</p>
-        <p>You can preach unity while feeding hostility. You can preach peace while treating everybody around you like they're disposable.</p>
         <p class="btc-emphasis">At some point words stop meaning anything if behavior never follows them.</p>
         <p>That's why I say a voice without action is only noise. Because sound is easy. Action costs something.</p>
       </div>
 
-      <div class="about-text reveal-text btc-qa-block">
-        <h3 class="btc-qa-question">What is the logic of "Be The Change"?</h3>
+      <div class="qa-block">
+        <h3>What is the logic of "Be The Change"?</h3>
         <p>The logic is actually really simple.</p>
         <p>Human behavior creates culture. Repeated behavior creates society. That means every small action people normalize becomes part of the structure we all live inside of.</p>
         <p>If selfishness becomes normal… society reflects selfishness. If cruelty becomes entertainment… society becomes hostile. If empathy becomes weakness… people stop helping each other.</p>
-        <p>People act like civilization is some separate thing above us when really it's just millions of repeated human behaviors stacked together.</p>
         <p class="btc-emphasis">So if enough people begin shifting behavior… the environment shifts too.</p>
         <p>That's the logic. Not fantasy. Not ideology. Just cause and effect.</p>
       </div>
 
-      <div class="about-text reveal-text btc-qa-block">
-        <h3 class="btc-qa-question">How can other people "be the change"?</h3>
+      <div class="qa-block">
+        <h3>How can other people "be the change"?</h3>
         <p>By understanding that change is usually uncomfortable at first.</p>
         <p>Most people are followers by conditioning. They wait to see what everybody else is doing before they move.</p>
         <p>Being the change means sometimes being the first person to: help, speak honestly, break hostility, show compassion, stop feeding division, stop treating people like enemies.</p>
@@ -269,8 +870,8 @@
         <p class="btc-emphasis">A healthier civilization starts with healthier human behavior. Not perfection. Just awareness and intention.</p>
       </div>
 
-      <div class="about-text reveal-text btc-qa-block">
-        <h3 class="btc-qa-question">If you were given the opportunity to lead your own civilization, what would you do differently?</h3>
+      <div class="qa-block">
+        <h3>If you were given the opportunity to lead your own civilization, what would you do differently?</h3>
         <p>First… I wouldn't want to rule people. That mindset alone is part of the problem. I would want to lead by example, not domination.</p>
         <p>Guiding a hostile civilization into a calmer one would require something humanity has been missing for a very long time… self-awareness.</p>
         <p>Our society conditions hostility. Every generation gets fed more division, more fear, more greed, more competition, more "me over everybody." Why? Because divided people are easier to control.</p>
@@ -285,6 +886,7 @@
     </div>
   </div>
 
+  <!-- Footer -->
   <div class="footer-void">
     <div class="footer-inner">
       <div class="footer-crown">♛</div>
@@ -292,1082 +894,8 @@
       <p class="footer-tagline">Create Intentionally · Build Freely · Inspire Always</p>
       <div class="footer-links">
         <a href="https://lasciviouscreator.gumroad.com/" target="_blank" rel="noopener">GUMROAD</a>
-        <a href="#signals" data-navigate="signals">SIGNALS</a>
-        <a href="#about" data-navigate="about">ABOUT</a>
-      </div>
-      <p class="footer-copy">© 2025 Lascivious Vibrations LLC. All rights reserved.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- ═══ REALM: DROPS ═══ -->
-<!-- ═══════════════════════════════════════════════════════ -->
-<section id="realm-drops" class="realm" data-realm-color="drops">
-  <div class="realm-header">
-    <span class="realm-label reveal-text">THE DROPS REALM</span>
-    <h1 class="realm-title reveal-text">DIGITAL DIMENSIONS</h1>
-    <p class="realm-desc reveal-text">Each drop is a world. Each world is a mirror.<br>Choose which reality you want to enter.</p>
-  </div>
-
-  <div class="drops-grid">
-
-    <!-- DROP 001 -->
-    <div class="drop-card reveal-up" data-navigate="drop001">
-      <div class="drop-card-image">
-        <img src="images/drop001_hero.webp" alt="DROP 001" loading="lazy">
-        <div class="drop-card-overlay"></div>
-      </div>
-      <div class="drop-card-content">
-        <span class="drop-number">DROP 001</span>
-        <h3 class="drop-name">PRETTY WITH TEETH</h3>
-        <p class="drop-tagline">Beauty hiding truth. Awareness beneath appearance.</p>
-        <div class="drop-tiers">
-          <span class="tier-badge">The Glimpse $29</span>
-          <span class="tier-badge">The Stare $39</span>
-          <span class="tier-badge tier-elite">The Obsession $49</span>
-        </div>
-        <span class="drop-cta">ENTER DIMENSION →</span>
-      </div>
-    </div>
-
-    <!-- DROP 002 -->
-    <div class="drop-card reveal-up" data-navigate="drop002">
-      <div class="drop-card-image">
-        <img src="images/drop002_hero.webp" alt="DROP 002" loading="lazy">
-        <div class="drop-card-overlay"></div>
-      </div>
-      <div class="drop-card-content">
-        <span class="drop-number">DROP 002</span>
-        <h3 class="drop-name">THE DROP RITUAL TOOLKIT</h3>
-        <p class="drop-tagline">Structured creation. Discipline. Intentional action.</p>
-        <div class="drop-tiers">
-          <span class="tier-badge">The Spark $39</span>
-          <span class="tier-badge">The Flame $49</span>
-          <span class="tier-badge tier-elite">The Cult Following $59</span>
-        </div>
-        <span class="drop-cta">ENTER DIMENSION →</span>
-      </div>
-    </div>
-
-    <!-- DROP 003 -->
-    <div class="drop-card reveal-up" data-navigate="drop003">
-      <div class="drop-card-image">
-        <img src="images/drop003_hero.webp" alt="DROP 003" loading="lazy">
-        <div class="drop-card-overlay"></div>
-      </div>
-      <div class="drop-card-content">
-        <span class="drop-number">DROP 003</span>
-        <h3 class="drop-name">ALCHEMY OF WORLDS</h3>
-        <p class="drop-tagline">Planetary collapse, transformation, and rebirth.</p>
-        <div class="drop-tiers">
-          <span class="tier-badge">The Crucible $49</span>
-          <span class="tier-badge">The Transmutation $59</span>
-          <span class="tier-badge tier-elite">The Philosopher's Engine $69</span>
-        </div>
-        <span class="drop-cta">ENTER DIMENSION →</span>
-      </div>
-    </div>
-
-    <!-- DROP 004 -->
-    <div class="drop-card drop-card-featured reveal-up" data-navigate="drop004">
-      <div class="drop-card-image">
-        <img src="images/drop004_hero.webp" alt="DROP 004" loading="lazy">
-        <div class="drop-card-overlay"></div>
-        <span class="drop-badge-new">NEW</span>
-      </div>
-      <div class="drop-card-content">
-        <span class="drop-number">DROP 004</span>
-        <h3 class="drop-name">PRETTY LITTLE NIGHTMARES</h3>
-        <p class="drop-tagline">Vol. 1: Sweet Decay Collection — Psychological horror meets creepy beauty.</p>
-        <div class="drop-tiers">
-          <span class="tier-badge">Innocence Rot $59</span>
-          <span class="tier-badge">Fractured Whispers $69</span>
-          <span class="tier-badge tier-elite">Grotesque Bloom $79</span>
-        </div>
-        <span class="drop-cta">DESCEND →</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- ═══ REALM: DROP 004 (Individual Dimension) ═══ -->
-<!-- ═══════════════════════════════════════════════════════ -->
-<section id="realm-drop004" class="realm" data-realm-color="drops">
-  <div class="realm-header">
-    <a class="back-link reveal-text" data-navigate="drops">← RETURN TO DROPS REALM</a>
-    <span class="realm-label reveal-text">DROP 004</span>
-    <h1 class="realm-title reveal-text">PRETTY LITTLE NIGHTMARES</h1>
-    <p class="realm-desc reveal-text">Vol. 1: Sweet Decay Collection<br>4 Sections · 3 Tiers · 400 Cinematic AI Prompts</p>
-  </div>
-
-  <!-- Drop Visual Gallery -->
-  <div class="section drop-gallery">
-    <div class="gallery-grid">
-      <div class="gallery-item reveal-up">
-        <img src="images/drop004_s1_creepy_cute.webp" alt="Creepy Cute" loading="lazy">
-        <div class="gallery-label">SECTION 01<br><strong>CREEPY CUTE</strong></div>
-      </div>
-      <div class="gallery-item reveal-up">
-        <img src="images/drop004_s2_gothic_romance.webp" alt="Gothic Romance Decay" loading="lazy">
-        <div class="gallery-label">SECTION 02<br><strong>GOTHIC ROMANCE DECAY</strong></div>
-      </div>
-      <div class="gallery-item reveal-up">
-        <img src="images/drop004_s3_nightmare_worlds.webp" alt="Nightmare Worlds" loading="lazy">
-        <div class="gallery-label">SECTION 03<br><strong>NIGHTMARE WORLDS</strong></div>
-      </div>
-      <div class="gallery-item reveal-up">
-        <img src="images/drop004_s4_childhood_distortion.webp" alt="Childhood Distortion" loading="lazy">
-        <div class="gallery-label">SECTION 04<br><strong>CHILDHOOD DISTORTION</strong></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Drop Lore -->
-  <div class="section drop-lore">
-    <div class="section-inner">
-      <h2 class="section-heading reveal-text">THE LORE</h2>
-      <p class="lore-text reveal-text">Something innocent was broken here. The dolls still smile, but their eyes have seen too much. Roses bloom from wounds that never healed. Lullabies play in rooms where childhood stopped existing.</p>
-      <p class="lore-text reveal-text">This is not horror for shock. This is horror as <em>recognition</em> — the moment you realize the pretty thing was never safe.</p>
-    </div>
-  </div>
-
-  <!-- Download Chamber -->
-  <div class="section download-chamber">
-    <div class="section-inner">
-      <h2 class="section-heading reveal-text">THE DOWNLOAD CHAMBER</h2>
-      <div class="tiers-grid">
-        <div class="tier-card reveal-up">
-          <div class="tier-glow"></div>
-          <span class="tier-label">TIER 1</span>
-          <h3 class="tier-name">INNOCENCE ROT</h3>
-          <div class="tier-price">$59</div>
-          <ul class="tier-features">
-            <li>25 Core Cinematic Prompts</li>
-            <li>Expanded Prompt System</li>
-            <li>Negative Prompt Library</li>
-            <li>Section Description & Lore</li>
-            <li>Legal Documentation</li>
-          </ul>
-          <a href="https://lasciviouscreator.gumroad.com/l/drop004-s01-creepy-cute" target="_blank" class="btn-portal btn-tier">
-            <span>UNLOCK ACCESS</span>
-          </a>
-        </div>
-
-        <div class="tier-card tier-card-mid reveal-up">
-          <div class="tier-glow"></div>
-          <span class="tier-label">TIER 2</span>
-          <h3 class="tier-name">FRACTURED WHISPERS</h3>
-          <div class="tier-price">$69</div>
-          <span class="tier-includes">Includes everything in Tier 1 +</span>
-          <ul class="tier-features">
-            <li>+20 Bonus Expansion Prompts</li>
-            <li>Advanced Prompt Engineering</li>
-            <li>Cinematic Sequence Builder</li>
-            <li>Extended Negative Library</li>
-          </ul>
-          <a href="https://lasciviouscreator.gumroad.com/l/drop004-s02-gothic-romance" target="_blank" class="btn-portal btn-tier">
-            <span>UNLOCK ACCESS</span>
-          </a>
-        </div>
-
-        <div class="tier-card tier-card-elite reveal-up">
-          <div class="tier-glow"></div>
-          <div class="tier-badge-elite">ELITE</div>
-          <span class="tier-label">TIER 3</span>
-          <h3 class="tier-name">GROTESQUE BLOOM</h3>
-          <div class="tier-price">$79</div>
-          <span class="tier-includes">Includes everything in Tier 1 & 2 +</span>
-          <ul class="tier-features">
-            <li>+50 Elite Cinematic Prompts</li>
-            <li>Digital Artbook PDF</li>
-            <li>World-Building Guide</li>
-            <li>24-Month Content Calendar</li>
-            <li>Commercial Portfolio License</li>
-          </ul>
-          <a href="https://lasciviouscreator.gumroad.com/l/drop004-s03-nightmare-worlds" target="_blank" class="btn-portal btn-tier btn-tier-elite">
-            <span>INITIATE</span>
-          </a>
-        </div>
-      </div>
-
-      <!-- Bundle -->
-      <div class="bundle-card reveal-up">
-        <div class="bundle-glow"></div>
-        <div class="bundle-content">
-          <span class="bundle-label">COMPLETE COLLECTION</span>
-          <h3 class="bundle-name">ALL 4 SECTIONS · ALL 3 TIERS</h3>
-          <div class="bundle-pricing">
-            <span class="bundle-original">$828</span>
-            <span class="bundle-arrow">→</span>
-            <span class="bundle-price">$297</span>
-          </div>
-          <p class="bundle-desc">400 prompts. Full ecosystem. Every section. Every tier. Every tool.</p>
-          <a href="https://lasciviouscreator.gumroad.com/l/drop004-complete" target="_blank" class="btn-portal btn-bundle">
-            <span>ACCESS THE COMPLETE SYSTEM</span>
-          </a>
-        </div>
-        <div class="bundle-image">
-          <img src="images/drop004_bundle.webp" alt="Complete Bundle" loading="lazy">
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Related Signal -->
-  <div class="section related-signal">
-    <div class="section-inner">
-      <span class="label-tag reveal-text">RELATED SIGNAL</span>
-      <p class="signal-preview reveal-text">"The things we called innocent were never innocent. They were just small enough to ignore."</p>
-      <a class="btn-portal btn-cool reveal-up" data-navigate="signals">
-        <span>OPEN SIGNAL FILE →</span>
-      </a>
-    </div>
-  </div>
-
-  <!-- BTC Connection -->
-  <div class="section btc-connection">
-    <div class="section-inner">
-      <span class="label-tag reveal-text">MOVEMENT CONNECTION</span>
-      <h2 class="section-heading reveal-text">Every nightmare holds a truth.</h2>
-      <p class="connection-text reveal-text">DROP 004 doesn't glorify horror — it exposes the violence hiding behind beauty. The systems that hurt us most often wear the prettiest masks.</p>
-      <a class="btn-portal btn-warm reveal-up" data-navigate="btc">
-        <span>EXPLORE THE MOVEMENT</span>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- ═══ REALM: DROP 001 ═══ -->
-<!-- ═══════════════════════════════════════════════════════ -->
-<section id="realm-drop001" class="realm" data-realm-color="drops">
-  <div class="realm-header">
-    <a class="back-link reveal-text" data-navigate="drops">← RETURN TO DROPS REALM</a>
-    <span class="realm-label reveal-text">DROP 001</span>
-    <h1 class="realm-title reveal-text">PRETTY WITH TEETH</h1>
-    <p class="realm-desc reveal-text">Beauty is the mask. The teeth are the truth.<br>Posters · Wall Sets · Creator Bundles</p>
-  </div>
-  <div class="section drop-gallery">
-    <div class="gallery-grid gallery-grid-3">
-      <div class="gallery-item reveal-up">
-        <img src="images/drop001_poster_cute_is_the_bait.webp" alt="Cute Is The Bait" loading="lazy">
-        <div class="gallery-label"><strong>CUTE IS THE BAIT</strong></div>
-      </div>
-      <div class="gallery-item reveal-up">
-        <img src="images/drop001_wall_smile_with_teeth.webp" alt="Smile With Teeth" loading="lazy">
-        <div class="gallery-label"><strong>THE SMILE SERIES</strong></div>
-      </div>
-      <div class="gallery-item reveal-up">
-        <img src="images/drop001_tier3_obsession.webp" alt="The Obsession" loading="lazy">
-        <div class="gallery-label"><strong>THE OBSESSION</strong></div>
-      </div>
-    </div>
-  </div>
-  <div class="section download-chamber">
-    <div class="section-inner">
-      <h2 class="section-heading reveal-text">DOWNLOAD CHAMBER</h2>
-      <div class="tiers-grid">
-        <div class="tier-card reveal-up">
-          <span class="tier-label">TIER 1</span>
-          <h3 class="tier-name">THE GLIMPSE</h3>
-          <div class="tier-price">$29</div>
-          <ul class="tier-features"><li>5 Single Posters with Prompts</li><li>Style Tags & Negative Prompts</li><li>Commercial Use License</li></ul>
-          <a href="https://lasciviouscreator.gumroad.com/l/drop001-standard" target="_blank" class="btn-portal btn-tier"><span>UNLOCK</span></a>
-        </div>
-        <div class="tier-card tier-card-mid reveal-up">
-          <span class="tier-label">TIER 2</span>
-          <h3 class="tier-name">THE STARE</h3>
-          <div class="tier-price">$39</div>
-          <ul class="tier-features"><li>Everything in Tier 1 +</li><li>"The Smile Series" 6-Image Wall Set</li><li>Extended Prompt Guide</li></ul>
-          <a href="https://lasciviouscreator.gumroad.com/l/drop001-premium" target="_blank" class="btn-portal btn-tier"><span>UNLOCK</span></a>
-        </div>
-        <div class="tier-card tier-card-elite reveal-up">
-          <div class="tier-badge-elite">ELITE</div>
-          <span class="tier-label">TIER 3</span>
-          <h3 class="tier-name">THE OBSESSION</h3>
-          <div class="tier-price">$49</div>
-          <ul class="tier-features"><li>Everything in Tier 1 & 2 +</li><li>10 Elite Variation Posters</li><li>"The Progression" 12-Image Story</li><li>Mockup Pack · Artbook PDF</li><li>Extended Commercial License</li></ul>
-          <a href="https://lasciviouscreator.gumroad.com/l/drop001-elite" target="_blank" class="btn-portal btn-tier btn-tier-elite"><span>INITIATE</span></a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="section btc-connection">
-    <div class="section-inner">
-      <span class="label-tag reveal-text">MOVEMENT CONNECTION</span>
-      <p class="connection-text reveal-text">"Be real in a world addicted to performance."</p>
-      <a class="btn-portal btn-warm reveal-up" data-navigate="btc"><span>EXPLORE THE MOVEMENT</span></a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- ═══ REALM: DROP 002 ═══ -->
-<!-- ═══════════════════════════════════════════════════════ -->
-<section id="realm-drop002" class="realm" data-realm-color="drops">
-  <div class="realm-header">
-    <a class="back-link reveal-text" data-navigate="drops">← RETURN TO DROPS REALM</a>
-    <span class="realm-label reveal-text">DROP 002</span>
-    <h1 class="realm-title reveal-text">THE DROP RITUAL TOOLKIT</h1>
-    <p class="realm-desc reveal-text">Every drop is a ritual. This is how you stop treating launches like accidents.<br>Templates · Guides · Systems</p>
-  </div>
-  <div class="section drop-gallery">
-    <div class="gallery-grid gallery-grid-2">
-      <div class="gallery-item reveal-up">
-        <img src="images/drop002_templates.webp" alt="Templates" loading="lazy">
-        <div class="gallery-label"><strong>RITUAL TEMPLATES</strong></div>
-      </div>
-      <div class="gallery-item reveal-up">
-        <img src="images/drop002_tier3_cult.webp" alt="The Cult Following" loading="lazy">
-        <div class="gallery-label"><strong>THE CULT FOLLOWING</strong></div>
-      </div>
-    </div>
-  </div>
-  <div class="section download-chamber">
-    <div class="section-inner">
-      <h2 class="section-heading reveal-text">DOWNLOAD CHAMBER</h2>
-      <div class="tiers-grid">
-        <div class="tier-card reveal-up">
-          <span class="tier-label">TIER 1</span><h3 class="tier-name">THE SPARK</h3><div class="tier-price">$39</div>
-          <ul class="tier-features"><li>Canva Templates</li><li>Caption & Copy Templates</li><li>CTA Phrase Library</li><li>Branding Basics Guide</li></ul>
-          <a href="https://lasciviouscreator.gumroad.com/l/drop002-standard" target="_blank" class="btn-portal btn-tier"><span>UNLOCK</span></a>
-        </div>
-        <div class="tier-card tier-card-mid reveal-up">
-          <span class="tier-label">TIER 2</span><h3 class="tier-name">THE FLAME</h3><div class="tier-price">$49</div>
-          <ul class="tier-features"><li>Everything in Tier 1 +</li><li>Launch Strategy Guides</li><li>Content Calendar System</li><li>Advanced Pricing Guide</li></ul>
-          <a href="https://lasciviouscreator.gumroad.com/l/drop002-premium" target="_blank" class="btn-portal btn-tier"><span>UNLOCK</span></a>
-        </div>
-        <div class="tier-card tier-card-elite reveal-up">
-          <div class="tier-badge-elite">ELITE</div>
-          <span class="tier-label">TIER 3</span><h3 class="tier-name">THE CULT FOLLOWING</h3><div class="tier-price">$59</div>
-          <ul class="tier-features"><li>Everything in Tier 1 & 2 +</li><li>12-Month Drop Calendar</li><li>Video Template Pack</li><li>Email Sequence Templates</li><li>Community Building Playbook</li><li>Analytics Dashboard</li><li>Lifetime Updates</li></ul>
-          <a href="https://lasciviouscreator.gumroad.com/l/drop002-elite" target="_blank" class="btn-portal btn-tier btn-tier-elite"><span>INITIATE</span></a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="section btc-connection">
-    <div class="section-inner">
-      <span class="label-tag reveal-text">MOVEMENT CONNECTION</span>
-      <p class="connection-text reveal-text">"Your habits create your future."</p>
-      <a class="btn-portal btn-warm reveal-up" data-navigate="btc"><span>EXPLORE THE MOVEMENT</span></a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- ═══ REALM: DROP 003 ═══ -->
-<!-- ═══════════════════════════════════════════════════════ -->
-<section id="realm-drop003" class="realm" data-realm-color="drops">
-  <div class="realm-header">
-    <a class="back-link reveal-text" data-navigate="drops">← RETURN TO DROPS REALM</a>
-    <span class="realm-label reveal-text">DROP 003</span>
-    <h1 class="realm-title reveal-text">ALCHEMY OF WORLDS</h1>
-    <p class="realm-desc reveal-text">Not every world deserves to be saved. Some must fall before they can become something better.<br>75 Cinematic AI Prompts · 3 Tiers</p>
-  </div>
-  <div class="section drop-gallery">
-    <div class="gallery-grid gallery-grid-3">
-      <div class="gallery-item reveal-up">
-        <img src="images/drop003_s1_decay.webp" alt="Planetary Decay" loading="lazy">
-        <div class="gallery-label">SECTION I<br><strong>PLANETARY DECAY</strong></div>
-      </div>
-      <div class="gallery-item reveal-up">
-        <img src="images/drop003_s2_transform.webp" alt="Transformation" loading="lazy">
-        <div class="gallery-label">SECTION II<br><strong>TRANSFORMATION</strong></div>
-      </div>
-      <div class="gallery-item reveal-up">
-        <img src="images/drop003_s3_rebirth.webp" alt="Rebirth" loading="lazy">
-        <div class="gallery-label">SECTION III<br><strong>REBIRTH</strong></div>
-      </div>
-    </div>
-  </div>
-  <div class="section download-chamber">
-    <div class="section-inner">
-      <h2 class="section-heading reveal-text">DOWNLOAD CHAMBER</h2>
-      <div class="tiers-grid">
-        <div class="tier-card reveal-up">
-          <span class="tier-label">TIER 1</span><h3 class="tier-name">THE CRUCIBLE</h3><div class="tier-price">$49</div>
-          <ul class="tier-features"><li>20 Core Cinematic Prompts</li><li>7 Thematic Sections</li><li>Style & Negative Guides</li><li>Prompt Chaining System</li></ul>
-          <a href="https://lasciviouscreator.gumroad.com/l/drop003-standard" target="_blank" class="btn-portal btn-tier"><span>UNLOCK</span></a>
-        </div>
-        <div class="tier-card tier-card-mid reveal-up">
-          <span class="tier-label">TIER 2</span><h3 class="tier-name">THE TRANSMUTATION</h3><div class="tier-price">$59</div>
-          <ul class="tier-features"><li>Everything in Tier 1 +</li><li>+25 Expansion Prompts</li><li>Sections VIII–XII</li><li>Advanced Systems</li></ul>
-          <a href="https://lasciviouscreator.gumroad.com/l/drop003-premium" target="_blank" class="btn-portal btn-tier"><span>UNLOCK</span></a>
-        </div>
-        <div class="tier-card tier-card-elite reveal-up">
-          <div class="tier-badge-elite">ELITE</div>
-          <span class="tier-label">TIER 3</span><h3 class="tier-name">THE PHILOSOPHER'S ENGINE</h3><div class="tier-price">$69</div>
-          <ul class="tier-features"><li>Everything in Tier 1 & 2 +</li><li>+30 Elite Prompts</li><li>Cinematic Sequence Builder</li><li>Digital Artbook PDF</li><li>World-Building Guide</li><li>24-Month Content Calendar</li><li>Commercial Portfolio License</li></ul>
-          <a href="https://lasciviouscreator.gumroad.com/l/drop003-elite" target="_blank" class="btn-portal btn-tier btn-tier-elite"><span>INITIATE</span></a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="section btc-connection">
-    <div class="section-inner">
-      <span class="label-tag reveal-text">MOVEMENT CONNECTION</span>
-      <p class="connection-text reveal-text">"The future is created collectively."</p>
-      <a class="btn-portal btn-warm reveal-up" data-navigate="btc"><span>EXPLORE THE MOVEMENT</span></a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- ═══ REALM: BE THE CHANGE ═══ -->
-<!-- ═══════════════════════════════════════════════════════ -->
-<section id="realm-btc" class="realm" data-realm-color="btc">
-  <div class="realm-header btc-header">
-    <h1 class="realm-title btc-title reveal-text">BE THE CHANGE<br>YOU WANT TO SEE<br>IN THE WORLD</h1>
-    <div class="btc-subtitle reveal-text">
-      <p>Not someday.<br>Not someone else.</p>
-      <p class="btc-emphasis">You. Now.</p>
-    </div>
-  </div>
-
-  <!-- Featured Film -->
-  <div class="section btc-section">
-    <div class="section-inner">
-      <span class="label-tag reveal-text">🐇 WATCH THE FILM</span>
-      <h2 class="section-heading reveal-text">THE WORLD BENEATH THE LIE</h2>
-      <div class="video-cinema-wrap reveal-up">
-        <div class="video-glow"></div>
-        <div class="video-frame">
-          <iframe 
-            src="https://www.youtube.com/embed/xtpXBp3WFH4?rel=0&modestbranding=1&color=white" 
-            title="The World Beneath the Lie — Be The Change" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-            allowfullscreen
-          ></iframe>
-        </div>
-      </div>
-      <p class="video-tagline reveal-text">"Follow the rabbit. Fall through the lie.<br>See what your silence built. Then choose different."</p>
-    </div>
-  </div>
-
-  <!-- The Problem -->
-  <div class="section btc-section">
-    <div class="section-inner">
-      <h2 class="section-heading reveal-text">THE PROBLEM</h2>
-      <div class="btc-text-block reveal-text">
-        <p>We live in a world that profits from division.</p>
-        <p>Where greed replaces empathy. Where performance replaces authenticity. Where connection is reduced to content, and content is reduced to metrics.</p>
-        <p>We scroll past suffering. We perform compassion. We curate ourselves into strangers.</p>
-        <p class="btc-quiet">Something broke. And most of us can feel it.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- The Shift -->
-  <div class="section btc-section">
-    <div class="section-inner">
-      <h2 class="section-heading reveal-text">THE SHIFT</h2>
-      <div class="btc-text-block reveal-text">
-        <p>Small actions matter more than grand gestures.</p>
-        <p>Kindness compounds. Creativity influences culture. Behavior spreads.</p>
-        <p>The world doesn't change through politics or protest alone — it changes through <em>daily human behavior</em>. The way you treat strangers. The way you create. The way you choose to see the world.</p>
-        <p class="btc-emphasis">Change is not an event. It's a practice.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Real World Actions -->
-  <div class="section btc-section">
-    <div class="section-inner">
-      <h2 class="section-heading reveal-text">REAL WORLD ACTIONS</h2>
-      <div class="actions-grid reveal-up">
-        <div class="action-card">
-          <div class="action-icon">🤝</div>
-          <p>Help a stranger without documenting it</p>
-        </div>
-        <div class="action-card">
-          <div class="action-icon">🎨</div>
-          <p>Support an independent creator</p>
-        </div>
-        <div class="action-card">
-          <div class="action-icon">🌿</div>
-          <p>Protect something that can't protect itself</p>
-        </div>
-        <div class="action-card">
-          <div class="action-icon">💬</div>
-          <p>Choose honesty when silence is easier</p>
-        </div>
-        <div class="action-card">
-          <div class="action-icon">🔥</div>
-          <p>Create something with purpose, not just for profit</p>
-        </div>
-        <div class="action-card">
-          <div class="action-icon">🌍</div>
-          <p>Build community in a world designed to isolate</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══ TRANSMISSIONS ═══ -->
-  <div class="section btc-section btc-transmissions">
-    <div class="section-inner">
-      <h2 class="section-heading reveal-text">TRANSMISSIONS</h2>
-      <p class="btc-transmissions-intro reveal-text">Words from within. Not content — conviction.</p>
-    </div>
-  </div>
-
-  <!-- TRANSMISSION 001 -->
-  <div class="section btc-post" id="btc-post-001">
-    <div class="btc-post-inner reveal-up">
-      <div class="btc-post-image-wrap">
-        <img src="images/btc_post_001.webp" alt="The Mirror in the Crowd — a single illuminated figure in a blurred crowd" class="btc-post-image" loading="lazy">
-      </div>
-      <div class="btc-post-content">
-        <span class="btc-post-id">TRANSMISSION_001</span>
-        <h3 class="btc-post-title">The Mirror in the Crowd</h3>
-        <div class="btc-post-body">
-          <p>We have comforted ourselves for too long with the lie that the world is "broken." We speak of it as if it were a natural disaster—a storm that hit us, leaving us as mere survivors amidst the debris. But a broken thing does not repeat itself with such haunting consistency. What we see around us isn't a collapse; it is a masterpiece of our own design.</p>
-          <p class="btc-emphasis">The world is not happening to us. It is happening <em>through</em> us.</p>
-          <p>Every time we look away from a stranger's quiet struggle, every time we choose the safety of silence over the discomfort of kindness, we are laying another brick. We condemn the cruelty of the "system" while practicing a thousand tiny indifferences in our own hallways. We want a better world, yet we cling to the very behaviors that keep this one exactly as it is.</p>
-          <p>This is not a call to witness a tragedy; it is a confrontation of our own hands. We are the architects of the disconnection we fear. But therein lies the only hope we have: if this world is built by our habits, it can be dismantled by our intentions. It starts when the "Be the Change" slogan stops being a decoration on a wall and starts being a disruption of the self.</p>
-          <p class="btc-emphasis">Stop looking for the villains. Look at the reflection. Then, choose to interrupt the pattern.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TRANSMISSION 002 -->
-  <div class="section btc-post" id="btc-post-002">
-    <div class="btc-post-inner btc-post-reverse reveal-up">
-      <div class="btc-post-image-wrap">
-        <img src="images/btc_post_002.webp" alt="A Voice Without Action — a figure shouting into crumbling speech bubbles" class="btc-post-image" loading="lazy">
-      </div>
-      <div class="btc-post-content">
-        <span class="btc-post-id">TRANSMISSION_002</span>
-        <h3 class="btc-post-title">A Voice Without Action</h3>
-        <div class="btc-post-body">
-          <p>We live in an era of endless commentary. Everyone has a stance, a grievance, or a scripted piece of outrage ready to fire. We watch the vitriol on our screens, shaking our heads at the cruelty of strangers and swearing we are different. We claim a moral high ground we haven't actually earned.</p>
-          <p>Then, the moment we are tested—the moment a situation becomes uncomfortable—we fall into the same traps. We mirror the very malice we condemned. This is the hypocrisy of our time: a refusal to acknowledge that we are the ones fueling the chaos.</p>
-          <p class="btc-emphasis">Words without the backbone of action are just noise.</p>
-          <p>Real change doesn't announce itself with a megaphone. It is quiet. It happens in the shadows when no one is watching and there is nothing to gain. It lives in the decision to remain calm when rage is easier.</p>
-          <p>No one forces a hateful word from your lips. No one compels you to be cruel. These are conscious choices. If we actually modeled the character we demand from our children, the world would begin to heal.</p>
-          <p class="btc-emphasis">So, look at your reflection. Are you the solution, or just more noise?</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TRANSMISSION 003 -->
-  <div class="section btc-post" id="btc-post-003">
-    <div class="btc-post-inner reveal-up">
-      <div class="btc-post-image-wrap">
-        <img src="images/btc_post_003.webp" alt="Watching The Lights Go Out — a lone figure with inner light on an empty platform" class="btc-post-image" loading="lazy">
-      </div>
-      <div class="btc-post-content">
-        <span class="btc-post-id">TRANSMISSION_003</span>
-        <h3 class="btc-post-title">Watching The Lights Go Out</h3>
-        <div class="btc-post-body">
-          <p>I've stood still long enough to watch the world speed past itself.<br>
-          Long enough to watch people stop looking at each other.<br>
-          Long enough to watch warmth turn mechanical.<br>
-          Long enough to watch the lights go out behind people's eyes while they're still standing there smiling.</p>
-          <p>From the outside looking in, this world feels like a giant machine running on fear, exhaustion, survival mode, fake validation, and emotional starvation. Everybody's moving, but nobody's really arriving anywhere. They rush. They scroll. They consume. They react. But very few people actually <em>feel</em> anymore.</p>
-          <p>People don't even walk with their heads up now. Most move like they're bracing for impact. Eyes locked on screens. Minds somewhere else. Hearts disconnected from the moment standing right in front of them. Everyone's terrified of each other. Terrified of being judged. Used. Hurt. Cancelled. Lied to. Robbed. Manipulated. Abandoned. So they build walls around themselves so thick that eventually they can't even hear their own soul knocking from the inside anymore.</p>
-          <p class="btc-quiet">And what's missing isn't manners.<br>It isn't "common courtesy."<br>It's humanity.</p>
-          <p class="btc-emphasis">Real humanity.</p>
-          <p>Not the performative kind people post online for applause and dopamine hits. Not the fake inspiration captions written by people who step over broken souls in real life. I'm talking about genuine human connection. The kind that exists when nobody's watching. The kind that doesn't need recognition, hashtags, validation, or proof.</p>
-          <p>Too many people today do good deeds like they're building a brand instead of building a better world. Everything becomes content. Everything becomes optics. Even compassion gets filtered now.</p>
-          <p>Then there's the other side of it. The people so emotionally beaten down by the state of the world that they've gone numb just to survive it. They see somebody struggling and instead of seeing a human being, they immediately think: <em>What's the catch? Is this a scam? Is this dangerous? Am I about to get hurt?</em></p>
-          <p>And honestly? I understand why. This world has given people reasons to become guarded.</p>
-          <p>But somewhere along the way, survival mode became identity. Apathy became protection. Disconnection became normal.</p>
-          <p class="btc-quiet">And that's the part that breaks my heart.</p>
-          <p>Because every once in a while… in the middle of all this cold machinery… you see a glitch in the system.</p>
-          <p class="btc-emphasis">You see someone stop.</p>
-          <p>Usually somebody who doesn't even have much themselves. Somebody who knows pain personally. Somebody who understands what it feels like to be invisible. They don't stop because it's trendy. They don't stop because a camera is recording. They stop because their heart still works.</p>
-          <p>Because despite everything this world has done to harden people… theirs stayed soft.</p>
-          <p class="btc-quiet">Not weak. Soft.<br>There's a difference.</p>
-          <p>Those are the people keeping this world from spiritually collapsing completely. The ones who still help even when life hasn't helped them. The ones who still love after being betrayed. The ones who still choose kindness even after watching cruelty become entertainment for the masses.</p>
-          <p class="btc-emphasis">That's strength.</p>
-          <p class="btc-quiet">Not dominance. Not ego. Not followers. Not money. Not image.</p>
-          <p>Strength is keeping your soul intact in a world designed to poison it.</p>
-          <p>And maybe that's what "Be The Change" really means.</p>
-          <p>Maybe it's not about changing the entire world overnight. Maybe it starts smaller than that. Maybe it starts in the moments nobody celebrates. Maybe it's choosing not to become cold just because coldness became common.</p>
-          <p class="btc-quiet">Because it's heartbreaking watching the light leave people.</p>
-          <p class="btc-emphasis">But it's also unforgettable watching someone refuse to let theirs die.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- TRANSMISSION 004 -->
-  <div class="section btc-post" id="btc-post-004">
-    <div class="btc-post-inner reveal-up">
-      <div class="btc-post-image-wrap">
-        <img src="images/btc_post_004.webp" alt="The Blueprint — a figure at a crossroads with golden light" class="btc-post-image" loading="lazy">
-      </div>
-      <div class="btc-post-content">
-        <span class="btc-post-id">TRANSMISSION_004</span>
-        <h3 class="btc-post-title">The Blueprint</h3>
-        <div class="btc-post-body">
-          <p>People keep asking what "Be the Change" actually means in practice. Like there's a manual. Like somebody needs to hand them a checklist before they're willing to stop contributing to the problem.</p>
-          <p>Here's the uncomfortable truth: you already know.</p>
-          <p>You know when you're being cruel. You know when you're choosing silence over honesty because honesty is harder. You know when you're performing compassion instead of practicing it. You know when you're treating people like they're disposable because it's easier than caring.</p>
-          <p class="btc-emphasis">Being the change isn't a philosophy. It's a mirror.</p>
-          <p>Human behavior creates culture. Repeated behavior creates society. Every small action people normalize becomes part of the structure we all live inside of. If selfishness becomes normal… society reflects selfishness. If cruelty becomes entertainment… society becomes hostile.</p>
-          <p>The logic isn't complicated. It's just cause and effect. But cause and effect requires something most people aren't willing to give: accountability.</p>
-          <p>Most people are followers by conditioning. They wait to see what everybody else is doing before they move. Being the change means sometimes being the first person to help. The first person to speak honestly. The first person to break the hostility cycle.</p>
-          <p>And it starts smaller than people think. Make eye contact. Listen when somebody speaks. Help when there's nothing in it for you. Stop living for validation.</p>
-          <p class="btc-emphasis">A healthier civilization starts with healthier human behavior. Not perfection. Just awareness and intention.</p>
-          <p>The world you want is waiting on your behavior. Not when it's easy. Not tomorrow. Now.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Community Wall (Future) -->
-  <div class="section btc-section">
-    <div class="section-inner">
-      <h2 class="section-heading reveal-text">THE WALL</h2>
-      <p class="btc-coming reveal-text">A space is being built here — for stories, for proof, for evidence that change is happening.</p>
-      <p class="btc-coming reveal-text">Not yet. But soon.</p>
-      <div class="wall-placeholder reveal-up">
-        <div class="wall-card wall-card-placeholder">Your story here.</div>
-        <div class="wall-card wall-card-placeholder">An act of kindness.</div>
-        <div class="wall-card wall-card-placeholder">Art with purpose.</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Join -->
-  <div class="section btc-section btc-join">
-    <div class="section-inner">
-      <h2 class="section-heading reveal-text">JOIN THE MOVEMENT</h2>
-      <p class="btc-text-block reveal-text">Every drop you support. Every piece you share. Every conversation you start.<br>It all adds up. It all matters.</p>
-      <a class="btn-portal btn-warm reveal-up" data-navigate="drops">
-        <span>EXPLORE THE DROPS</span>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- ═══ REALM: SIGNALS (Blog) ═══ -->
-<!-- ═══════════════════════════════════════════════════════ -->
-<section id="realm-signals" class="realm" data-realm-color="signals">
-  <div class="realm-header">
-    <span class="realm-label reveal-text">INTERCEPTED TRANSMISSIONS</span>
-    <h1 class="realm-title reveal-text">SIGNALS</h1>
-    <p class="realm-desc reveal-text">Dispatches from within the system.<br>Philosophy · Creation · Vision · Truth</p>
-  </div>
-
-  <!-- ═══ ACTIVE TRANSMISSIONS ═══ -->
-  <div class="section signals-featured">
-    <div class="section-inner">
-      <h2 class="section-heading reveal-text">ACTIVE TRANSMISSIONS</h2>
-      <p class="signals-featured-intro reveal-text">Live signals from the Be The Change frequency.</p>
-    </div>
-  </div>
-
-  <div class="signal-featured-card reveal-up" data-navigate-scroll="btc-post-001">
-    <div class="signal-featured-image">
-      <img src="images/btc_post_001.webp" alt="The Mirror in the Crowd" loading="lazy">
-    </div>
-    <div class="signal-featured-content">
-      <span class="signal-id">SIGNAL_001</span>
-      <span class="signal-category">BE THE CHANGE</span>
-      <h3 class="signal-title">The Mirror in the Crowd</h3>
-      <p class="signal-excerpt">We have comforted ourselves for too long with the lie that the world is "broken." What we see around us isn't a collapse; it is a masterpiece of our own design. The world is not happening to us. It is happening <em>through</em> us.</p>
-      <a class="signal-cta" data-navigate="btc">READ TRANSMISSION →</a>
-    </div>
-  </div>
-
-  <div class="signal-featured-card signal-featured-reverse reveal-up" data-navigate-scroll="btc-post-002">
-    <div class="signal-featured-image">
-      <img src="images/btc_post_002.webp" alt="A Voice Without Action" loading="lazy">
-    </div>
-    <div class="signal-featured-content">
-      <span class="signal-id">SIGNAL_002</span>
-      <span class="signal-category">BE THE CHANGE</span>
-      <h3 class="signal-title">A Voice Without Action</h3>
-      <p class="signal-excerpt">We live in an era of endless commentary. Everyone has a stance, a grievance, or a scripted piece of outrage ready to fire. We claim a moral high ground we haven't actually earned. Words without the backbone of action are just noise.</p>
-      <a class="signal-cta" data-navigate="btc">READ TRANSMISSION →</a>
-    </div>
-  </div>
-
-  <div class="signal-featured-card reveal-up" data-navigate-scroll="btc-post-003">
-    <div class="signal-featured-image">
-      <img src="images/btc_post_003.webp" alt="Watching The Lights Go Out" loading="lazy">
-    </div>
-    <div class="signal-featured-content">
-      <span class="signal-id">SIGNAL_003</span>
-      <span class="signal-category">BE THE CHANGE</span>
-      <h3 class="signal-title">Watching The Lights Go Out</h3>
-      <p class="signal-excerpt">I've stood still long enough to watch the world speed past itself. Long enough to watch people stop looking at each other. Long enough to watch the lights go out behind people's eyes while they're still standing there smiling.</p>
-      <a class="signal-cta" data-navigate="btc">READ TRANSMISSION →</a>
-    </div>
-  </div>
-
-  <div class="signal-featured-card signal-featured-reverse reveal-up" data-navigate-scroll="btc-post-004">
-    <div class="signal-featured-image">
-      <img src="images/btc_post_004.webp" alt="The Blueprint" loading="lazy">
-    </div>
-    <div class="signal-featured-content">
-      <span class="signal-id">SIGNAL_BTC_004</span>
-      <span class="signal-category">BE THE CHANGE</span>
-      <h3 class="signal-title">The Blueprint</h3>
-      <p class="signal-excerpt">People keep asking what "Be the Change" actually means in practice. Like there's a manual. Here's the uncomfortable truth: you already know. Being the change isn't a philosophy. It's a mirror.</p>
-      <a class="signal-cta" data-navigate="btc">READ TRANSMISSION →</a>
-    </div>
-  </div>
-
-
-  <!-- ═══ LIVE SIGNALS ═══ -->
-
-  <!-- Signal 004 — Horror Art -->
-  <div class="signal-featured-card signal-featured-reverse reveal-up" id="signal-004">
-    <div class="signal-featured-image">
-      <img src="images/signal_004_horror_art.webp" alt="The Dark Canvas — Horror Art as Emotional Architecture" loading="lazy">
-    </div>
-    <div class="signal-featured-content">
-      <span class="signal-id">SIGNAL_004</span>
-      <span class="signal-category">HORROR ART</span>
-      <h3 class="signal-title">The Dark Canvas — Horror Art as Emotional Architecture</h3>
-      <div class="signal-full-body">
-        <p>Horror art isn't about scaring people. That's what Halloween costumes and jump-scare movies are for. Horror art — real horror art — is about making you feel something you've been running from.</p>
-        <p>Every image in the Lascivious Vibrations universe was built through emotional architecture. Not randomized AI outputs. Not trend-chasing aesthetic generators. Each piece went through seven layers of intentional design: subject identity, psychological weight, cinematic composition, texture logic, atmospheric lighting, worldbuilding continuity, and negative suppression.</p>
-        <p>The goal was never "make something creepy." The goal was always: <em>make something that won't leave you alone.</em></p>
-        <p>There's a difference between horror that repulses and horror that seduces. The first pushes you away. The second pulls you closer while whispering that you should probably leave. That's the space we operate in. Beautiful danger. Emotionally invasive. Psychologically sophisticated.</p>
-        <p>A stitched toy watching you from a crumbling shelf isn't scary because it has button eyes. It's scary because it reminds you of something innocent that became something else. That's what corrupted innocence actually feels like — not a monster under the bed, but the slow realization that the bed was never safe.</p>
-        <p>People dismiss AI art as soulless. That's because most of it is. Most of it is procedurally generated visual noise with no emotional direction behind it. But when you treat every generation like directing a frame of a film — when you demand cinematic realism, emotional gravity, and visual intelligence from every single output — the result isn't AI art anymore.</p>
-        <p>It's authored imagery that happens to use AI as a medium.</p>
-        <p>Horror art heals because it gives shape to the things we refuse to look at directly. Grief. Loss. Corruption of innocence. The slow erosion of beauty. The things we carry beneath our curated surfaces.</p>
-        <p>Every DROP in this universe explores a different dimension of that truth. Pretty With Teeth explores the danger hiding inside beauty. Gothic Romance Decay explores love that transcends death. Alchemy of Worlds explores reality collapsing and rebuilding. Pretty Little Nightmares explores childhood innocence consumed by darkness.</p>
-        <p><strong>This isn't content. This is cinema disguised as art collections. And the darkness isn't decoration — it's the whole point.</strong></p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Signal 005 — Live Signal -->
-  <div class="signal-featured-card reveal-up" id="signal-005">
-    <div class="signal-featured-image">
-      <img src="images/signal_005_live_signal.webp" alt="Live Signal — Frequency of the Awake" loading="lazy">
-    </div>
-    <div class="signal-featured-content">
-      <span class="signal-id">SIGNAL_005</span>
-      <span class="signal-category">LIVE SIGNAL</span>
-      <h3 class="signal-title">Live Signal — Frequency of the Awake</h3>
-      <div class="signal-full-body">
-        <p>Most people are tuned to dead frequencies. Feeds full of outrage, performance, and emotional manipulation designed to keep them scrolling, reacting, and never actually thinking.</p>
-        <p>A live signal is different. It's a transmission that doesn't need you to agree with it. It needs you to <em>feel</em> it. To sit with the discomfort. To let it rearrange something inside you that was already misaligned.</p>
-        <p>This entire ecosystem — the drops, the movement, the blog, the art — it's one continuous live signal. Every piece is broadcasting something. Sometimes it's a whisper. Sometimes it's a scream. But it's always intentional.</p>
-        <p>The drops are not products. They're encrypted emotional experiences disguised as creator toolkits. The Be The Change movement isn't activism — it's behavioral recalibration. The signals aren't blog posts — they're intercepted transmissions from someone who stopped pretending the world is fine.</p>
-        <p>We built this because the noise was deafening and the signal was dying. Because too many voices were talking and not enough were saying anything worth hearing. Because content became a commodity and meaning became a luxury.</p>
-        <p><strong>If you're reading this, you've already tuned in. The question is whether you'll stay on the frequency or go back to the noise.</strong></p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Signal 006 — Transitions -->
-  <div class="signal-featured-card signal-featured-reverse reveal-up" id="signal-006">
-    <div class="signal-featured-image">
-      <img src="images/signal_006_transitions.webp" alt="Transitions — Between Who You Were and Who You're Becoming" loading="lazy">
-    </div>
-    <div class="signal-featured-content">
-      <span class="signal-id">SIGNAL_006</span>
-      <span class="signal-category">TRANSITIONS</span>
-      <h3 class="signal-title">Transitions — Between Who You Were and Who You're Becoming</h3>
-      <div class="signal-full-body">
-        <p>Nobody talks about the middle.</p>
-        <p>Everybody celebrates the before and after. The glow-up. The transformation story. The "look how far I've come" highlight reel. But the space between? The ugly, confusing, terrifying middle where you're no longer who you were but haven't yet become who you're going to be?</p>
-        <p>That's where the real work happens. And it's where most people quit.</p>
-        <p>Transitions aren't clean. They're not linear. They don't come with a motivational soundtrack. They come with doubt, isolation, grief for the version of yourself you're leaving behind, and the constant temptation to go back to what's familiar even when what's familiar was killing you.</p>
-        <p>This entire project is a transition made visible. From an idea to a universe. From a voice to a movement. From one woman's creative obsession to a system that funds change through art.</p>
-        <p>The drops themselves are transitions. Planetary Decay becomes Alchemy becomes Rebirth. Innocence becomes Corruption becomes Awakening. Love becomes Loss becomes Eternal Devotion. Every section tells the same story in a different frequency: something ends so something else can begin.</p>
-        <p>If you're in a transition right now — if you're in that terrifying middle ground where nothing makes sense and you can't see the other side yet — you're exactly where you need to be.</p>
-        <p><strong>The doorway between who you were and who you're becoming only opens when you stop trying to go back through the one you came from.</strong></p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Signal 007 — Live Transmission -->
-  <div class="signal-featured-card reveal-up" id="signal-007">
-    <div class="signal-featured-image">
-      <img src="images/signal_007_live_transmission.webp" alt="Live Transmission — Words That Cost Something" loading="lazy">
-    </div>
-    <div class="signal-featured-content">
-      <span class="signal-id">SIGNAL_007</span>
-      <span class="signal-category">LIVE TRANSMISSION</span>
-      <h3 class="signal-title">Live Transmission — Words That Cost Something</h3>
-      <div class="signal-full-body">
-        <p>Everything here is a live transmission. Not a scheduled post. Not a content calendar. Not an algorithm-optimized engagement strategy. A live transmission.</p>
-        <p>The difference between content and a transmission is cost. Content costs time. A transmission costs something personal. It requires honesty when dishonesty would be easier. Vulnerability when performance would be safer. Clarity when ambiguity would protect you.</p>
-        <p>Most creators produce content. They build brands. They optimize for reach. They study what performs and then perform it. There's nothing wrong with that — but that's not what this is.</p>
-        <p>This is a woman building an entire creative universe from scratch while simultaneously trying to model a different way of existing in the world. The drops fund the movement. The movement gives the art meaning. The art gives the movement visibility. The signals document the entire process in real time.</p>
-        <p>Nothing is pre-packaged. Nothing is focus-grouped. Nothing is designed to make you comfortable. If a transmission makes you uncomfortable, good. That means something in it touched something in you that needed to be disturbed.</p>
-        <p>The world is full of voices. Most of them are performing. A few of them are transmitting. The difference is always the same: performers adjust to the audience. Transmitters broadcast regardless of who's listening.</p>
-        <p><strong>This is a live transmission. It will continue broadcasting whether you're tuned in or not. But if you are… welcome to the frequency.</strong></p>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- ═══ INCOMING ═══ -->
-  <div class="section signals-upcoming">
-    <div class="section-inner">
-      <h2 class="section-heading reveal-text">INCOMING FREQUENCIES</h2>
-    </div>
-  </div>
-  <div class="signals-grid">
-    <div class="signal-card reveal-up">
-      <span class="signal-id">SIGNAL_008</span>
-      <span class="signal-category">BEHIND THE DROPS</span>
-      <h3 class="signal-title">Pretty Little Nightmares: Why Horror Heals</h3>
-      <p class="signal-excerpt">The things we call "creepy" are usually the things we're afraid to acknowledge. Horror doesn't create fear — it gives shape to the fear that was already there.</p>
-      <span class="signal-cta signal-locked">INCOMING →</span>
-    </div>
-    <div class="signal-card reveal-up">
-      <span class="signal-id">SIGNAL_009</span>
-      <span class="signal-category">THE SYSTEM</span>
-      <h3 class="signal-title">How Art Funds a Movement</h3>
-      <p class="signal-excerpt">Every drop sold plants a seed. Every download carries a philosophy. This isn't commerce — it's infrastructure for change.</p>
-      <span class="signal-cta signal-locked">INCOMING →</span>
-    </div>
-  </div>
-
-  <div class="section signals-note">
-    <p class="reveal-text">The system is always transmitting. Stay on the frequency.</p>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- ═══ REALM: THE DARK CANVAS (Horror Art Blog) ═══ -->
-<!-- ═══════════════════════════════════════════════════════ -->
-<section id="realm-darkcanvas" class="realm" data-realm-color="darkcanvas">
-
-  <!-- REALM HEADER -->
-  <div class="realm-header dc-header">
-    <span class="realm-label reveal-text">GALLERY OF THE UNSEEN</span>
-    <h1 class="realm-title reveal-text dc-title">THE DARK CANVAS</h1>
-    <p class="realm-desc reveal-text">Horror Art as Emotional Architecture<br>Where darkness is the medium. Feeling is the point.</p>
-  </div>
-
-  <!-- HERO IMAGE -->
-  <div class="section dc-hero-section">
-    <div class="dc-hero-image-wrap reveal-up">
-      <img src="images/darkcanvas_hero.webp" alt="The Dark Canvas — a gothic gallery where paintings bleed" class="dc-hero-image" loading="lazy">
-      <div class="dc-hero-overlay"></div>
-      <div class="dc-hero-caption">
-        <span class="dc-caption-label">GALLERY INTERIOR</span>
-        <span class="dc-caption-text">Where every frame contains a world that watches back</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- MANIFESTO -->
-  <div class="section dc-section">
-    <div class="section-inner">
-      <div class="dc-manifesto reveal-text">
-        <p class="dc-pull-quote">Horror art isn't about scaring people.<br>It's about making you feel something you've been running from.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- THE PHILOSOPHY -->
-  <div class="section dc-section">
-    <div class="section-inner">
-      <h2 class="section-heading reveal-text dc-heading">THE 7-LAYER PIPELINE</h2>
-      <p class="dc-intro-text reveal-text">Every image in this universe was built through emotional architecture. Not randomized AI outputs. Not trend-chasing aesthetic generators. Each piece went through seven layers of intentional design:</p>
-      <div class="dc-layers-grid reveal-up">
-        <div class="dc-layer-card">
-          <span class="dc-layer-num">01</span>
-          <h3 class="dc-layer-title">Subject Identity</h3>
-          <p>Who is this being? What have they survived? What haunts them?</p>
-        </div>
-        <div class="dc-layer-card">
-          <span class="dc-layer-num">02</span>
-          <h3 class="dc-layer-title">Psychological Weight</h3>
-          <p>The emotion that refuses to leave the room after you close the image.</p>
-        </div>
-        <div class="dc-layer-card">
-          <span class="dc-layer-num">03</span>
-          <h3 class="dc-layer-title">Cinematic Composition</h3>
-          <p>Every frame directed like a still from a film that doesn't exist yet.</p>
-        </div>
-        <div class="dc-layer-card">
-          <span class="dc-layer-num">04</span>
-          <h3 class="dc-layer-title">Texture Logic</h3>
-          <p>Decay has rules. Rust doesn't appear without moisture. Rot follows patterns.</p>
-        </div>
-        <div class="dc-layer-card">
-          <span class="dc-layer-num">05</span>
-          <h3 class="dc-layer-title">Atmospheric Lighting</h3>
-          <p>Light tells the story before anything else does. Shadows hold the secrets.</p>
-        </div>
-        <div class="dc-layer-card">
-          <span class="dc-layer-num">06</span>
-          <h3 class="dc-layer-title">Worldbuilding Continuity</h3>
-          <p>Every piece exists in the same universe. Rules persist across collections.</p>
-        </div>
-        <div class="dc-layer-card dc-layer-card-final">
-          <span class="dc-layer-num">07</span>
-          <h3 class="dc-layer-title">Negative Suppression</h3>
-          <p>What we refuse to generate matters as much as what we create. No generic. No soulless. No noise.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- WHY HORROR HEALS -->
-  <div class="section dc-section dc-section-alt">
-    <div class="section-inner">
-      <h2 class="section-heading reveal-text dc-heading">WHY HORROR HEALS</h2>
-      <div class="dc-essay reveal-text">
-        <p>There's a difference between horror that repulses and horror that seduces. The first pushes you away. The second pulls you closer while whispering that you should probably leave. <em>That's the space we operate in.</em> Beautiful danger. Emotionally invasive. Psychologically sophisticated.</p>
-        <p>A stitched toy watching you from a crumbling shelf isn't scary because it has button eyes. It's scary because it reminds you of something innocent that became something else. That's what corrupted innocence actually feels like — not a monster under the bed, but the slow realization that the bed was never safe.</p>
-        <p class="dc-emphasis">Horror art heals because it gives shape to the things we refuse to look at directly.</p>
-        <p>Grief. Loss. Corruption of innocence. The slow erosion of beauty. The things we carry beneath our curated surfaces. When darkness has a frame around it, when it's been composed and lit and given weight — it becomes something you can sit with instead of something that eats you alive in the dark.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- THE DIMENSIONS -->
-  <div class="section dc-section">
-    <div class="section-inner">
-      <h2 class="section-heading reveal-text dc-heading">FOUR DIMENSIONS OF DARKNESS</h2>
-      <p class="dc-intro-text reveal-text">Every DROP in this universe explores a different dimension of emotional truth.</p>
-      <div class="dc-dimensions-grid">
-        <div class="dc-dimension reveal-up">
-          <div class="dc-dimension-icon">🦷</div>
-          <h3 class="dc-dimension-title">Pretty With Teeth</h3>
-          <p class="dc-dimension-desc">The danger hiding inside beauty. Smiles that bite. Elegance that kills.</p>
-          <span class="dc-dimension-drop">DROP 001</span>
-        </div>
-        <div class="dc-dimension reveal-up">
-          <div class="dc-dimension-icon">🥀</div>
-          <h3 class="dc-dimension-title">Gothic Romance Decay</h3>
-          <p class="dc-dimension-desc">Love that transcends death. Devotion that outlasts flesh.</p>
-          <span class="dc-dimension-drop">DROP 002</span>
-        </div>
-        <div class="dc-dimension reveal-up">
-          <div class="dc-dimension-icon">🌀</div>
-          <h3 class="dc-dimension-title">Alchemy of Worlds</h3>
-          <p class="dc-dimension-desc">Reality collapsing and rebuilding. Decay into transformation into rebirth.</p>
-          <span class="dc-dimension-drop">DROP 003</span>
-        </div>
-        <div class="dc-dimension reveal-up">
-          <div class="dc-dimension-icon">🎭</div>
-          <h3 class="dc-dimension-title">Pretty Little Nightmares</h3>
-          <p class="dc-dimension-desc">Childhood innocence consumed by darkness. The toys remember everything.</p>
-          <span class="dc-dimension-drop">DROP 004</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- AI AS MEDIUM -->
-  <div class="section dc-section dc-section-alt">
-    <div class="section-inner">
-      <h2 class="section-heading reveal-text dc-heading">AUTHORED IMAGERY</h2>
-      <div class="dc-essay reveal-text">
-        <p>People dismiss AI art as soulless. That's because most of it is. Most of it is procedurally generated visual noise with no emotional direction behind it.</p>
-        <p>But when you treat every generation like directing a frame of a film — when you demand cinematic realism, emotional gravity, and visual intelligence from every single output — the result isn't AI art anymore.</p>
-        <p class="dc-emphasis">It's authored imagery that happens to use AI as a medium.</p>
-        <p>The camera doesn't make the photographer. The brush doesn't make the painter. The tool has never been the art. The vision behind it — the emotional architecture — that's what separates noise from cinema.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- THE DECLARATION -->
-  <div class="section dc-section dc-declaration">
-    <div class="section-inner">
-      <div class="dc-final-statement reveal-text">
-        <p class="dc-declaration-text">This isn't content.<br>This is cinema disguised as art collections.</p>
-        <p class="dc-declaration-emphasis">And the darkness isn't decoration — it's the whole point.</p>
-      </div>
-      <div class="dc-cta-group reveal-up">
-        <a class="btn-portal dc-btn" data-navigate="drops">
-          <span>EXPLORE THE DROPS</span>
-        </a>
-        <a class="btn-portal dc-btn dc-btn-secondary" data-navigate="signals">
-          <span>READ ALL SIGNALS</span>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- FOOTER -->
-  <div class="footer-void">
-    <div class="footer-inner">
-      <div class="footer-crown">♛</div>
-      <p class="footer-brand">LASCIVIOUS VIBRATIONS LLC</p>
-      <p class="footer-tagline">Create Intentionally · Build Freely · Inspire Always</p>
-      <div class="footer-links">
-        <a href="https://lasciviouscreator.gumroad.com/" target="_blank" rel="noopener">GUMROAD</a>
-        <a href="#signals" data-navigate="signals">SIGNALS</a>
-        <a href="#darkcanvas" data-navigate="darkcanvas">THE DARK CANVAS</a>
-        <a href="#about" data-navigate="about">ABOUT</a>
-      </div>
-      <p class="footer-copy">© 2025 Lascivious Vibrations LLC. All rights reserved.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- ═══ REALM: ABOUT ═══ -->
-<!-- ═══════════════════════════════════════════════════════ -->
-<section id="realm-about" class="realm" data-realm-color="about">
-  <div class="realm-header">
-    <span class="realm-label reveal-text">ORIGIN FILE</span>
-    <h1 class="realm-title reveal-text">WHAT IS THIS?</h1>
-  </div>
-
-  <div class="section about-section">
-    <div class="section-inner">
-      <h2 class="section-heading reveal-text">LASCIVIOUS VIBRATIONS</h2>
-      <div class="about-text reveal-text">
-        <p>Lascivious Vibrations is a digital creative ecosystem built at the intersection of art, technology, and human consciousness.</p>
-        <p>It is three things simultaneously:</p>
-        <p><strong>1. A product system.</strong> Cinematic AI art collections, prompt engineering packs, and creator toolkits — designed for people who understand that AI is a creative instrument, not a replacement for vision.</p>
-        <p><strong>2. A movement.</strong> "Be The Change You Want To See In The World" is not a slogan. It's the operating principle. Every drop carries a message. Every message carries intent.</p>
-        <p><strong>3. A signal.</strong> The blog — "Signals" — is a voice. Not a content machine. A real perspective on humanity, creativity, the future, and the work behind the art.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="section about-section">
-    <div class="section-inner">
-      <h2 class="section-heading reveal-text">THE PHILOSOPHY</h2>
-      <div class="about-text reveal-text">
-        <p><em>Create Intentionally.</em> Nothing here is filler. Every prompt, every image, every word was placed with purpose.</p>
-        <p><em>Build Freely.</em> These tools exist so creators can build without limits. No gatekeeping. No artificial scarcity of knowledge.</p>
-        <p><em>Inspire Always.</em> If the work doesn't move someone, it hasn't done its job.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="section about-section">
-    <div class="section-inner">
-      <h2 class="section-heading reveal-text">CREATOR STATEMENT</h2>
-      <div class="about-text reveal-text">
-        <p>I built this because the world has enough noise and not enough signal.</p>
-        <p>I believe AI art can be intentional, emotional, and meaningful. I believe products can fund movements. I believe movements can change behavior. I believe behavior changes everything.</p>
-        <p>This is not a brand. This is a system.</p>
-        <p>Welcome to it.</p>
-      </div>
-      <div class="about-signature reveal-text">
-        <p>— Lascivious Vibrations LLC</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="footer-void">
-    <div class="footer-inner">
-      <div class="footer-crown">♛</div>
-      <p class="footer-brand">LASCIVIOUS VIBRATIONS LLC</p>
-      <p class="footer-tagline">Create Intentionally · Build Freely · Inspire Always</p>
-      <div class="footer-links">
-        <a href="https://lasciviouscreator.gumroad.com/" target="_blank" rel="noopener">GUMROAD</a>
-        <a href="#signals" data-navigate="signals">SIGNALS</a>
+        <a data-navigate="btc-blog-1">TRANSMISSIONS</a>
+        <a data-navigate="about">ABOUT</a>
         <a href="mailto:saundramaebennett@gmail.com">CONTACT</a>
       </div>
       <p class="footer-copy">© 2025 Lascivious Vibrations LLC. All rights reserved.</p>
@@ -1376,7 +904,6 @@
 </section>
 
 <!-- ═══ SCRIPTS ═══ -->
-<script src="js/particles.js"></script>
-<script src="js/app.js"></script>
+<script src="js/engine.js"></script>
 </body>
 </html>
