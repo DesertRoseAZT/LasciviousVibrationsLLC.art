@@ -40,7 +40,7 @@
       }
       this.type = type;
       this.particles = [];
-      const count = type === 'decay-dust' ? 60 : type === 'candy-breath' ? 45 : type === 'moth-wings' ? 35 : 40;
+      const count = type === 'decay-dust' ? 120 : type === 'candy-breath' ? 90 : type === 'moth-wings' ? 70 : 80;
       for (let i = 0; i < count; i++) {
         this.particles.push(this.createParticle(type));
       }
@@ -61,26 +61,26 @@
       };
 
       if (type === 'decay-dust') {
-        base.color = `rgba(184,154,90,${0.1 + Math.random() * 0.2})`;
-        base.vy = -0.1 - Math.random() * 0.3;
-        base.size = 0.5 + Math.random() * 1.5;
+        base.color = `rgba(184,154,90,${0.25 + Math.random() * 0.35})`;
+        base.vy = -0.15 - Math.random() * 0.5;
+        base.size = 1 + Math.random() * 3;
       } else if (type === 'candy-breath') {
         const colors = ['rgba(212,160,192,', 'rgba(194,116,137,', 'rgba(212,80,107,'];
-        base.color = colors[Math.floor(Math.random() * colors.length)] + (0.15 + Math.random() * 0.2) + ')';
+        base.color = colors[Math.floor(Math.random() * colors.length)] + (0.3 + Math.random() * 0.3) + ')';
         base.pulseRate = 0.01 + Math.random() * 0.02;
-        base.baseSize = 1 + Math.random() * 3;
+        base.baseSize = 2 + Math.random() * 5;
         base.size = base.baseSize;
       } else if (type === 'moth-wings') {
-        base.color = `rgba(106,42,58,${0.15 + Math.random() * 0.25})`;
+        base.color = `rgba(160,60,90,${0.3 + Math.random() * 0.35})`;
         base.wingPhase = Math.random() * Math.PI * 2;
         base.wingSpeed = 0.03 + Math.random() * 0.05;
-        base.size = 1.5 + Math.random() * 2.5;
-        base.flutter = Math.random() * 2;
+        base.size = 2.5 + Math.random() * 4;
+        base.flutter = Math.random() * 3;
       } else if (type === 'thorn-lollipop') {
-        base.color = `rgba(138,106,42,${0.1 + Math.random() * 0.2})`;
-        base.vy = 0.2 + Math.random() * 0.4;
+        base.color = `rgba(180,140,60,${0.2 + Math.random() * 0.3})`;
+        base.vy = 0.2 + Math.random() * 0.5;
         base.drip = Math.random();
-        base.size = 0.8 + Math.random() * 2;
+        base.size = 1.5 + Math.random() * 3.5;
       }
       return base;
     }
@@ -128,11 +128,15 @@
         this.ctx.fillStyle = p.color;
         this.ctx.fill();
 
-        // Glow for moth wings
-        if (this.type === 'moth-wings' && p.size > 2) {
+        // Glow halos for larger particles
+        if (p.size > 2) {
           this.ctx.beginPath();
-          this.ctx.arc(p.x, p.y, p.size * 2, 0, Math.PI * 2);
-          this.ctx.fillStyle = 'rgba(106,42,58,0.03)';
+          this.ctx.arc(p.x, p.y, p.size * 3, 0, Math.PI * 2);
+          const glowColor = this.type === 'moth-wings' ? 'rgba(160,60,90,0.06)'
+            : this.type === 'candy-breath' ? 'rgba(212,160,192,0.05)'
+            : this.type === 'decay-dust' ? 'rgba(184,154,90,0.04)'
+            : 'rgba(180,140,60,0.05)';
+          this.ctx.fillStyle = glowColor;
           this.ctx.fill();
         }
       }
@@ -591,8 +595,9 @@
   class NightmareSky {
     constructor() {
       this.canvas = document.getElementById('sky-canvas');
-      if (!this.canvas) return;
+      if (!this.canvas || !this.canvas.getContext) return;
       this.ctx = this.canvas.getContext('2d');
+      if (!this.ctx) return;
       this.stars = [];
       this.resize();
       window.addEventListener('resize', () => this.resize());
@@ -602,12 +607,12 @@
     resize() {
       if (!this.canvas) return;
       this.canvas.width = window.innerWidth;
-      this.canvas.height = window.innerHeight * 0.3;
+      this.canvas.height = window.innerHeight;
     }
 
     generateStars() {
       this.stars = [];
-      for (let i = 0; i < 80; i++) {
+      for (let i = 0; i < 150; i++) {
         this.stars.push({
           x: Math.random() * this.canvas.width,
           y: Math.random() * this.canvas.height,
@@ -620,9 +625,15 @@
 
     update(realm) {
       if (!this.canvas || !this.ctx) return;
-      const showSky = ['nightmare-worlds', 'gothic-romance', 'childhood-distortion'].includes(realm);
-      this.canvas.style.opacity = showSky ? '0.4' : '0';
-      if (!showSky) return;
+      const skyOpacity = {
+        'veil': '0.15', 'crossroads': '0.2',
+        'creepy-cute': '0.25', 'gothic-romance': '0.5',
+        'nightmare-worlds': '0.6', 'childhood-distortion': '0.45',
+        'drops': '0.2'
+      };
+      const op = skyOpacity[realm] || '0';
+      this.canvas.style.opacity = op;
+      if (op === '0') return;
 
       const t = Date.now() * 0.001;
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -632,6 +643,10 @@
         const alpha = 0.3 + Math.sin(star.twinkle) * 0.3;
         const color = realm === 'nightmare-worlds' ? `rgba(100,130,200,${alpha})`
           : realm === 'gothic-romance' ? `rgba(160,80,100,${alpha})`
+          : realm === 'veil' ? `rgba(184,154,90,${alpha * 0.6})`
+          : realm === 'crossroads' ? `rgba(160,140,180,${alpha * 0.7})`
+          : realm === 'creepy-cute' ? `rgba(212,160,192,${alpha * 0.8})`
+          : realm === 'drops' ? `rgba(140,120,180,${alpha * 0.6})`
             : `rgba(180,160,100,${alpha})`;
         this.ctx.beginPath();
         this.ctx.arc(star.x + Math.sin(t + star.twinkle) * 0.5, star.y, star.size, 0, Math.PI * 2);
@@ -714,10 +729,10 @@
       realm.addEventListener('scroll', handleScroll);
     });
 
-    // Animation loop
+    // Animation loop (error-safe — never stops)
     function animate() {
-      particles.update();
-      sky.update(state.currentRealm);
+      try { particles.update(); } catch (e) {}
+      try { sky.update(state.currentRealm); } catch (e) {}
       requestAnimationFrame(animate);
     }
     animate();
