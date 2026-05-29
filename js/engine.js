@@ -222,7 +222,8 @@
     }
 
     setRealm(realm) {
-      if (!this.ctx || this.currentRealm === realm) return;
+      if (!this.ctx) return;
+      if (this.currentRealm === realm && this.nodes.length > 0) return;
       this.currentRealm = realm;
       this.stopAll();
 
@@ -452,6 +453,10 @@
           state.audioMuted = !state.audioMuted;
           document.body.classList.toggle('audio-muted', state.audioMuted);
           this.audio.setMuted(state.audioMuted);
+          // If unmuting and no realm sounds loaded yet, load them now
+          if (!state.audioMuted) {
+            this.audio.setRealm(state.currentRealm);
+          }
         }
       });
 
