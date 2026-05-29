@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════
-   PRETTY LITTLE NIGHTMARES — SWEET DECAY ENGINE
+   PRETTY LITTLE NIGHTMARES — SWEET DECAY ENGINE v2
    Particles · Audio · Navigation · Cursor · Transitions
    ═══════════════════════════════════════════════════════════════ */
 
@@ -54,7 +54,6 @@
         vx: (Math.random() - 0.5) * 0.3,
         vy: (Math.random() - 0.5) * 0.3,
         life: Math.random(),
-        maxLife: 0.7 + Math.random() * 0.3,
         size: 1 + Math.random() * 2,
         phase: Math.random() * Math.PI * 2,
         speed: 0.002 + Math.random() * 0.005
@@ -221,8 +220,30 @@
       return { source, gain, filter };
     }
 
+    // Map realm IDs to audio profiles
+    getAudioProfile(realm) {
+      const map = {
+        'veil': 'veil',
+        'gateway': 'gateway',
+        'world-drop001': 'pretty-teeth',
+        'world-drop002': 'gothic-romance',
+        'world-drop003': 'alchemy',
+        'world-drop004': 'childhood-distortion',
+        'drops': 'gateway',
+        'btc': 'sanctuary',
+        'btc-videos': 'sanctuary',
+        'btc-blog-1': 'sanctuary',
+        'btc-blog-2': 'sanctuary',
+        'community': 'sanctuary',
+        'the-static': 'sanctuary',
+        'about': 'sanctuary'
+      };
+      return map[realm] || 'veil';
+    }
+
     setRealm(realm) {
       if (!this.ctx) return;
+      const profile = this.getAudioProfile(realm);
       if (this.currentRealm === realm && this.nodes.length > 0) return;
       this.currentRealm = realm;
       this.stopAll();
@@ -231,130 +252,142 @@
         if (this.currentRealm !== realm) return;
         this.realmGain.gain.setTargetAtTime(1, this.ctx.currentTime, 1.5);
 
-        switch (realm) {
+        switch (profile) {
           case 'veil':
-            // Low drone + distant echoes
+            // Low drone + distant echoes + faint soft screams
             this.createOsc(55, 'sine', 0, 0.06);
             this.createOsc(55.5, 'sine', 5, 0.04);
             this.createOsc(82.5, 'sine', -3, 0.02);
-            this.createNoise(0.006);
+            this.createNoise(0.008);
+            // Faint muffled cries (high filtered noise with LFO)
+            { const cry = this.createNoise(0.004);
+              cry.filter.type = 'bandpass';
+              cry.filter.frequency.value = 600;
+              cry.filter.Q.value = 8;
+              const cryLfo = this.ctx.createOscillator();
+              cryLfo.frequency.value = 0.12;
+              const cryLfoG = this.ctx.createGain();
+              cryLfoG.gain.value = 400;
+              cryLfo.connect(cryLfoG);
+              cryLfoG.connect(cry.filter.frequency);
+              cryLfo.start();
+              this.nodes.push(cryLfo); }
             break;
 
-          case 'crossroads':
+          case 'gateway':
             // Drone + questioning piano note
             this.createOsc(55, 'sine', 0, 0.05);
             this.createOsc(110, 'triangle', 0, 0.015);
             this.createNoise(0.004);
             // Single questioning note (A3)
-            const q = this.createOsc(220, 'sine', 0, 0);
-            const lfo = this.ctx.createOscillator();
-            lfo.frequency.value = 0.15;
-            const lfoGain = this.ctx.createGain();
-            lfoGain.gain.value = 0.02;
-            lfo.connect(lfoGain);
-            lfoGain.connect(q.gain.gain);
-            lfo.start();
-            this.nodes.push(lfo);
+            { const q = this.createOsc(220, 'sine', 0, 0);
+              const lfo = this.ctx.createOscillator();
+              lfo.frequency.value = 0.15;
+              const lfoGain = this.ctx.createGain();
+              lfoGain.gain.value = 0.02;
+              lfo.connect(lfoGain);
+              lfoGain.connect(q.gain.gain);
+              lfo.start();
+              this.nodes.push(lfo); }
             break;
 
-          case 'creepy-cute':
-            // Sweet distorted melody, breathing quality
+          case 'pretty-teeth':
+            // DROP001: seductive, invasive, magnetic pink horror
             this.createOsc(65, 'sine', 0, 0.04);
             this.createOsc(130, 'triangle', 7, 0.015);
             this.createOsc(195, 'sine', -5, 0.008);
             this.createNoise(0.005);
-            // Music box note
-            const mb = this.createOsc(523.25, 'sine', 0, 0);
-            const mbLfo = this.ctx.createOscillator();
-            mbLfo.frequency.value = 0.3;
-            const mbLfoG = this.ctx.createGain();
-            mbLfoG.gain.value = 0.008;
-            mbLfo.connect(mbLfoG);
-            mbLfoG.connect(mb.gain.gain);
-            mbLfo.start();
-            this.nodes.push(mbLfo);
+            // Invasive music box shimmer
+            { const mb = this.createOsc(523.25, 'sine', 0, 0);
+              const mbLfo = this.ctx.createOscillator();
+              mbLfo.frequency.value = 0.3;
+              const mbLfoG = this.ctx.createGain();
+              mbLfoG.gain.value = 0.008;
+              mbLfo.connect(mbLfoG);
+              mbLfoG.connect(mb.gain.gain);
+              mbLfo.start();
+              this.nodes.push(mbLfo); }
             break;
 
           case 'gothic-romance':
-            // Cello + piano weeping + wind
+            // DROP002: Cello bellows + piano weeps + tombstone wind
             this.createOsc(65.4, 'sawtooth', 0, 0.015);  // cello-like
             this.createOsc(130.8, 'sawtooth', 3, 0.008);
             this.createOsc(98, 'sine', 0, 0.03);
-            // Piano-ish
+            // Piano weeping
             this.createOsc(261.6, 'triangle', 0, 0.006);
             this.createOsc(329.6, 'sine', -2, 0.004);
-            // Wind
-            const wind = this.createNoise(0.012);
-            wind.filter.frequency.value = 300;
-            // LFO on wind for breathing effect
-            const wLfo = this.ctx.createOscillator();
-            wLfo.frequency.value = 0.08;
-            const wLfoG = this.ctx.createGain();
-            wLfoG.gain.value = 0.008;
-            wLfo.connect(wLfoG);
-            wLfoG.connect(wind.gain.gain);
-            wLfo.start();
-            this.nodes.push(wLfo);
+            // Wind through tombstones
+            { const wind = this.createNoise(0.012);
+              wind.filter.frequency.value = 300;
+              const wLfo = this.ctx.createOscillator();
+              wLfo.frequency.value = 0.08;
+              const wLfoG = this.ctx.createGain();
+              wLfoG.gain.value = 0.008;
+              wLfo.connect(wLfoG);
+              wLfoG.connect(wind.gain.gain);
+              wLfo.start();
+              this.nodes.push(wLfo); }
             break;
 
-          case 'nightmare-worlds':
-            // Distorted Fur Elise notes + violence weeping
-            this.createOsc(48, 'sine', 0, 0.06);
-            this.createOsc(48.5, 'sine', 8, 0.04);
-            // Fur Elise-like descending pattern (E-D#-E)
-            this.createOsc(329.6, 'sine', 0, 0.005);
-            this.createOsc(311.1, 'sine', 10, 0.004);
-            this.createOsc(329.6, 'triangle', -8, 0.003);
-            // Dark noise
-            const nn = this.createNoise(0.01);
-            nn.filter.frequency.value = 150;
+          case 'alchemy':
+            // DROP003: Cosmic dread, dimensional collapse, Escher geometry
+            this.createOsc(48, 'sine', 0, 0.05);
+            this.createOsc(72, 'sine', 6, 0.03);
+            this.createOsc(96, 'triangle', -4, 0.015);
+            // Cosmic shimmer
+            this.createOsc(440, 'sine', 0, 0.003);
+            this.createOsc(554.4, 'sine', 8, 0.002);
+            // Deep space noise
+            { const space = this.createNoise(0.008);
+              space.filter.frequency.value = 120; }
             break;
 
           case 'childhood-distortion':
-            // Broken music box + children's laughter frequency
+            // DROP004: Broken music box + children's laughter frequency + creaking
             this.createOsc(55, 'sine', 0, 0.04);
-            // Music box broken melody
+            // Music box broken melody (sugar plum fairy nightmare)
             this.createOsc(392, 'sine', 0, 0.004);
             this.createOsc(523.25, 'triangle', 15, 0.003);
             this.createOsc(659.25, 'sine', -10, 0.002);
-            // Creaking (filtered noise)
-            const creak = this.createNoise(0.008);
-            creak.filter.type = 'bandpass';
-            creak.filter.frequency.value = 800;
-            creak.filter.Q.value = 5;
-            // LFO for mechanical quality
-            const mLfo = this.ctx.createOscillator();
-            mLfo.frequency.value = 0.5;
-            const mLfoG = this.ctx.createGain();
-            mLfoG.gain.value = 500;
-            mLfo.connect(mLfoG);
-            mLfoG.connect(creak.filter.frequency);
-            mLfo.start();
-            this.nodes.push(mLfo);
+            // Creaking doors (filtered noise)
+            { const creak = this.createNoise(0.008);
+              creak.filter.type = 'bandpass';
+              creak.filter.frequency.value = 800;
+              creak.filter.Q.value = 5;
+              const mLfo = this.ctx.createOscillator();
+              mLfo.frequency.value = 0.5;
+              const mLfoG = this.ctx.createGain();
+              mLfoG.gain.value = 500;
+              mLfo.connect(mLfoG);
+              mLfoG.connect(creak.filter.frequency);
+              mLfo.start();
+              this.nodes.push(mLfo); }
+            // Children giggling frequency
+            { const giggle = this.createNoise(0.003);
+              giggle.filter.type = 'bandpass';
+              giggle.filter.frequency.value = 2000;
+              giggle.filter.Q.value = 3;
+              const gLfo = this.ctx.createOscillator();
+              gLfo.frequency.value = 3;
+              const gLfoG = this.ctx.createGain();
+              gLfoG.gain.value = 0.002;
+              gLfo.connect(gLfoG);
+              gLfoG.connect(giggle.gain.gain);
+              gLfo.start();
+              this.nodes.push(gLfo); }
             break;
 
-          case 'btc':
-          case 'btc-videos':
-          case 'btc-blog-1':
-          case 'btc-blog-2':
-          case 'community':
-          case 'about':
-            // Sanctuary: warm, calm pad
+          case 'sanctuary':
+            // Warm, calm, hopeful pad
             this.createOsc(110, 'sine', 0, 0.03);
             this.createOsc(165, 'sine', 2, 0.015);
             this.createOsc(220, 'sine', -1, 0.008);
             break;
-
-          case 'drops':
-            this.createOsc(55, 'sine', 0, 0.04);
-            this.createOsc(82.5, 'sine', 3, 0.02);
-            this.createNoise(0.003);
-            break;
         }
 
-        // Subliminal layer (always present, barely audible)
-        if (realm !== 'btc' && realm !== 'about' && realm !== 'community') {
-          // Very low frequency binaural-like tones at near-inaudible volume
+        // Subliminal layer (barely audible binaural tones for Be The Change)
+        if (profile !== 'sanctuary') {
           this.createOsc(40, 'sine', 0, 0.003);
           this.createOsc(40.5, 'sine', 0, 0.003);
         }
@@ -364,14 +397,13 @@
     cursorEcho(x, y) {
       if (!this.ctx || state.audioMuted) return;
       const freq = 200 + (y / window.innerHeight) * 400;
-      const pan = (x / window.innerWidth) * 2 - 1;
 
       if (!this.cursorOsc) {
         this.cursorOsc = this.ctx.createOscillator();
         this.cursorOsc.type = 'sine';
         this.cursorOsc.frequency.value = freq;
         const panner = this.ctx.createStereoPanner();
-        panner.pan.value = pan;
+        panner.pan.value = (x / window.innerWidth) * 2 - 1;
         this.cursorOsc.connect(this.cursorGain);
         this.cursorGain.connect(panner);
         panner.connect(this.masterGain);
@@ -398,118 +430,122 @@
     }
 
     setupListeners() {
-      document.querySelectorAll('[data-navigate]').forEach(el => {
-        el.addEventListener('click', (e) => {
-          e.preventDefault();
-          const target = el.dataset.navigate;
-          if (target !== state.currentRealm) {
-            this.navigate(target);
-          }
-        });
+      // Data-navigate links
+      document.addEventListener('click', (e) => {
+        const el = e.target.closest('[data-navigate]');
+        if (!el) return;
+        e.preventDefault();
+        const target = el.dataset.navigate;
+        if (target !== state.currentRealm) {
+          this.navigate(target);
+        }
       });
 
-      // Crown entrance
-      const crown = document.getElementById('enter-crown');
-      if (crown) {
-        crown.addEventListener('click', () => this.navigate('crossroads'));
+      // Enter the Realm button (homepage)
+      const enter = document.getElementById('enter-crown');
+      if (enter) {
+        enter.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.navigate('gateway');
+        });
       }
 
       // Video thumbnails
-      document.querySelectorAll('.video-thumb').forEach(el => {
-        el.addEventListener('click', () => {
-          const videoId = el.dataset.videoId;
-          const modal = document.getElementById('video-modal');
-          const frame = document.getElementById('modal-video-frame');
+      document.addEventListener('click', (e) => {
+        const thumb = e.target.closest('.video-thumb');
+        if (!thumb) return;
+        const videoId = thumb.dataset.videoId;
+        const modal = document.getElementById('video-modal');
+        const frame = document.getElementById('modal-video-frame');
+        if (modal && frame) {
           frame.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" allowfullscreen allow="autoplay"></iframe>`;
           modal.classList.add('active');
-        });
+        }
       });
 
       // Video modal close
-      const closeModal = document.querySelector('.video-modal-close');
-      if (closeModal) {
-        closeModal.addEventListener('click', () => {
+      document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('video-modal-close') || e.target.classList.contains('video-modal')) {
           const modal = document.getElementById('video-modal');
-          modal.classList.remove('active');
-          document.getElementById('modal-video-frame').innerHTML = '';
-        });
-      }
-      document.getElementById('video-modal')?.addEventListener('click', (e) => {
-        if (e.target === e.currentTarget) {
-          e.currentTarget.classList.remove('active');
-          document.getElementById('modal-video-frame').innerHTML = '';
+          if (modal) {
+            modal.classList.remove('active');
+            const frame = document.getElementById('modal-video-frame');
+            if (frame) frame.innerHTML = '';
+          }
         }
       });
 
       // Audio toggle
       const audioBtn = document.getElementById('audio-toggle');
-      audioBtn.addEventListener('click', () => {
-        if (!state.audioStarted) {
-          this.audio.init();
-          state.audioMuted = false;
-          document.body.classList.remove('audio-muted');
-          this.audio.setRealm(state.currentRealm);
-        } else {
-          state.audioMuted = !state.audioMuted;
-          document.body.classList.toggle('audio-muted', state.audioMuted);
-          this.audio.setMuted(state.audioMuted);
-          // If unmuting and no realm sounds loaded yet, load them now
-          if (!state.audioMuted) {
+      if (audioBtn) {
+        audioBtn.addEventListener('click', () => {
+          if (!state.audioStarted) {
+            this.audio.init();
+            state.audioMuted = false;
+            audioBtn.textContent = '🔊';
             this.audio.setRealm(state.currentRealm);
+          } else {
+            state.audioMuted = !state.audioMuted;
+            audioBtn.textContent = state.audioMuted ? '🔇' : '🔊';
+            this.audio.setMuted(state.audioMuted);
+            if (!state.audioMuted) {
+              this.audio.setRealm(state.currentRealm);
+            }
           }
-        }
-      });
+        });
+      }
 
-      // Mobile nav
+      // Mobile nav toggle
       const navToggle = document.querySelector('.nav-toggle');
-      navToggle?.addEventListener('click', () => {
-        document.querySelector('.nav-links').classList.toggle('open');
-      });
-
-      // Close mobile nav on link click
+      if (navToggle) {
+        navToggle.addEventListener('click', () => {
+          document.querySelector('.nav-links')?.classList.toggle('open');
+        });
+      }
       document.querySelectorAll('.nav-link').forEach(el => {
         el.addEventListener('click', () => {
-          document.querySelector('.nav-links').classList.remove('open');
+          document.querySelector('.nav-links')?.classList.remove('open');
         });
-      });
-
-      // Hash navigation
-      window.addEventListener('hashchange', () => {
-        const hash = window.location.hash.slice(1);
-        if (hash && hash !== state.currentRealm) {
-          this.navigate(hash, true);
-        }
       });
     }
 
-    navigate(targetRealm, fromHash) {
+    navigate(targetRealm) {
       if (state.transitioning) return;
       state.transitioning = true;
 
-      const overlay = document.getElementById('transition-overlay');
-      overlay.classList.add('active');
-
-      // Transition text variations
+      // Transition texts
       const texts = {
         'veil': 'RETURNING TO THE VEIL',
-        'crossroads': 'APPROACHING THE CROSSROADS',
-        'creepy-cute': 'DESCENDING INTO CREEPY CUTE',
-        'gothic-romance': 'ENTERING GOTHIC ROMANCE & ROT',
-        'nightmare-worlds': 'FALLING INTO NIGHTMARE WORLDS',
-        'childhood-distortion': 'THE CHILDREN ARE WAITING',
+        'gateway': 'APPROACHING THE GATEWAY',
+        'world-drop001': 'DESCENDING INTO PRETTY WITH TEETH',
+        'world-drop002': 'ENTERING THE RITUAL TOOLKIT',
+        'world-drop003': 'FALLING INTO THE ALCHEMY OF WORLDS',
+        'world-drop004': 'THE NIGHTMARES ARE WAITING',
         'drops': 'OPENING THE ARCHIVE',
         'btc': 'ENTERING THE SANCTUARY',
         'btc-videos': 'LOADING TRANSMISSIONS',
         'btc-blog-1': 'TUNING THE FREQUENCY',
         'btc-blog-2': 'OPENING THE DARK CANVAS',
-        'community': 'CONNECTING',
+        'community': 'CONNECTING TO THE COLLECTIVE',
+        'the-static': 'ANSWERING THE INTERFERENCE',
         'about': 'ACCESSING ORIGIN FILE'
       };
-      overlay.querySelector('.transition-text').textContent = texts[targetRealm] || 'CROSSING OVER';
+
+      // Create inline overlay
+      const overlay = document.getElementById('transition-overlay');
+      if (overlay) {
+        const textEl = overlay.querySelector('.transition-text');
+        if (textEl) textEl.textContent = texts[targetRealm] || 'CROSSING OVER';
+        overlay.classList.add('active');
+      }
 
       setTimeout(() => {
         // Deactivate current
-        document.querySelectorAll('.realm.active').forEach(r => r.classList.remove('active'));
+        document.querySelectorAll('.realm.active').forEach(r => {
+          r.classList.remove('active');
+          // Reset reveal animations
+          r.querySelectorAll('.rv.revealed').forEach(el => el.classList.remove('revealed'));
+        });
 
         // Activate target
         const target = document.getElementById('realm-' + targetRealm);
@@ -524,24 +560,23 @@
           this.particles.setType(pType);
 
           // Set audio
-          if (state.audioStarted) {
+          if (state.audioStarted && !state.audioMuted) {
             this.audio.setRealm(targetRealm);
           }
 
-          // Show nav (hide on veil)
-          document.getElementById('main-nav').classList.toggle('nav-hidden', targetRealm === 'veil');
+          // Show/hide nav
+          const mainNav = document.getElementById('main-nav');
+          if (mainNav) mainNav.classList.toggle('nav-hidden', targetRealm === 'veil');
 
-          // Update hash without triggering hashchange
-          if (!fromHash) {
-            history.pushState(null, '', '#' + targetRealm);
-          }
+          // Update URL
+          history.pushState(null, '', '#' + targetRealm);
 
           // Trigger reveal animations
           this.revealElements(target);
         }
 
         setTimeout(() => {
-          overlay.classList.remove('active');
+          if (overlay) overlay.classList.remove('active');
           state.transitioning = false;
         }, 600);
       }, 700);
@@ -553,45 +588,6 @@
         setTimeout(() => {
           el.classList.add('revealed');
         }, 100 + i * 80);
-      });
-    }
-  }
-
-  // ─── CURSOR SYSTEM ───
-  class CursorSystem {
-    constructor(audio) {
-      this.trail = document.getElementById('cursor-trail');
-      this.audio = audio;
-      this.lastEchoTime = 0;
-      this.setup();
-    }
-
-    setup() {
-      document.addEventListener('mousemove', (e) => {
-        state.mouseX = e.clientX;
-        state.mouseY = e.clientY;
-
-        this.trail.style.left = (e.clientX - 10) + 'px';
-        this.trail.style.top = (e.clientY - 10) + 'px';
-        this.trail.classList.add('visible');
-
-        // Cursor echo (throttled)
-        const now = Date.now();
-        if (now - this.lastEchoTime > 100) {
-          this.lastEchoTime = now;
-          this.audio.cursorEcho(e.clientX, e.clientY);
-        }
-      });
-
-      document.addEventListener('mouseleave', () => {
-        this.trail.classList.remove('visible');
-      });
-
-      // Hover states
-      const hoverables = 'a, button, [data-navigate], .sigil-card, .drop-card, .video-thumb, .btn-descend, .btn-sanctuary';
-      document.querySelectorAll(hoverables).forEach(el => {
-        el.addEventListener('mouseenter', () => this.trail.classList.add('hover'));
-        el.addEventListener('mouseleave', () => this.trail.classList.remove('hover'));
       });
     }
   }
@@ -631,28 +627,28 @@
     update(realm) {
       if (!this.canvas || !this.ctx) return;
       const skyOpacity = {
-        'veil': '0.15', 'crossroads': '0.2',
-        'creepy-cute': '0.25', 'gothic-romance': '0.5',
-        'nightmare-worlds': '0.6', 'childhood-distortion': '0.45',
-        'drops': '0.2'
+        'veil': 0.15, 'gateway': 0.2,
+        'world-drop001': 0.25, 'world-drop002': 0.5,
+        'world-drop003': 0.6, 'world-drop004': 0.45,
+        'drops': 0.2
       };
-      const op = skyOpacity[realm] || '0';
+      const op = skyOpacity[realm] || 0;
       this.canvas.style.opacity = op;
-      if (op === '0') return;
+      if (op === 0) return;
 
-      const t = Date.now() * 0.001;
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      const t = Date.now() * 0.001;
 
       for (const star of this.stars) {
         star.twinkle += star.speed;
         const alpha = 0.3 + Math.sin(star.twinkle) * 0.3;
-        const color = realm === 'nightmare-worlds' ? `rgba(100,130,200,${alpha})`
-          : realm === 'gothic-romance' ? `rgba(160,80,100,${alpha})`
+        const color = realm === 'world-drop003' ? `rgba(100,130,200,${alpha})`
+          : realm === 'world-drop002' ? `rgba(160,80,100,${alpha})`
           : realm === 'veil' ? `rgba(184,154,90,${alpha * 0.6})`
-          : realm === 'crossroads' ? `rgba(160,140,180,${alpha * 0.7})`
-          : realm === 'creepy-cute' ? `rgba(212,160,192,${alpha * 0.8})`
+          : realm === 'gateway' ? `rgba(160,140,180,${alpha * 0.7})`
+          : realm === 'world-drop001' ? `rgba(212,160,192,${alpha * 0.8})`
           : realm === 'drops' ? `rgba(140,120,180,${alpha * 0.6})`
-            : `rgba(180,160,100,${alpha})`;
+          : `rgba(180,160,100,${alpha})`;
         this.ctx.beginPath();
         this.ctx.arc(star.x + Math.sin(t + star.twinkle) * 0.5, star.y, star.size, 0, Math.PI * 2);
         this.ctx.fillStyle = color;
@@ -661,44 +657,36 @@
     }
   }
 
-  // ─── INTERSECTION OBSERVER FOR REVEALS ───
-  function setupScrollReveal() {
-    // Use MutationObserver to handle dynamically revealed realms
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('revealed');
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-    // Observe all rv elements in active realms
-    function observeActive() {
-      const active = document.querySelector('.realm.active');
-      if (active) {
-        active.querySelectorAll('.rv:not(.revealed)').forEach(el => observer.observe(el));
-      }
-    }
-
-    // Re-observe when realm changes
-    const bodyObserver = new MutationObserver(() => observeActive());
-    bodyObserver.observe(document.body, { attributes: true, attributeFilter: ['data-realm'] });
-    observeActive();
-  }
-
   // ─── INIT ───
   function init() {
-    const canvas = document.getElementById('void-canvas');
+    // Create missing elements
+    // Transition overlay
+    if (!document.getElementById('transition-overlay')) {
+      const overlay = document.createElement('div');
+      overlay.id = 'transition-overlay';
+      overlay.innerHTML = '<span class="transition-text">CROSSING OVER</span>';
+      document.body.appendChild(overlay);
+    }
+
+    // Cursor trail
+    if (!document.getElementById('cursor-trail')) {
+      const trail = document.createElement('div');
+      trail.id = 'cursor-trail';
+      document.body.appendChild(trail);
+    }
+
+    const canvas = document.getElementById('particle-canvas');
+    if (!canvas) return;
+
     const particles = new ParticleEngine(canvas);
     const audio = new AudioEngine();
     const nav = new NavigationEngine(particles, audio);
-    const cursor = new CursorSystem(audio);
     const sky = new NightmareSky();
 
     // Start with veil particles
     particles.setType('decay-dust');
 
-    // Initial reveal
+    // Initial reveal for veil
     const veil = document.getElementById('realm-veil');
     if (veil) {
       setTimeout(() => {
@@ -708,19 +696,48 @@
       }, 500);
     }
 
-    // Audio starts muted
-    document.body.classList.add('audio-muted');
+    // Cursor system
+    const trail = document.getElementById('cursor-trail');
+    let lastEchoTime = 0;
 
-    // Setup scroll-based reveal
-    setupScrollReveal();
+    document.addEventListener('mousemove', (e) => {
+      state.mouseX = e.clientX;
+      state.mouseY = e.clientY;
 
-    // Scroll-based reveals for active realm
+      if (trail) {
+        trail.style.left = (e.clientX - 10) + 'px';
+        trail.style.top = (e.clientY - 10) + 'px';
+        trail.classList.add('visible');
+      }
+
+      const now = Date.now();
+      if (now - lastEchoTime > 100) {
+        lastEchoTime = now;
+        audio.cursorEcho(e.clientX, e.clientY);
+      }
+    });
+
+    document.addEventListener('mouseleave', () => {
+      if (trail) trail.classList.remove('visible');
+    });
+
+    // Hover effects on interactive elements
+    document.addEventListener('mouseenter', (e) => {
+      if (e.target.closest('a, button, [data-navigate], .gateway-card, .drop-card, .video-thumb, .btn-descend, .btn-sanctuary, .btn-section, .drop004-section-card')) {
+        trail?.classList.add('hover');
+      }
+    }, true);
+    document.addEventListener('mouseleave', (e) => {
+      if (e.target.closest('a, button, [data-navigate], .gateway-card, .drop-card, .video-thumb, .btn-descend, .btn-sanctuary, .btn-section, .drop004-section-card')) {
+        trail?.classList.remove('hover');
+      }
+    }, true);
+
+    // Scroll reveals
     function handleScroll() {
       const active = document.querySelector('.realm.active');
       if (!active) return;
-      const scrollTop = active.scrollTop;
       const vh = window.innerHeight;
-
       active.querySelectorAll('.rv:not(.revealed)').forEach(el => {
         const rect = el.getBoundingClientRect();
         if (rect.top < vh * 0.85) {
@@ -729,12 +746,12 @@
       });
     }
 
-    // Add scroll listener to each realm
     document.querySelectorAll('.realm').forEach(realm => {
       realm.addEventListener('scroll', handleScroll);
     });
+    window.addEventListener('scroll', handleScroll);
 
-    // Animation loop (error-safe — never stops)
+    // Animation loop
     function animate() {
       try { particles.update(); } catch (e) {}
       try { sky.update(state.currentRealm); } catch (e) {}
@@ -748,11 +765,11 @@
       setTimeout(() => nav.navigate(hash), 100);
     }
 
-    // First interaction starts audio context
+    // First interaction starts audio context (but muted)
     document.addEventListener('click', function firstClick() {
       if (!state.audioStarted) {
         audio.init();
-        audio.setMuted(true); // Start muted, user toggles
+        audio.setMuted(true);
       }
       document.removeEventListener('click', firstClick);
     }, { once: true });
