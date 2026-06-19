@@ -1,14 +1,19 @@
+/* ══════════════════════════════════════════════════════════════
+   PRETTY LITTLE NIGHTMARES — SWEET DECAY ENGINE
+   Lascivious Vibrations LLC © 2026
+   ══════════════════════════════════════════════════════════════ */
 (function () {
   'use strict';
 
-  // ─── STATE ───
+  // ─── GLOBAL STATE ───
   const state = {
     currentRealm: 'veil',
-    audioStarted: false,
-    audioMuted: true,
+    transitioning: false,
     mouseX: 0,
     mouseY: 0,
-    transitioning: false
+    audioStarted: false,
+    audioMuted: true,
+    currentSection: null
   };
 
   // ─── PARTICLE ENGINE ───
@@ -28,274 +33,310 @@
     }
 
     setType(type) {
-      if (type === 'none') {
-        this.particles = [];
-        this.type = type;
-        return;
-      }
-      this.type = type;
+      this.type = type || 'decay-dust';
       this.particles = [];
-      let count;
-      switch (type) {
-        case 'decay-dust':
-          count = 120;
-          break;
-        case 'candy-breath':
-          count = 90;
-          break;
-        case 'moth-wings':
-          count = 70;
-          break;
-        case 'thorn-lollipop':
-          count = 80;
-          break;
-        case 'teeth-float':
-          count = 60; // Fewer, larger particles for teeth
-          break;
-        case 'golden-hope':
-          count = 100;
-          break;
-        case 'ethereal-wisps':
-          count = 50; // Subtle wisps
-          break;
-        default:
-          count = 100;
-      }
+      const count = this.getCount();
       for (let i = 0; i < count; i++) {
-        this.particles.push(this.createParticle(type));
+        this.particles.push(this.createParticle());
       }
     }
 
-    createParticle(type) {
-      const w = this.canvas.width, h = this.canvas.height;
+    getCount() {
+      const counts = {
+        'decay-dust': 60,
+        'golden-hope': 45,
+        'teeth-float': 50,
+        'moth-wings': 40,
+        'thorn-lollipop': 35,
+        'candy-breath': 55,
+        'smile-shards': 45,
+        'element-drift': 30,
+        'velvet-dust': 50,
+        'ritual-smoke': 40,
+        'alchemy-sparks': 55,
+        'porcelain-dust': 45
+      };
+      return counts[this.type] || 50;
+    }
+
+    createParticle() {
+      const w = this.canvas.width;
+      const h = this.canvas.height;
       const base = {
         x: Math.random() * w,
         y: Math.random() * h,
         vx: (Math.random() - 0.5) * 0.3,
         vy: (Math.random() - 0.5) * 0.3,
-        life: Math.random(),
-        size: 1 + Math.random() * 2,
+        size: Math.random() * 3 + 1,
+        opacity: Math.random() * 0.5 + 0.1,
+        life: Math.random() * 300 + 100,
+        maxLife: 400,
         phase: Math.random() * Math.PI * 2,
-        speed: 0.002 + Math.random() * 0.005,
-        opacity: 0.2 + Math.random() * 0.4
+        rotation: Math.random() * Math.PI * 2,
+        rotationSpeed: (Math.random() - 0.5) * 0.02
       };
 
-      switch (type) {
-        case 'decay-dust':
-          base.color = `rgba(184,154,90,${base.opacity})`;
-          base.vy = -0.15 - Math.random() * 0.5;
-          base.size = 1 + Math.random() * 3;
+      switch (this.type) {
+        case 'teeth-float':
+          base.size = Math.random() * 4 + 2;
+          base.vy = -Math.random() * 0.4 - 0.1;
+          base.vx = (Math.random() - 0.5) * 0.2;
+          base.color = [255, 245, 238];
+          base.shape = 'triangle';
           break;
-        case 'candy-breath':
-          const colors_cb = ['rgba(212,160,192,', 'rgba(194,116,137,', 'rgba(212,80,107,'];
-          base.color = colors_cb[Math.floor(Math.random() * colors_cb.length)] + (0.3 + Math.random() * 0.3) + ')';
-          base.pulseRate = 0.01 + Math.random() * 0.02;
-          base.baseSize = 2 + Math.random() * 5;
-          base.size = base.baseSize;
+        case 'smile-shards':
+          base.size = Math.random() * 5 + 1;
+          base.vy = Math.random() * 0.3 + 0.1;
+          base.vx = (Math.random() - 0.5) * 0.5;
+          base.color = [194, 116, 137];
+          base.shape = 'shard';
+          break;
+        case 'element-drift':
+          base.size = Math.random() * 3 + 2;
+          base.vy = (Math.random() - 0.5) * 0.15;
+          base.vx = (Math.random() - 0.5) * 0.15;
+          base.color = [200, 180, 220];
+          base.shape = 'circle';
+          base.opacity = Math.random() * 0.3 + 0.1;
+          break;
+        case 'velvet-dust':
+          base.size = Math.random() * 2 + 1;
+          base.vy = Math.random() * 0.2 + 0.05;
+          base.color = [139, 69, 89];
+          base.shape = 'circle';
           break;
         case 'moth-wings':
-          base.color = `rgba(160,60,90,${base.opacity})`;
-          base.wingPhase = Math.random() * Math.PI * 2;
-          base.wingSpeed = 0.03 + Math.random() * 0.05;
-          base.size = 2.5 + Math.random() * 4;
-          base.flutter = Math.random() * 3;
+          base.size = Math.random() * 6 + 3;
+          base.vy = (Math.random() - 0.5) * 0.2;
+          base.vx = Math.sin(base.phase) * 0.5;
+          base.color = [180, 140, 160];
+          base.shape = 'moth';
           break;
         case 'thorn-lollipop':
-          base.color = `rgba(180,140,60,${base.opacity})`;
-          base.vy = 0.2 + Math.random() * 0.5;
-          base.drip = Math.random();
-          base.size = 1.5 + Math.random() * 3.5;
-          break;
-        case 'teeth-float':
-          base.color = `rgba(232,221,208,${0.4 + Math.random() * 0.3})`; // Bone white
-          base.size = 5 + Math.random() * 10; // Larger for teeth
-          base.shape = Math.random() > 0.5 ? 'tooth' : 'smile';
-          base.rotation = Math.random() * Math.PI * 2;
-          base.rotationSpeed = (Math.random() - 0.5) * 0.02;
-          base.pulseRate = 0.05 + Math.random() * 0.05;
-          base.baseOpacity = base.opacity;
+          base.size = Math.random() * 3 + 1.5;
+          base.vy = -Math.random() * 0.3;
+          base.color = [220, 80, 120];
+          base.shape = 'diamond';
           break;
         case 'golden-hope':
-          base.color = `rgba(184,154,90,${0.3 + Math.random() * 0.4})`; // Aged gold
-          base.size = 2 + Math.random() * 4;
-          base.vx = (Math.random() - 0.5) * 0.1;
-          base.vy = -0.05 - Math.random() * 0.2; // Gently float upwards
-          base.pulseRate = 0.02 + Math.random() * 0.03;
-          base.baseOpacity = base.opacity;
+          base.size = Math.random() * 3 + 1;
+          base.vy = -Math.random() * 0.3 - 0.1;
+          base.color = [255, 215, 120];
+          base.shape = 'circle';
+          base.opacity = Math.random() * 0.4 + 0.1;
           break;
-        case 'ethereal-wisps':
-          base.color = `rgba(232,221,208,${0.1 + Math.random() * 0.2})`; // Whisper white
-          base.size = 3 + Math.random() * 6;
-          base.vx = (Math.random() - 0.5) * 0.2;
+        case 'ritual-smoke':
+          base.size = Math.random() * 8 + 3;
+          base.vy = -Math.random() * 0.2 - 0.05;
+          base.vx = (Math.random() - 0.5) * 0.3;
+          base.color = [100, 60, 120];
+          base.shape = 'smoke';
+          base.opacity = Math.random() * 0.15 + 0.05;
+          break;
+        case 'alchemy-sparks':
+          base.size = Math.random() * 2 + 1;
+          base.vy = (Math.random() - 0.5) * 0.6;
+          base.vx = (Math.random() - 0.5) * 0.6;
+          base.color = [100, 200, 255];
+          base.shape = 'spark';
+          base.opacity = Math.random() * 0.6 + 0.2;
+          break;
+        case 'porcelain-dust':
+          base.size = Math.random() * 2 + 0.5;
+          base.vy = Math.random() * 0.15 + 0.05;
+          base.color = [240, 230, 220];
+          base.shape = 'circle';
+          base.opacity = Math.random() * 0.3 + 0.05;
+          break;
+        case 'candy-breath':
+          base.size = Math.random() * 4 + 2;
+          base.vy = -Math.random() * 0.2;
+          base.color = [255, 150, 200];
+          base.shape = 'circle';
+          break;
+        default: // decay-dust
+          base.size = Math.random() * 2 + 0.5;
           base.vy = (Math.random() - 0.5) * 0.2;
-          base.driftX = (Math.random() - 0.5) * 0.05;
-          base.driftY = (Math.random() - 0.5) * 0.05;
-          base.baseOpacity = base.opacity;
+          base.color = [194, 116, 137];
+          base.shape = 'circle';
           break;
       }
       return base;
     }
 
     update() {
-      if (this.type === 'none') return;
-      const w = this.canvas.width, h = this.canvas.height;
-      const t = Date.now() * 0.001;
+      if (!this.ctx) return;
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-      this.ctx.clearRect(0, 0, w, h);
+      const mx = state.mouseX;
+      const my = state.mouseY;
 
-      for (let i = 0; i < this.particles.length; i++) {
+      for (let i = this.particles.length - 1; i >= 0; i--) {
         const p = this.particles[i];
-        p.x += p.vx + Math.sin(t + p.phase) * 0.15;
-        p.y += p.vy + Math.cos(t + p.phase) * 0.08;
+        p.life--;
+        p.phase += 0.01;
+        p.rotation += p.rotationSpeed;
 
         // Mouse influence
-        const dx = state.mouseX - p.x;
-        const dy = state.mouseY - p.y;
+        const dx = mx - p.x;
+        const dy = my - p.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 120) {
-          p.x -= dx * 0.005;
-          p.y -= dy * 0.005;
+        if (dist < 150 && dist > 0) {
+          const force = (150 - dist) / 150 * 0.02;
+          p.vx += (dx / dist) * force;
+          p.vy += (dy / dist) * force;
         }
 
-        // Wrap
-        if (p.x < -p.size) p.x = w + p.size;
-        if (p.x > w + p.size) p.x = -p.size;
-        if (p.y < -p.size) p.y = h + p.size;
-        if (p.y > h + p.size) p.y = -p.size;
+        // Drift
+        p.x += p.vx + Math.sin(p.phase) * 0.15;
+        p.y += p.vy + Math.cos(p.phase * 0.7) * 0.1;
 
-        // Type-specific behavior and drawing
-        this.ctx.fillStyle = p.color;
-        this.ctx.globalAlpha = p.opacity;
+        // Dampen
+        p.vx *= 0.99;
+        p.vy *= 0.99;
 
-        switch (this.type) {
-          case 'candy-breath':
-            p.size = p.baseSize + Math.sin(t * p.pulseRate * 60) * 1;
+        // Fade based on life
+        const lifeRatio = p.life / p.maxLife;
+        const alpha = p.opacity * (lifeRatio < 0.2 ? lifeRatio / 0.2 : lifeRatio > 0.8 ? (1 - lifeRatio) / 0.2 : 1);
+
+        // Draw
+        const [r, g, b] = p.color || [194, 116, 137];
+        this.ctx.save();
+        this.ctx.globalAlpha = Math.max(0, alpha);
+        this.ctx.fillStyle = `rgb(${r},${g},${b})`;
+        this.ctx.translate(p.x, p.y);
+        this.ctx.rotate(p.rotation);
+
+        switch (p.shape) {
+          case 'triangle':
             this.ctx.beginPath();
-            this.ctx.arc(p.x, p.y, Math.max(0.5, p.size), 0, Math.PI * 2);
+            this.ctx.moveTo(0, -p.size);
+            this.ctx.lineTo(-p.size * 0.6, p.size * 0.5);
+            this.ctx.lineTo(p.size * 0.6, p.size * 0.5);
+            this.ctx.closePath();
             this.ctx.fill();
             break;
-          case 'moth-wings':
-            p.wingPhase += p.wingSpeed;
-            p.x += Math.sin(p.wingPhase) * p.flutter;
+          case 'shard':
             this.ctx.beginPath();
-            this.ctx.arc(p.x, p.y, Math.max(0.5, p.size), 0, Math.PI * 2);
+            this.ctx.moveTo(0, -p.size);
+            this.ctx.lineTo(p.size * 0.3, 0);
+            this.ctx.lineTo(0, p.size * 0.6);
+            this.ctx.lineTo(-p.size * 0.3, 0);
+            this.ctx.closePath();
             this.ctx.fill();
             break;
-          case 'thorn-lollipop':
-            p.size = p.size * (1 + Math.sin(t * 2 + p.drip * 10) * 0.05);
+          case 'diamond':
             this.ctx.beginPath();
-            this.ctx.arc(p.x, p.y, Math.max(0.5, p.size), 0, Math.PI * 2);
+            this.ctx.moveTo(0, -p.size);
+            this.ctx.lineTo(p.size * 0.5, 0);
+            this.ctx.lineTo(0, p.size);
+            this.ctx.lineTo(-p.size * 0.5, 0);
+            this.ctx.closePath();
             this.ctx.fill();
             break;
-          case 'teeth-float':
-            p.rotation += p.rotationSpeed;
-            p.opacity = p.baseOpacity * (0.7 + 0.3 * Math.sin(t * p.pulseRate)); // Fade in/out
-            this.ctx.globalAlpha = p.opacity;
-            this.ctx.save();
-            this.ctx.translate(p.x, p.y);
-            this.ctx.rotate(p.rotation);
-            if (p.shape === 'tooth') {
-              this.drawTooth(this.ctx, p.size);
-            } else {
-              this.drawSmile(this.ctx, p.size);
-            }
-            this.ctx.restore();
-            break;
-          case 'golden-hope':
-            p.opacity = p.baseOpacity * (0.8 + 0.2 * Math.sin(t * p.pulseRate)); // Gentle pulse
-            this.ctx.globalAlpha = p.opacity;
+          case 'moth':
             this.ctx.beginPath();
-            this.ctx.arc(p.x, p.y, Math.max(0.5, p.size), 0, Math.PI * 2);
+            this.ctx.ellipse(-p.size * 0.4, 0, p.size * 0.5, p.size * 0.25, -0.3, 0, Math.PI * 2);
+            this.ctx.fill();
+            this.ctx.beginPath();
+            this.ctx.ellipse(p.size * 0.4, 0, p.size * 0.5, p.size * 0.25, 0.3, 0, Math.PI * 2);
             this.ctx.fill();
             break;
-          case 'ethereal-wisps':
-            p.x += p.driftX * Math.sin(t * 0.5 + p.phase);
-            p.y += p.driftY * Math.cos(t * 0.5 + p.phase);
-            p.opacity = p.baseOpacity * (0.6 + 0.4 * Math.sin(t * 0.3 + p.phase)); // Slow fade
-            this.ctx.globalAlpha = p.opacity;
+          case 'smoke':
             this.ctx.beginPath();
-            this.ctx.ellipse(p.x, p.y, p.size, p.size * 0.5, p.phase, 0, Math.PI * 2);
+            this.ctx.arc(0, 0, p.size, 0, Math.PI * 2);
+            this.ctx.fill();
+            this.ctx.beginPath();
+            this.ctx.arc(p.size * 0.5, -p.size * 0.3, p.size * 0.7, 0, Math.PI * 2);
             this.ctx.fill();
             break;
-          default: // decay-dust
+          case 'spark':
             this.ctx.beginPath();
-            this.ctx.arc(p.x, p.y, Math.max(0.5, p.size), 0, Math.PI * 2);
+            this.ctx.arc(0, 0, p.size * 0.5, 0, Math.PI * 2);
+            this.ctx.fill();
+            this.ctx.globalAlpha = alpha * 0.3;
+            this.ctx.beginPath();
+            this.ctx.arc(0, 0, p.size * 1.5, 0, Math.PI * 2);
+            this.ctx.fill();
+            break;
+          default: // circle
+            this.ctx.beginPath();
+            this.ctx.arc(0, 0, p.size, 0, Math.PI * 2);
             this.ctx.fill();
             break;
         }
+        this.ctx.restore();
 
-        // Glow halos for larger particles (existing logic, adjusted for new types)
-        if (p.size > 2 && this.type !== 'teeth-float' && this.type !== 'ethereal-wisps') {
-          this.ctx.beginPath();
-          this.ctx.arc(p.x, p.y, p.size * 3, 0, Math.PI * 2);
-          const glowColor = this.type === 'moth-wings' ? 'rgba(160,60,90,0.06)'
-            : this.type === 'candy-breath' ? 'rgba(212,160,192,0.05)'
-            : this.type === 'decay-dust' ? 'rgba(184,154,90,0.04)'
-            : this.type === 'golden-hope' ? 'rgba(184,154,90,0.08)'
-            : 'rgba(180,140,60,0.05)';
-          this.ctx.fillStyle = glowColor;
-          this.ctx.globalAlpha = 0.5; // Ensure glow is subtle
-          this.ctx.fill();
+        // Recycle dead or offscreen particles
+        if (p.life <= 0 || p.x < -50 || p.x > this.canvas.width + 50 || p.y < -50 || p.y > this.canvas.height + 50) {
+          this.particles[i] = this.createParticle();
+          // Respawn at edges
+          if (Math.random() < 0.5) {
+            this.particles[i].x = Math.random() < 0.5 ? -10 : this.canvas.width + 10;
+            this.particles[i].y = Math.random() * this.canvas.height;
+          } else {
+            this.particles[i].x = Math.random() * this.canvas.width;
+            this.particles[i].y = Math.random() < 0.5 ? -10 : this.canvas.height + 10;
+          }
         }
-      }
-      this.ctx.globalAlpha = 1; // Reset global alpha
-    }
-
-    drawTooth(ctx, size) {
-      ctx.beginPath();
-      ctx.moveTo(0, -size);
-      ctx.lineTo(size * 0.7, size);
-      ctx.lineTo(-size * 0.7, size);
-      ctx.closePath();
-      ctx.fill();
-    }
-
-    drawSmile(ctx, size) {
-      ctx.beginPath();
-      ctx.arc(0, 0, size, 0, Math.PI, false);
-      ctx.lineTo(size * 0.8, size * 0.5);
-      ctx.lineTo(-size * 0.8, size * 0.5);
-      ctx.closePath();
-      ctx.fill();
-
-      // Draw multiple small teeth for the 'too many teeth' effect
-      const numTeeth = 5 + Math.floor(Math.random() * 3);
-      const toothWidth = size * 0.2;
-      const startX = -size * 0.7;
-      for (let i = 0; i < numTeeth; i++) {
-        ctx.beginPath();
-        ctx.moveTo(startX + i * (toothWidth * 1.2), size * 0.5);
-        ctx.lineTo(startX + i * (toothWidth * 1.2) + toothWidth * 0.5, size * 0.8);
-        ctx.lineTo(startX + i * (toothWidth * 1.2) - toothWidth * 0.5, size * 0.8);
-        ctx.closePath();
-        ctx.fill();
       }
     }
   }
 
   // ─── AUDIO ENGINE ───
+  // Soft unsettling ambient soundscapes with per-realm uniqueness
+  // and barely-audible stoic subliminal affirmations
   class AudioEngine {
     constructor() {
       this.ctx = null;
       this.masterGain = null;
       this.realmGain = null;
+      this.subGain = null;
       this.nodes = [];
       this.currentRealm = null;
       this.cursorGain = null;
       this.cursorOsc = null;
+      this._melodyIntervals = [];
+      this._subliminalInterval = null;
+      this._subliminalIndex = 0;
+
+      // Stoic subliminal affirmations
+      this.subliminals = [
+        'be the change you want to see in the world',
+        'be the best person you can be',
+        'see the light in the dark',
+        'accept what you cannot change',
+        'worry only about what you can control',
+        'be humble',
+        'act like we live in this world together',
+        'the obstacle is the way',
+        'waste no more time arguing what a good person should be',
+        'it is not what happens to you but how you react',
+        'we suffer more in imagination than in reality',
+        'the best revenge is not to be like your enemy',
+        'you have power over your mind not outside events',
+        'choose not to be harmed and you will not feel harmed'
+      ];
     }
 
     init() {
       if (this.ctx) return;
       this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+
       this.masterGain = this.ctx.createGain();
-      this.masterGain.gain.value = 0.25;
+      this.masterGain.gain.value = 0.2;
       this.masterGain.connect(this.ctx.destination);
+
       this.realmGain = this.ctx.createGain();
       this.realmGain.gain.value = 0;
       this.realmGain.connect(this.masterGain);
 
-      // Cursor echo setup
+      // Subliminal channel - barely audible
+      this.subGain = this.ctx.createGain();
+      this.subGain.gain.value = 0.015; // Nearly inaudible
+      this.subGain.connect(this.masterGain);
+
+      // Cursor hover sound channel
       this.cursorGain = this.ctx.createGain();
       this.cursorGain.gain.value = 0;
       this.cursorGain.connect(this.masterGain);
@@ -309,271 +350,456 @@
         try { n.disconnect(); } catch (e) { }
       });
       this.nodes = [];
-      // Clear melody loops
       if (this._melodyIntervals) {
         this._melodyIntervals.forEach(id => clearInterval(id));
         this._melodyIntervals = [];
+      }
+      if (this._subliminalInterval) {
+        clearInterval(this._subliminalInterval);
+        this._subliminalInterval = null;
       }
       if (this.realmGain) {
         this.realmGain.gain.setTargetAtTime(0, this.ctx.currentTime, 0.5);
       }
     }
 
-    createOsc(freq, type, detune, gainVal) {
+    // Create a sustained drone note
+    createDrone(freq, type, gain, detuneAmount) {
       const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
-      osc.type = type;
+      const g = this.ctx.createGain();
+      osc.type = type || 'sine';
       osc.frequency.value = freq;
-      osc.detune.value = detune || 0;
-      gain.gain.value = gainVal || 0.05;
-      osc.connect(gain);
-      gain.connect(this.realmGain);
+      if (detuneAmount) osc.detune.value = detuneAmount;
+      g.gain.value = gain || 0.1;
+      osc.connect(g);
+      g.connect(this.realmGain);
       osc.start();
-      this.nodes.push(osc);
-      return { osc, gain };
+      this.nodes.push(osc, g);
+      return { osc, gain: g };
     }
 
-    createNoise(gainVal) {
-      const bufferSize = this.ctx.sampleRate * 2;
+    // Create an LFO to modulate a parameter
+    createLFO(freq, amount, target) {
+      const lfo = this.ctx.createOscillator();
+      const lfoGain = this.ctx.createGain();
+      lfo.type = 'sine';
+      lfo.frequency.value = freq;
+      lfoGain.gain.value = amount;
+      lfo.connect(lfoGain);
+      lfoGain.connect(target);
+      lfo.start();
+      this.nodes.push(lfo, lfoGain);
+      return lfo;
+    }
+
+    // Subliminal whisper system using oscillator-encoded speech patterns
+    startSubliminals() {
+      if (this._subliminalInterval) return;
+      this._subliminalInterval = setInterval(() => {
+        if (!this.ctx || state.audioMuted) return;
+        this.whisperSubliminal();
+      }, 12000 + Math.random() * 8000); // Every 12-20 seconds
+    }
+
+    whisperSubliminal() {
+      if (!this.ctx) return;
+      const msg = this.subliminals[this._subliminalIndex % this.subliminals.length];
+      this._subliminalIndex++;
+
+      // Create a breathy whisper effect using filtered noise + gentle tonal pattern
+      const now = this.ctx.currentTime;
+      const duration = 3 + msg.length * 0.08;
+
+      // Noise-based whisper texture
+      const bufferSize = this.ctx.sampleRate * duration;
       const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
       const data = buffer.getChannelData(0);
       for (let i = 0; i < bufferSize; i++) {
-        data[i] = Math.random() * 2 - 1;
+        // Modulated white noise that mimics speech rhythm
+        const t = i / this.ctx.sampleRate;
+        const wordIndex = Math.floor(t * 3);
+        const syllableEnv = Math.sin(t * Math.PI * 2 * (2 + wordIndex * 0.3)) * 0.5 + 0.5;
+        data[i] = (Math.random() * 2 - 1) * syllableEnv * 0.4;
       }
+
       const source = this.ctx.createBufferSource();
       source.buffer = buffer;
-      source.loop = true;
-      const gain = this.ctx.createGain();
-      gain.gain.value = gainVal || 0.01;
-      const filter = this.ctx.createBiquadFilter();
-      filter.type = 'lowpass';
-      filter.frequency.value = 200;
-      source.connect(filter);
-      filter.connect(gain);
-      gain.connect(this.realmGain);
-      source.start();
-      this.nodes.push(source);
-      return { source, gain, filter };
+
+      // Bandpass to make it sound like whispered speech
+      const bp = this.ctx.createBiquadFilter();
+      bp.type = 'bandpass';
+      bp.frequency.value = 2000 + Math.random() * 1000;
+      bp.Q.value = 1.5;
+
+      const whisperGain = this.ctx.createGain();
+      whisperGain.gain.setValueAtTime(0, now);
+      whisperGain.gain.linearRampToValueAtTime(0.08, now + 0.5);
+      whisperGain.gain.linearRampToValueAtTime(0.06, now + duration - 0.8);
+      whisperGain.gain.linearRampToValueAtTime(0, now + duration);
+
+      source.connect(bp);
+      bp.connect(whisperGain);
+      whisperGain.connect(this.subGain);
+      source.start(now);
+      source.stop(now + duration);
+
+      this.nodes.push(source, bp, whisperGain);
+
+      // Also add a very faint tonal element
+      const subOsc = this.ctx.createOscillator();
+      const subOscGain = this.ctx.createGain();
+      subOsc.type = 'sine';
+      subOsc.frequency.value = 100 + Math.random() * 50;
+      subOscGain.gain.setValueAtTime(0, now);
+      subOscGain.gain.linearRampToValueAtTime(0.03, now + 0.5);
+      subOscGain.gain.linearRampToValueAtTime(0, now + duration);
+      subOsc.connect(subOscGain);
+      subOscGain.connect(this.subGain);
+      subOsc.start(now);
+      subOsc.stop(now + duration);
+      this.nodes.push(subOsc, subOscGain);
     }
 
-    // Creates a haunting looping melody from an array of frequencies
-    createMelody(notes, type, gainVal, noteLength) {
-      const totalDuration = notes.length * noteLength;
-      const playMelody = () => {
-        if (this.currentRealm === null) return;
-        notes.forEach((freq, i) => {
-          const osc = this.ctx.createOscillator();
-          const gain = this.ctx.createGain();
-          osc.type = type || 'sine';
-          osc.frequency.value = freq;
-          gain.gain.value = 0;
-          osc.connect(gain);
-          gain.connect(this.realmGain);
-          const startTime = this.ctx.currentTime + (i * noteLength);
-          // Gentle fade in and out for each note
-          gain.gain.setTargetAtTime(gainVal, startTime, 0.15);
-          gain.gain.setTargetAtTime(0, startTime + noteLength * 0.7, 0.2);
-          osc.start(startTime);
-          osc.stop(startTime + noteLength);
-          this.nodes.push(osc);
-        });
-      };
-      playMelody();
-      // Loop the melody
-      const loopInterval = setInterval(() => {
-        if (this.nodes.length === 0) {
-          clearInterval(loopInterval);
-          return;
-        }
-        playMelody();
-      }, totalDuration * 1000);
-      // Store interval reference for cleanup
-      this._melodyIntervals = this._melodyIntervals || [];
-      this._melodyIntervals.push(loopInterval);
-    }
-
-    // Map realm IDs to audio profiles
-    getAudioProfile(realm) {
-      const map = {
-        'veil': 'veil',
-        'gateway': 'gateway',
-        'world-drop001': 'pretty-teeth',
-        'world-drop002': 'gothic-romance',
-        'world-drop003': 'alchemy',
-        'world-drop004': 'childhood-distortion',
-        'drops': 'gateway',
-        'btc': 'sanctuary',
-        'btc-videos': 'sanctuary',
-        'btc-blog-1': 'sanctuary',
-        'btc-blog-2': 'sanctuary',
-        'community': 'sanctuary',
-        'the-static': 'sanctuary',
-        'about': 'sanctuary'
-      };
-      return map[realm] || 'veil';
-    }
-
-    setRealm(realm) {
+    setRealm(realmId) {
       if (!this.ctx) return;
-      const profile = this.getAudioProfile(realm);
-      if (this.currentRealm === realm && this.nodes.length > 0) return;
-      this.currentRealm = realm;
       this.stopAll();
+      this.currentRealm = realmId;
+      if (state.audioMuted) return;
 
-      setTimeout(() => {
-        if (this.currentRealm !== realm) return;
-        this.realmGain.gain.setTargetAtTime(1, this.ctx.currentTime, 1.5);
+      // Fade in realm audio
+      this.realmGain.gain.setTargetAtTime(1, this.ctx.currentTime, 0.8);
 
-        switch (profile) {
-          case 'veil':
-            // Haunting melodic whisper — distant music box lullaby descending
-            this.createMelody([293.7, 261.6, 220, 196, 174.6], 'sine', 0.012, 1.8);
-            // Soft spectral choir pad (no drone)
-            this.createOsc(330, 'sine', 0, 0.008);
-            this.createOsc(392, 'sine', -3, 0.005);
-            // Distant muffled cries — haunting vocal-like filter sweep
-            { const cry = this.createNoise(0.003);
-              cry.filter.type = 'bandpass';
-              cry.filter.frequency.value = 800;
-              cry.filter.Q.value = 12;
-              const cryLfo = this.ctx.createOscillator();
-              cryLfo.frequency.value = 0.08;
-              const cryLfoG = this.ctx.createGain();
-              cryLfoG.gain.value = 300;
-              cryLfo.connect(cryLfoG);
-              cryLfoG.connect(cry.filter.frequency);
-              cryLfo.start();
-              this.nodes.push(cryLfo); }
-            break;
+      // Start subliminals
+      this.startSubliminals();
 
-          case 'gateway':
-            // Haunting single piano melody — questioning, slow, deliberate
-            this.createMelody([220, 262, 247, 220, 196], 'triangle', 0.015, 2.2);
-            // Ethereal glass harmonics
-            this.createOsc(880, 'sine', 0, 0.003);
-            this.createOsc(1108, 'sine', 5, 0.002);
-            break;
+      // Route to realm-specific soundscape
+      const profiles = {
+        'veil': () => this.soundscapeVeil(),
+        'gateway': () => this.soundscapeGateway(),
+        'world-drop001': () => this.soundscapePrettyWithTeeth(),
+        'world-drop002': () => this.soundscapeRitualToolkit(),
+        'world-drop003': () => this.soundscapeAlchemy(),
+        'world-drop004': () => this.soundscapeSweetDecay(),
+        'drops': () => this.soundscapeGateway(),
+        'btc': () => this.soundscapeSanctuary(),
+        'btc-videos': () => this.soundscapeSanctuary(),
+        'btc-blog-1': () => this.soundscapeSanctuary(),
+        'btc-blog-2': () => this.soundscapeSanctuary(),
+        'community': () => this.soundscapeCommunity(),
+        'the-static': () => this.soundscapeStatic(),
+        'about': () => this.soundscapeSanctuary()
+      };
 
-          case 'pretty-teeth':
-            // DROP001: Seductive broken music box — haunting melodic shimmer
-            this.createMelody([523.25, 587.33, 659.25, 523.25, 493.88, 440], 'sine', 0.01, 1.4);
-            // Ghostly harp arpeggios
-            this.createOsc(784, 'sine', 0, 0.004);
-            { const harp = this.createOsc(659.25, 'triangle', 0, 0);
-              const harpLfo = this.ctx.createOscillator();
-              harpLfo.frequency.value = 0.4;
-              const harpLfoG = this.ctx.createGain();
-              harpLfoG.gain.value = 0.006;
-              harpLfo.connect(harpLfoG);
-              harpLfoG.connect(harp.gain.gain);
-              harpLfo.start();
-              this.nodes.push(harpLfo); }
-            break;
-
-          case 'gothic-romance':
-            // DROP002: Weeping cello melody + mournful piano
-            this.createMelody([196, 220, 261.6, 247, 220, 196, 174.6], 'sawtooth', 0.008, 2.5);
-            // Piano tears — descending minor notes
-            this.createMelody([329.6, 311.1, 293.7, 261.6], 'triangle', 0.005, 3.0);
-            // Soft wind through cathedral (gentle, not harsh)
-            { const wind = this.createNoise(0.006);
-              wind.filter.type = 'bandpass';
-              wind.filter.frequency.value = 400;
-              wind.filter.Q.value = 2;
-              const wLfo = this.ctx.createOscillator();
-              wLfo.frequency.value = 0.06;
-              const wLfoG = this.ctx.createGain();
-              wLfoG.gain.value = 0.004;
-              wLfo.connect(wLfoG);
-              wLfoG.connect(wind.gain.gain);
-              wLfo.start();
-              this.nodes.push(wLfo); }
-            break;
-
-          case 'alchemy':
-            // DROP003: Cosmic glass bells + ethereal descending scale
-            this.createMelody([880, 784, 659.25, 587.33, 523.25, 440], 'sine', 0.006, 2.8);
-            // Crystalline shimmer — high harmonics pulsing gently
-            this.createOsc(1318.5, 'sine', 0, 0.002);
-            { const crystal = this.createOsc(1760, 'sine', 8, 0);
-              const cLfo = this.ctx.createOscillator();
-              cLfo.frequency.value = 0.2;
-              const cLfoG = this.ctx.createGain();
-              cLfoG.gain.value = 0.003;
-              cLfo.connect(cLfoG);
-              cLfoG.connect(crystal.gain.gain);
-              cLfo.start();
-              this.nodes.push(cLfo); }
-            break;
-
-          case 'childhood-distortion':
-            // DROP004: Broken music box melody — sugar plum fairy nightmare
-            this.createMelody([659.25, 622.25, 587.33, 523.25, 493.88, 440, 392], 'sine', 0.006, 1.6);
-            // Haunting children's lullaby — high delicate notes
-            this.createMelody([784, 880, 784, 659.25], 'triangle', 0.004, 2.4);
-            // Creaking — gentle spectral texture (not harsh)
-            { const creak = this.createNoise(0.004);
-              creak.filter.type = 'bandpass';
-              creak.filter.frequency.value = 1200;
-              creak.filter.Q.value = 8;
-              const mLfo = this.ctx.createOscillator();
-              mLfo.frequency.value = 0.3;
-              const mLfoG = this.ctx.createGain();
-              mLfoG.gain.value = 400;
-              mLfo.connect(mLfoG);
-              mLfoG.connect(creak.filter.frequency);
-              mLfo.start();
-              this.nodes.push(mLfo); }
-            break;
-
-          case 'sanctuary':
-            // Warm hopeful melody — gentle ascending piano
-            this.createMelody([261.6, 293.7, 329.6, 392, 440], 'sine', 0.012, 3.0);
-            // Soft harmonic glow
-            this.createOsc(523.25, 'sine', 0, 0.006);
-            this.createOsc(659.25, 'sine', 2, 0.004);
-            break;
-        }
-
-        // Subliminal positivity layer (gentle harmonic, not binaural buzz)
-        if (profile !== 'sanctuary') {
-          this.createOsc(396, 'sine', 0, 0.002);
-          this.createOsc(528, 'sine', 0, 0.0015);
-        }
-      }, 300);
+      (profiles[realmId] || profiles['veil'])();
     }
 
-    cursorEcho(x, y) {
-      if (!this.ctx || state.audioMuted) return;
-      const freq = 200 + (y / window.innerHeight) * 400;
+    // ═══ VEIL (Homepage) ═══
+    // Deep, low drone. Barely there. Like something breathing in the dark.
+    soundscapeVeil() {
+      // Sub-bass breath
+      const d1 = this.createDrone(55, 'sine', 0.12);
+      this.createLFO(0.08, 8, d1.osc.frequency);
 
+      // High spectral shimmer
+      const d2 = this.createDrone(880, 'sine', 0.02, 5);
+      this.createLFO(0.05, 3, d2.osc.frequency);
+
+      // Ghostly harmonics
+      this.createDrone(220, 'triangle', 0.03, -3);
+      this.createDrone(330, 'sine', 0.015, 7);
+
+      // Slow decay-whisper texture
+      const d4 = this.createDrone(440, 'sine', 0.008);
+      this.createLFO(0.02, 20, d4.osc.frequency);
+    }
+
+    // ═══ GATEWAY ═══
+    // Multi-layered, slightly more active. Four frequencies hinting at four worlds.
+    soundscapeGateway() {
+      this.createDrone(65, 'sine', 0.08);
+      // Four world hints — each a different note
+      this.createDrone(164.81, 'triangle', 0.025, 3); // E3 — World I
+      this.createDrone(196.00, 'triangle', 0.020, -5); // G3 — World II
+      this.createDrone(246.94, 'triangle', 0.018, 7); // B3 — World III
+      this.createDrone(293.66, 'triangle', 0.015, -3); // D4 — World IV
+
+      // Slow sweep
+      const sweep = this.createDrone(300, 'sawtooth', 0.01);
+      this.createLFO(0.03, 100, sweep.osc.frequency);
+
+      // Heartbeat-like low pulse
+      const pulse = this.createDrone(40, 'sine', 0.06);
+      this.createLFO(0.8, 0.05, pulse.gain.gain);
+    }
+
+    // ═══ WORLD I: PRETTY WITH TEETH ═══
+    // Detuned music box. Uncanny lullaby. Something sweet gone wrong.
+    soundscapePrettyWithTeeth() {
+      // Detuned music box base
+      this.createDrone(523.25, 'sine', 0.04, 8); // C5 slightly sharp
+      this.createDrone(659.25, 'sine', 0.03, -12); // E5 slightly flat — dissonance
+      this.createDrone(783.99, 'triangle', 0.02, 5); // G5
+
+      // Sub-bass unease
+      this.createDrone(55, 'sine', 0.08);
+      const unease = this.createDrone(110, 'sawtooth', 0.015);
+      this.createLFO(0.1, 5, unease.osc.frequency);
+
+      // Ticking / heartbeat texture
+      const tick = this.createDrone(1200, 'square', 0.005);
+      this.createLFO(4, 0.004, tick.gain.gain);
+
+      // Creepy melody fragments
+      const melodyNotes = [523.25, 587.33, 659.25, 523.25, 783.99, 659.25, 554.37, 523.25];
+      let noteIdx = 0;
+      const melodyInterval = setInterval(() => {
+        if (!this.ctx || state.audioMuted) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const g = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = melodyNotes[noteIdx % melodyNotes.length] * (Math.random() < 0.2 ? 1.003 : 1); // occasional detune
+        g.gain.setValueAtTime(0, now);
+        g.gain.linearRampToValueAtTime(0.035, now + 0.05);
+        g.gain.exponentialRampToValueAtTime(0.001, now + 1.5);
+        osc.connect(g);
+        g.connect(this.realmGain);
+        osc.start(now);
+        osc.stop(now + 1.5);
+        this.nodes.push(osc, g);
+        noteIdx++;
+      }, 2500 + Math.random() * 1500);
+      this._melodyIntervals.push(melodyInterval);
+    }
+
+    // ═══ WORLD II: RITUAL TOOLKIT ═══
+    // Dark ceremonial drone. Deep resonance. Like being inside a cathedral of shadow.
+    soundscapeRitualToolkit() {
+      // Organ-like drones
+      this.createDrone(65.41, 'sine', 0.10); // C2
+      this.createDrone(130.81, 'triangle', 0.05); // C3
+      this.createDrone(196.00, 'sine', 0.04, -8); // G3 — slightly flat, ominous
+
+      // Choral texture
+      const choir1 = this.createDrone(261.63, 'sine', 0.02);
+      this.createLFO(0.15, 3, choir1.osc.frequency); // vibrato
+      const choir2 = this.createDrone(329.63, 'sine', 0.015, 5);
+      this.createLFO(0.17, 4, choir2.osc.frequency);
+
+      // Low rumble
+      this.createDrone(30, 'sine', 0.06);
+
+      // Ceremonial bell tones
+      const bellNotes = [523.25, 659.25, 392.00, 493.88];
+      let bellIdx = 0;
+      const bellInterval = setInterval(() => {
+        if (!this.ctx || state.audioMuted) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const g = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = bellNotes[bellIdx % bellNotes.length];
+        g.gain.setValueAtTime(0, now);
+        g.gain.linearRampToValueAtTime(0.04, now + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.001, now + 3);
+        osc.connect(g);
+        g.connect(this.realmGain);
+        osc.start(now);
+        osc.stop(now + 3);
+        this.nodes.push(osc, g);
+        bellIdx++;
+      }, 4000 + Math.random() * 3000);
+      this._melodyIntervals.push(bellInterval);
+    }
+
+    // ═══ WORLD III: ALCHEMY OF WORLDS ═══
+    // Vast. Cosmic. Dimensional shifting. Sounds that feel impossibly large.
+    soundscapeAlchemy() {
+      // Deep cosmic drone
+      this.createDrone(40, 'sine', 0.10);
+      this.createDrone(80, 'triangle', 0.04, 3);
+
+      // Dimensional shimmer — high frequencies with wide LFO
+      const dim1 = this.createDrone(1046.50, 'sine', 0.015);
+      this.createLFO(0.07, 50, dim1.osc.frequency);
+      const dim2 = this.createDrone(1318.51, 'sine', 0.01, -10);
+      this.createLFO(0.05, 30, dim2.osc.frequency);
+
+      // Gravity pulse
+      const gravity = this.createDrone(60, 'sine', 0.06);
+      this.createLFO(0.25, 0.04, gravity.gain.gain);
+
+      // Crystalline arpeggios — like stars forming
+      const crystalNotes = [880, 1108.73, 1318.51, 1567.98, 1318.51, 1108.73];
+      let crystalIdx = 0;
+      const crystalInterval = setInterval(() => {
+        if (!this.ctx || state.audioMuted) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const g = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = crystalNotes[crystalIdx % crystalNotes.length];
+        g.gain.setValueAtTime(0, now);
+        g.gain.linearRampToValueAtTime(0.02, now + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.001, now + 2);
+        osc.connect(g);
+        g.connect(this.realmGain);
+        osc.start(now);
+        osc.stop(now + 2);
+        this.nodes.push(osc, g);
+        crystalIdx++;
+      }, 1500 + Math.random() * 1000);
+      this._melodyIntervals.push(crystalInterval);
+    }
+
+    // ═══ WORLD IV: SWEET DECAY ═══
+    // The most layered. Corrupted innocence. Music box meets requiem.
+    soundscapeSweetDecay() {
+      // Warm but unsettling base
+      this.createDrone(73.42, 'sine', 0.09); // D2
+      this.createDrone(146.83, 'triangle', 0.04, -5); // D3 slightly flat
+
+      // Corrupted lullaby texture
+      const lull1 = this.createDrone(293.66, 'sine', 0.025, 10); // D4 sharp
+      this.createLFO(0.12, 5, lull1.osc.frequency);
+      const lull2 = this.createDrone(349.23, 'sine', 0.02, -8); // F4 flat
+      this.createLFO(0.09, 4, lull2.osc.frequency);
+
+      // Childhood distortion — detuned fifth
+      this.createDrone(440, 'sine', 0.015, 15);
+      this.createDrone(660, 'sine', 0.01, -20);
+
+      // Music box melody — slower, more mournful
+      const decayNotes = [293.66, 349.23, 440, 349.23, 293.66, 261.63, 246.94, 261.63];
+      let decayIdx = 0;
+      const decayInterval = setInterval(() => {
+        if (!this.ctx || state.audioMuted) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const g = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = decayNotes[decayIdx % decayNotes.length] * (1 + (Math.random() - 0.5) * 0.005);
+        g.gain.setValueAtTime(0, now);
+        g.gain.linearRampToValueAtTime(0.03, now + 0.05);
+        g.gain.exponentialRampToValueAtTime(0.001, now + 2.5);
+        osc.connect(g);
+        g.connect(this.realmGain);
+        osc.start(now);
+        osc.stop(now + 2.5);
+        this.nodes.push(osc, g);
+        decayIdx++;
+      }, 3000 + Math.random() * 2000);
+      this._melodyIntervals.push(decayInterval);
+
+      // Crying/whimpering texture — very high, very faint
+      const cry = this.createDrone(3000, 'sine', 0.003);
+      const cryLfo = this.ctx.createOscillator();
+      const cryLfoG = this.ctx.createGain();
+      cryLfo.frequency.value = 5;
+      cryLfoG.gain.value = 200;
+      cryLfo.connect(cryLfoG);
+      cryLfoG.connect(cry.osc.frequency);
+      cryLfo.start();
+      this.nodes.push(cryLfo, cryLfoG);
+    }
+
+    // ═══ BE THE CHANGE — SANCTUARY ═══
+    // Warmer. Golden. Still haunting but with hope underneath.
+    soundscapeSanctuary() {
+      // Warm drone
+      this.createDrone(110, 'sine', 0.08); // A2
+      this.createDrone(220, 'sine', 0.04); // A3
+
+      // Major tonality — hope
+      this.createDrone(277.18, 'sine', 0.025); // C#4
+      this.createDrone(329.63, 'triangle', 0.02); // E4
+
+      // Golden shimmer
+      const shimmer = this.createDrone(880, 'sine', 0.01);
+      this.createLFO(0.06, 10, shimmer.osc.frequency);
+
+      // Gentle pulse — like a calm heartbeat
+      const pulse = this.createDrone(55, 'sine', 0.04);
+      this.createLFO(0.5, 0.03, pulse.gain.gain);
+
+      // Harp-like tones
+      const harpNotes = [440, 554.37, 659.25, 880, 659.25, 554.37];
+      let harpIdx = 0;
+      const harpInterval = setInterval(() => {
+        if (!this.ctx || state.audioMuted) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const g = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = harpNotes[harpIdx % harpNotes.length];
+        g.gain.setValueAtTime(0, now);
+        g.gain.linearRampToValueAtTime(0.025, now + 0.01);
+        g.gain.exponentialRampToValueAtTime(0.001, now + 2);
+        osc.connect(g);
+        g.connect(this.realmGain);
+        osc.start(now);
+        osc.stop(now + 2);
+        this.nodes.push(osc, g);
+        harpIdx++;
+      }, 3500 + Math.random() * 2000);
+      this._melodyIntervals.push(harpInterval);
+    }
+
+    // ═══ COMMUNITY ═══
+    // Collective resonance. Multiple frequencies merging.
+    soundscapeCommunity() {
+      this.soundscapeSanctuary(); // Base sanctuary sound
+      // Add collective texture — multiple voices
+      this.createDrone(174.61, 'sine', 0.015); // F3
+      this.createDrone(207.65, 'sine', 0.012, 3); // Ab3
+      const breath = this.createDrone(300, 'triangle', 0.008);
+      this.createLFO(0.2, 0.006, breath.gain.gain);
+    }
+
+    // ═══ THE STATIC ═══
+    // Deliberately uncomfortable. Interference patterns. Resolution through discomfort.
+    soundscapeStatic() {
+      // Interference drone
+      this.createDrone(100, 'sawtooth', 0.03);
+      this.createDrone(101.5, 'sawtooth', 0.03); // Beating frequency
+
+      // Resolution tone underneath
+      this.createDrone(110, 'sine', 0.05);
+
+      // Static texture
+      const staticNode = this.createDrone(60, 'square', 0.01);
+      this.createLFO(0.3, 20, staticNode.osc.frequency);
+
+      // Clarity emerging
+      const clarity = this.createDrone(440, 'sine', 0.02);
+      this.createLFO(0.03, 2, clarity.osc.frequency);
+    }
+
+    // Cursor hover sound
+    playCursorEcho(x, y) {
+      if (!this.ctx || state.audioMuted) return;
       if (!this.cursorOsc) {
         this.cursorOsc = this.ctx.createOscillator();
         this.cursorOsc.type = 'sine';
-        this.cursorOsc.frequency.value = freq;
-        const panner = this.ctx.createStereoPanner();
-        panner.pan.value = (x / window.innerWidth) * 2 - 1;
+        this.cursorOsc.frequency.value = 800;
         this.cursorOsc.connect(this.cursorGain);
-        this.cursorGain.connect(panner);
-        panner.connect(this.masterGain);
         this.cursorOsc.start();
+        this.nodes.push(this.cursorOsc);
       }
-
-      this.cursorOsc.frequency.linearRampToValueAtTime(freq, this.ctx.currentTime + 0.05);
-      this.cursorGain.gain.linearRampToValueAtTime(0.005, this.ctx.currentTime + 0.01);
-      this.cursorGain.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 0.5);
+      const freq = 400 + (y / window.innerHeight) * 600;
+      this.cursorOsc.frequency.setTargetAtTime(freq, this.ctx.currentTime, 0.1);
+      this.cursorGain.gain.setTargetAtTime(0.015, this.ctx.currentTime, 0.05);
+      this.cursorGain.gain.setTargetAtTime(0, this.ctx.currentTime + 0.1, 0.15);
     }
 
     toggleMute() {
       state.audioMuted = !state.audioMuted;
       if (state.audioMuted) {
-        this.masterGain.gain.setTargetAtTime(0, this.ctx.currentTime, 0.1);
+        this.stopAll();
         document.body.classList.add('audio-muted');
       } else {
-        this.masterGain.gain.setTargetAtTime(0.25, this.ctx.currentTime, 0.1);
         document.body.classList.remove('audio-muted');
-        // Restart audio for current realm if it was muted
-        this.setRealm(state.currentRealm);
+        this.setRealm(this.currentRealm || state.currentRealm);
       }
     }
   }
@@ -586,12 +812,14 @@
       this.realms = document.querySelectorAll('.realm');
       this.navLinks = document.querySelectorAll('[data-navigate]');
       this.transitionOverlay = document.getElementById('transition-overlay');
-      this.transitionText = this.transitionOverlay.querySelector('.transition-text');
+      this.transitionText = this.transitionOverlay ? this.transitionOverlay.querySelector('.transition-text') : null;
       this.setupEventListeners();
       this.initNavigation();
+      this.setupSectionObserver();
     }
 
     setupEventListeners() {
+      // Navigation links
       this.navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
           e.preventDefault();
@@ -600,13 +828,41 @@
         });
       });
 
-      document.getElementById('enter-crown').addEventListener('click', () => {
-        this.navigateTo('gateway');
-      });
+      // Enter button
+      const enterBtn = document.getElementById('enter-crown');
+      if (enterBtn) {
+        enterBtn.addEventListener('click', () => {
+          this.navigateTo('gateway');
+        });
+      }
 
-      document.getElementById('audio-toggle').addEventListener('click', () => {
-        this.audioEngine.init(); // Ensure audio context is started on first interaction
-        this.audioEngine.toggleMute();
+      // Audio toggle
+      const audioToggle = document.getElementById('audio-toggle');
+      if (audioToggle) {
+        audioToggle.addEventListener('click', () => {
+          this.audioEngine.init();
+          this.audioEngine.toggleMute();
+          audioToggle.textContent = state.audioMuted ? '🔇' : '🔊';
+        });
+      }
+
+      // Mobile nav toggle (hamburger)
+      const navToggle = document.querySelector('.nav-toggle');
+      if (navToggle) {
+        navToggle.addEventListener('click', () => {
+          const navLinks = document.querySelector('.nav-links');
+          navLinks.classList.toggle('open');
+          navToggle.classList.toggle('open');
+        });
+      }
+
+      // Close mobile nav on link click
+      document.querySelectorAll('.nav-link').forEach(el => {
+        el.addEventListener('click', () => {
+          document.querySelector('.nav-links').classList.remove('open');
+          const toggle = document.querySelector('.nav-toggle');
+          if (toggle) toggle.classList.remove('open');
+        });
       });
 
       // Video modal handling
@@ -617,17 +873,22 @@
         });
       });
 
-      document.querySelector('.video-modal .close-button').addEventListener('click', () => {
-        this.closeVideoModal();
-      });
+      const closeBtn = document.querySelector('.video-modal .close-button');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => this.closeVideoModal());
+      }
 
-      document.getElementById('video-modal').addEventListener('click', (e) => {
-        if (e.target.id === 'video-modal') {
-          this.closeVideoModal();
-        }
-      });
+      const videoModal = document.getElementById('video-modal');
+      if (videoModal) {
+        videoModal.addEventListener('click', (e) => {
+          if (e.target.id === 'video-modal') this.closeVideoModal();
+        });
+      }
 
+      // Hash navigation
       window.addEventListener('hashchange', () => this.handleHashChange());
+
+      // Mouse tracking
       window.addEventListener('mousemove', (e) => {
         state.mouseX = e.clientX;
         state.mouseY = e.clientY;
@@ -640,6 +901,27 @@
       this.activateRealm(initialRealm);
       document.body.dataset.realm = initialRealm;
       this.audioEngine.setRealm(initialRealm);
+    }
+
+    // Observe sections within realm pages for per-section particle/sound changes
+    setupSectionObserver() {
+      const sections = document.querySelectorAll('.realm-section');
+      if (sections.length === 0) return;
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
+            const section = entry.target;
+            const sectionParticles = section.dataset.sectionParticles;
+            if (sectionParticles && sectionParticles !== state.currentSection) {
+              state.currentSection = sectionParticles;
+              this.particleEngine.setType(sectionParticles);
+            }
+          }
+        });
+      }, { threshold: [0.3] });
+
+      sections.forEach(section => observer.observe(section));
     }
 
     handleHashChange() {
@@ -655,23 +937,40 @@
       if (state.transitioning || targetRealmId === state.currentRealm) return;
 
       state.transitioning = true;
-      this.transitionOverlay.classList.add('active');
-      this.transitionText.textContent = this.getTransitionText(targetRealmId);
+      state.currentSection = null;
 
-      setTimeout(() => {
-        this.deactivateRealm(state.currentRealm);
-        this.activateRealm(targetRealmId);
-        document.body.dataset.realm = targetRealmId;
-        this.audioEngine.setRealm(targetRealmId);
-        this.particleEngine.setType(document.getElementById(`realm-${targetRealmId}`).dataset.particles || 'decay-dust');
-        window.location.hash = targetRealmId;
+      if (this.transitionOverlay && this.transitionText) {
+        this.transitionOverlay.classList.add('active');
+        this.transitionText.textContent = this.getTransitionText(targetRealmId);
 
         setTimeout(() => {
-          this.transitionOverlay.classList.remove('active');
+          this.performTransition(targetRealmId);
+          setTimeout(() => {
+            this.transitionOverlay.classList.remove('active');
+            state.transitioning = false;
+          }, 600);
+        }, 600);
+      } else {
+        // Fallback without overlay
+        this.performTransition(targetRealmId);
+        setTimeout(() => {
           state.transitioning = false;
-        }, 600); // Transition out duration
+        }, 400);
+      }
+    }
 
-      }, 600); // Transition in duration
+    performTransition(targetRealmId) {
+      this.deactivateRealm(state.currentRealm);
+      this.activateRealm(targetRealmId);
+      document.body.dataset.realm = targetRealmId;
+      this.audioEngine.setRealm(targetRealmId);
+
+      const targetEl = document.getElementById(`realm-${targetRealmId}`);
+      if (targetEl) {
+        const particleType = targetEl.dataset.particles || 'decay-dust';
+        this.particleEngine.setType(particleType);
+      }
+      window.location.hash = targetRealmId;
     }
 
     activateRealm(realmId) {
@@ -679,8 +978,14 @@
       if (targetRealm) {
         targetRealm.classList.add('active');
         state.currentRealm = realmId;
-        this.revealElements(targetRealm);
-        targetRealm.scrollTop = 0; // Scroll to top on realm activation
+        targetRealm.scrollTop = 0;
+
+        // Reveal-on-view animation
+        setTimeout(() => {
+          targetRealm.querySelectorAll('.rv').forEach((el, i) => {
+            setTimeout(() => el.classList.add('visible'), i * 80);
+          });
+        }, 200);
       }
     }
 
@@ -688,22 +993,8 @@
       const currentRealm = document.getElementById(`realm-${realmId}`);
       if (currentRealm) {
         currentRealm.classList.remove('active');
-        this.resetElements(currentRealm);
+        currentRealm.querySelectorAll('.rv').forEach(el => el.classList.remove('visible'));
       }
-    }
-
-    revealElements(parent) {
-      parent.querySelectorAll('.rv').forEach((el, index) => {
-        el.style.transitionDelay = `${index * 0.08}s`;
-        el.classList.add('revealed');
-      });
-    }
-
-    resetElements(parent) {
-      parent.querySelectorAll('.rv').forEach(el => {
-        el.classList.remove('revealed');
-        el.style.transitionDelay = ''; // Reset delay
-      });
     }
 
     getTransitionText(realmId) {
@@ -711,71 +1002,107 @@
         'veil': 'RETURNING TO THE VEIL',
         'gateway': 'ENTERING THE GATEWAY',
         'world-drop001': 'DESCENDING INTO PRETTY WITH TEETH',
-        'world-drop002': 'UNEARTHING THE RITUAL TOOLKIT',
-        'world-drop003': 'COLLAPSING INTO ALCHEMY OF WORLDS',
-        'world-drop004': 'AWAKENING PRETTY LITTLE NIGHTMARES',
-        'drops': 'CONSULTING THE SIGILS',
-        'btc': 'SEEKING THE HEART OF CHANGE',
-        'btc-videos': 'VIEWING TRANSMISSIONS',
-        'btc-blog-1': 'READING TRANSMISSIONS',
-        'btc-blog-2': 'EXPLORING THE DARK CANVAS',
+        'world-drop002': 'ENTERING THE RITUAL',
+        'world-drop003': 'COLLAPSING INTO ALCHEMY',
+        'world-drop004': 'FALLING INTO SWEET DECAY',
+        'drops': 'VIEWING THE SIGILS',
+        'btc': 'ENTERING THE HEART',
+        'btc-videos': 'LOADING TRANSMISSIONS',
+        'btc-blog-1': 'READING THE SIGNAL',
+        'btc-blog-2': 'OPENING THE DARK CANVAS',
         'community': 'JOINING THE COLLECTIVE',
-        'the-static': 'ANSWERING THE INTERFERENCE',
-        'about': 'UNVEILING ORIGINS'
+        'the-static': 'CONFRONTING THE STATIC',
+        'about': 'ACCESSING ORIGIN FILE'
       };
-      return texts[realmId] || 'SHIFTING REALITIES';
+      return texts[realmId] || 'CROSSING OVER';
     }
 
     openVideoModal(videoId) {
-      const videoModal = document.getElementById('video-modal');
-      const videoPlayer = document.getElementById('video-player');
-      videoPlayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
-      videoModal.classList.add('active');
+      const modal = document.getElementById('video-modal');
+      const player = document.getElementById('video-player');
+      if (modal && player && videoId && !videoId.startsWith('VIDEO_ID')) {
+        player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+        modal.classList.add('active');
+      }
     }
 
     closeVideoModal() {
-      const videoModal = document.getElementById('video-modal');
-      const videoPlayer = document.getElementById('video-player');
-      videoPlayer.src = ''; // Stop video playback
-      videoModal.classList.remove('active');
+      const modal = document.getElementById('video-modal');
+      const player = document.getElementById('video-player');
+      if (modal) modal.classList.remove('active');
+      if (player) player.src = '';
     }
   }
 
-  // ─── CURSOR ECHO ───
-  const cursorTrail = document.getElementById('cursor-trail');
-  let trailElements = [];
-  const TRAIL_LENGTH = 15;
+  // ─── CAROUSEL ENGINE ───
+  class CarouselEngine {
+    constructor() {
+      this.carousel = document.querySelector('.homepage-carousel');
+      if (this.carousel) {
+        this.horses = this.carousel.querySelectorAll('.carousel-horse');
+        this.glitchOverlay = this.carousel.querySelector('.carousel-glitch-overlay');
+        this.mistOverlay = this.carousel.querySelector('.carousel-mist-overlay');
+        this.animateCarousel();
+      }
+    }
 
-  function createTrailElement() {
-    const el = document.createElement('div');
-    el.className = 'cursor-echo';
-    document.body.appendChild(el);
-    return el;
+    animateCarousel() {
+      if (!this.carousel) return;
+
+      let rotation = 0;
+      const rotationSpeed = 0.005;
+      let lastGlitch = Date.now();
+
+      const update = () => {
+        rotation += rotationSpeed;
+        this.carousel.style.transform = `translateX(-50%) rotateY(${rotation}deg)`;
+
+        // Stutter effect
+        if (Math.random() < 0.01) {
+          rotation += (Math.random() - 0.5) * 5;
+        }
+
+        // Glitch effect
+        if (this.glitchOverlay && Date.now() - lastGlitch > 3000) {
+          this.glitchOverlay.style.opacity = 0.2 + Math.random() * 0.3;
+          setTimeout(() => {
+            if (this.glitchOverlay) this.glitchOverlay.style.opacity = 0;
+          }, 50 + Math.random() * 150);
+          lastGlitch = Date.now() + Math.random() * 5000;
+        }
+
+        requestAnimationFrame(update);
+      };
+      update();
+    }
   }
 
+  // ─── CURSOR TRAIL ───
+  const cursorTrail = document.createElement('div');
+  cursorTrail.id = 'cursor-trail';
+  document.body.appendChild(cursorTrail);
+
+  const TRAIL_LENGTH = 5;
+  const echoes = [];
   for (let i = 0; i < TRAIL_LENGTH; i++) {
-    trailElements.push(createTrailElement());
+    const echo = document.createElement('div');
+    echo.className = 'cursor-echo';
+    document.body.appendChild(echo);
+    echoes.push(echo);
   }
-
   let echoIndex = 0;
   let lastEchoTime = 0;
-  const ECHO_INTERVAL = 50; // ms
 
   function updateCursor(e) {
-    state.mouseX = e.clientX;
-    state.mouseY = e.clientY;
+    cursorTrail.style.left = e.clientX + 'px';
+    cursorTrail.style.top = e.clientY + 'px';
 
-    cursorTrail.style.left = `${e.clientX}px`;
-    cursorTrail.style.top = `${e.clientY}px`;
-    cursorTrail.classList.add('visible');
-
-    if (Date.now() - lastEchoTime > ECHO_INTERVAL) {
-      const echo = trailElements[echoIndex];
-      echo.style.left = `${e.clientX}px`;
-      echo.style.top = `${e.clientY}px`;
-      echo.style.opacity = 1;
+    if (Date.now() - lastEchoTime > 50) {
+      const echo = echoes[echoIndex];
+      echo.style.left = e.clientX + 'px';
+      echo.style.top = e.clientY + 'px';
+      echo.style.opacity = 0.6;
       echo.style.transform = 'scale(1)';
-      echo.style.transition = 'transform 0.5s ease-out, opacity 0.5s ease-out';
       setTimeout(() => {
         echo.style.opacity = 0;
         echo.style.transform = 'scale(2)';
@@ -784,8 +1111,8 @@
       lastEchoTime = Date.now();
     }
 
-    // Check for hoverable elements
-    const target = e.target.closest('a, button, [data-navigate], .gateway-card, .drop-card, .video-card, .blog-card');
+    // Hover state
+    const target = e.target.closest('a, button, [data-navigate], .gateway-card, .drop-card, .video-card, .blog-card, .progression-stage, .element-category, .bg-card');
     if (target) {
       cursorTrail.classList.add('hover');
     } else {
@@ -795,8 +1122,8 @@
 
   document.addEventListener('mousemove', updateCursor);
 
-  // ─── MAIN ANIMATION LOOP ───
-  let particleEngine, audioEngine, navigationEngine;
+  // ─── MAIN INIT ───
+  let particleEngine, audioEngine, navigationEngine, carouselEngine;
 
   function animate() {
     requestAnimationFrame(animate);
@@ -809,13 +1136,17 @@
     particleEngine = new ParticleEngine(document.getElementById('particle-canvas'));
     audioEngine = new AudioEngine();
     navigationEngine = new NavigationEngine(particleEngine, audioEngine);
+    carouselEngine = new CarouselEngine();
 
-    // Initial particle setup based on current realm
-    particleEngine.setType(document.getElementById(`realm-${state.currentRealm}`).dataset.particles || 'decay-dust');
+    // Initial particle setup
+    const currentRealmEl = document.getElementById(`realm-${state.currentRealm}`);
+    if (currentRealmEl) {
+      particleEngine.setType(currentRealmEl.dataset.particles || 'decay-dust');
+    }
 
     animate();
 
-    // Add cursor echo elements to CSS
+    // Cursor echo styles
     const style = document.createElement('style');
     style.innerHTML = `
       .cursor-echo {
@@ -823,108 +1154,50 @@
         width: 10px;
         height: 10px;
         border-radius: 50%;
-        background: rgba(194,116,137,0.6); /* decay-pink */
+        background: rgba(194,116,137,0.6);
         pointer-events: none;
         z-index: 99998;
         opacity: 0;
         transform: scale(0);
+        transition: opacity 0.4s, transform 0.4s;
       }
     `;
     document.head.appendChild(style);
 
-    // Initial audio mute state
+    // Initial mute state
     if (state.audioMuted) {
       document.body.classList.add('audio-muted');
     }
-  });
 
-})();
+    // Community form handler
+    const communityForm = document.getElementById('community-post-form');
+    if (communityForm) {
+      communityForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('post-name').value.trim();
+        const type = document.getElementById('post-type').value;
+        const content = document.getElementById('post-content').value.trim();
+        if (!name || !content) return;
 
-  // ─── CAROUSEL ENGINE ───
-  class CarouselEngine {
-    constructor() {
-      this.carousel = document.querySelector(".homepage-carousel");
-      if (this.carousel) {
-        this.horses = this.carousel.querySelectorAll(".carousel-horse");
-        this.glitchOverlay = this.carousel.querySelector(".carousel-glitch-overlay");
-        this.mistOverlay = this.carousel.querySelector(".carousel-mist-overlay");
-        this.animateCarousel();
-      }
-    }
+        const feed = document.getElementById('community-feed');
+        if (feed) {
+          const post = document.createElement('div');
+          post.className = 'feed-post feed-post-new';
+          const typeLabels = { written: 'TRANSMISSION', art: 'ARTWORK', video: 'VIDEO', story: 'STORY' };
+          post.innerHTML = `
+            <span class="feed-author">${name.replace(/</g, '&lt;')}</span>
+            <span class="feed-type">${typeLabels[type] || 'TRANSMISSION'}</span>
+            <p class="feed-content">"${content.replace(/</g, '&lt;')}"</p>
+          `;
+          feed.appendChild(post);
+          setTimeout(() => post.classList.add('visible'), 10);
 
-    animateCarousel() {
-      if (!this.carousel) return;
-
-      let rotation = 0;
-      const rotationSpeed = 0.005; // Slower rotation
-      const glitchInterval = 3000; // Glitch every 3 seconds
-      let lastGlitch = Date.now();
-
-      const update = () => {
-        rotation += rotationSpeed;
-        this.carousel.style.transform = `translateX(-50%) rotateY(${rotation}deg)`;
-
-        // Stuttering effect
-        if (Math.random() < 0.01) { // Small chance to stutter
-          rotation += (Math.random() - 0.5) * 5; // Jump rotation slightly
+          // Clear form
+          document.getElementById('post-name').value = '';
+          document.getElementById('post-content').value = '';
+          document.getElementById('post-link').value = '';
         }
-
-        // Glitch effect
-        if (Date.now() - lastGlitch > glitchInterval) {
-          this.glitchOverlay.style.opacity = 0.2 + Math.random() * 0.3;
-          setTimeout(() => {
-            this.glitchOverlay.style.opacity = 0;
-          }, 50 + Math.random() * 150); // Short glitch duration
-          lastGlitch = Date.now() + Math.random() * 5000; // Next glitch in 3-8 seconds
-        }
-
-        requestAnimationFrame(update);
-      };
-      update();
-    }
-  }
-
-  // ─── MAIN ANIMATION LOOP ───
-  let particleEngine, audioEngine, navigationEngine, carouselEngine;
-
-  function animate() {
-    requestAnimationFrame(animate);
-    if (particleEngine) {
-      particleEngine.update();
-    }
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    particleEngine = new ParticleEngine(document.getElementById("particle-canvas"));
-    audioEngine = new AudioEngine();
-    navigationEngine = new NavigationEngine(particleEngine, audioEngine);
-    carouselEngine = new CarouselEngine(); // Initialize carousel engine
-
-    // Initial particle setup based on current realm
-    particleEngine.setType(document.getElementById(`realm-${state.currentRealm}`).dataset.particles || "decay-dust");
-
-    animate();
-
-    // Add cursor echo elements to CSS
-    const style = document.createElement("style");
-    style.innerHTML = `
-      .cursor-echo {
-        position: fixed;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background: rgba(194,116,137,0.6); /* decay-pink */
-        pointer-events: none;
-        z-index: 99998;
-        opacity: 0;
-        transform: scale(0);
-      }
-    `;
-    document.head.appendChild(style);
-
-    // Initial audio mute state
-    if (state.audioMuted) {
-      document.body.classList.add("audio-muted");
+      });
     }
   });
 
