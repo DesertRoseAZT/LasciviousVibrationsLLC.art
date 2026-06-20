@@ -51,13 +51,12 @@ body {
   color: var(--bone-white);
   overflow: hidden;
   height: 100%;
-  cursor: none;
   -webkit-font-smoothing: antialiased;
 }
 
-a { color: inherit; text-decoration: none; cursor: none; }
+a { color: inherit; text-decoration: none; cursor: pointer; }
 img { max-width: 100%; height: auto; display: block; }
-button { cursor: none; }
+button { cursor: pointer; }
 
 /* Custom cursor */
 #cursor-trail {
