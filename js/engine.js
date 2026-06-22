@@ -33,11 +33,24 @@
     }
 
     setType(type) {
-      this.type = type || 'decay-dust';
-      this.particles = [];
+      const newType = type || 'decay-dust';
+      if (newType === this.type && this.particles.length > 0) return;
+
+      // Mark existing particles for fade-out instead of instant clear
+      for (let i = 0; i < this.particles.length; i++) {
+        this.particles[i]._fading = true;
+        this.particles[i].life = Math.min(this.particles[i].life, 40);
+      }
+
+      this.type = newType;
       const count = this.getCount();
+      // Stagger new particle creation for seamless blend
       for (let i = 0; i < count; i++) {
-        this.particles.push(this.createParticle());
+        const p = this.createParticle();
+        p.opacity = 0;
+        p._fadeIn = true;
+        p._fadeDelay = i * 2; // stagger frames
+        this.particles.push(p);
       }
     }
 
@@ -75,6 +88,8 @@
         rotation: Math.random() * Math.PI * 2,
         rotationSpeed: (Math.random() - 0.5) * 0.02
       };
+
+      base._targetOpacity = base.opacity; // store for fade-in blending
 
       switch (this.type) {
         case 'teeth-float':
@@ -196,6 +211,13 @@
         p.vy *= 0.99;
 
         // Fade based on life
+        // Handle fade-in for new blended particles
+        if (p._fadeIn) {
+          if (p._fadeDelay > 0) { p._fadeDelay--; continue; }
+          p.opacity = Math.min(p.opacity + 0.015, p._targetOpacity || 0.3);
+          if (p.opacity >= (p._targetOpacity || 0.3)) { p._fadeIn = false; }
+        }
+
         const lifeRatio = p.life / p.maxLife;
         const alpha = p.opacity * (lifeRatio < 0.2 ? lifeRatio / 0.2 : lifeRatio > 0.8 ? (1 - lifeRatio) / 0.2 : 1);
 
@@ -792,6 +814,37 @@
       this.cursorGain.gain.setTargetAtTime(0, this.ctx.currentTime + 0.1, 0.15);
     }
 
+    // Per-section intensity modulation — called by section observer
+    setSectionIntensity(level) {
+      if (!this.ctx || !this.realmGain) return;
+      // level: 0.0 (baseline) → 1.0 (max intensity)
+      const clamped = Math.max(0, Math.min(1, level));
+      const baseGain = 0.25;
+      const maxGain = 0.55;
+      const target = baseGain + clamped * (maxGain - baseGain);
+      this.realmGain.gain.setTargetAtTime(target, this.ctx.currentTime, 0.8);
+    }
+
+    // Scroll-depth intensity — melody deepens as user scrolls further into realm
+    setScrollIntensity(depth) {
+      if (!this.ctx || !this.realmGain) return;
+      // depth: 0.0 (top) → 1.0 (bottom)
+      // Subtle: adds up to 30% more gain at full scroll
+      const scrollBoost = depth * 0.08;
+      const currentBase = this.realmGain.gain.value || 0.25;
+      // Don't override section intensity, just layer a subtle boost
+      const boosted = Math.min(0.6, currentBase + scrollBoost);
+      this.realmGain.gain.setTargetAtTime(boosted, this.ctx.currentTime, 1.2);
+
+      // Also modulate subliminal whisper intensity with scroll depth
+      if (this.subliminalGain) {
+        const whisperBase = 0.015;
+        const whisperMax = 0.04;
+        const whisperTarget = whisperBase + depth * (whisperMax - whisperBase);
+        this.subliminalGain.gain.setTargetAtTime(whisperTarget, this.ctx.currentTime, 1.0);
+      }
+    }
+
     toggleMute() {
       state.audioMuted = !state.audioMuted;
       if (state.audioMuted) {
@@ -917,11 +970,45 @@
               state.currentSection = sectionParticles;
               this.particleEngine.setType(sectionParticles);
             }
+
+            // Per-section audio intensification
+            const sectionAudio = section.dataset.sectionAudio;
+            if (sectionAudio) {
+              this.audioEngine.setSectionIntensity(parseFloat(sectionAudio));
+            }
           }
         });
       }, { threshold: [0.3] });
 
       sections.forEach(section => observer.observe(section));
+
+      // Scroll-based intensity: melody deepens as user scrolls further into a realm
+      this.setupScrollIntensity();
+    }
+
+    // Progressive audio intensification on scroll depth within a realm
+    setupScrollIntensity() {
+      let lastIntensityUpdate = 0;
+      const realmContainer = document;
+
+      realmContainer.addEventListener('scroll', () => {
+        const now = Date.now();
+        if (now - lastIntensityUpdate < 200) return; // throttle
+        lastIntensityUpdate = now;
+
+        const activeRealm = document.querySelector('.realm.active');
+        if (!activeRealm) return;
+
+        const scrollTop = activeRealm.scrollTop || 0;
+        const scrollHeight = activeRealm.scrollHeight || 1;
+        const clientHeight = activeRealm.clientHeight || 1;
+        const maxScroll = scrollHeight - clientHeight;
+        if (maxScroll <= 0) return;
+
+        // 0.0 at top → 1.0 at bottom
+        const scrollDepth = Math.min(1, scrollTop / maxScroll);
+        this.audioEngine.setScrollIntensity(scrollDepth);
+      }, true); // capture phase to catch realm scroll
     }
 
     handleHashChange() {
