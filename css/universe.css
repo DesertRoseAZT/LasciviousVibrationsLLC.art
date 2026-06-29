@@ -304,6 +304,7 @@ body.audio-muted .audio-off { display: block; }
   opacity: 1;
   pointer-events: all;
   z-index: 5;
+  background: var(--void);
 }
 
 /* ─── REVEAL ANIMATIONS ─── */
@@ -1516,11 +1517,7 @@ body.audio-muted .audio-off { display: block; }
 /* ═══ FOOTER ═══ */
 /* ══════════════════════════════════════════════════════════════ */
 #site-footer {
-  padding: 60px 32px;
-  text-align: center;
-  background: linear-gradient(0deg, rgba(6,3,10,0.95) 0%, rgba(6,3,10,0.6) 60%, transparent 100%);
-  position: relative;
-  z-index: 4;
+  display: none;
 }
 .footer-inner {
   max-width: 800px;
